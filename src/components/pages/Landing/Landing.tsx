@@ -10,10 +10,30 @@ import { ReactComponent as Bolt } from './assets/bolt.svg';
 import { ReactComponent as Search } from './assets/search.svg';
 import { ReactComponent as Smile } from './assets/smile.svg';
 
-import './style.scss';
+import { LandingDataService } from './landing-data.service';
 
-export function Landing(): JSX.Element {
-  return (
+import './style.scss';
+import { TCompanyInn, TCompanyLandingInfo } from '../../../transport';
+import { RouteChildrenProps } from 'react-router-dom';
+
+export const COMPANY_INN_ROUTE_KEY: string = 'company';
+
+export function Landing({ match }: RouteChildrenProps): JSX.Element {
+  const [info, setInfo] = React.useState<TCompanyLandingInfo | null>(null);
+  const companyInn: TCompanyInn = (match as {
+    params: { [key: string]: TCompanyInn };
+  })?.params[COMPANY_INN_ROUTE_KEY];
+
+  React.useEffect((): VoidFunction => {
+    const dataService = new LandingDataService();
+    const sub = dataService.data$.subscribe(setInfo);
+    dataService.getLandingDataByInn(companyInn);
+
+    return (): void => sub.unsubscribe();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return info ? (
     <PageLayout>
       <div className="landing">
         <section className="landing-comparsion">
@@ -244,5 +264,7 @@ export function Landing(): JSX.Element {
         </section>
       </div>
     </PageLayout>
+  ) : (
+    <>'kekek'</>
   );
 }
