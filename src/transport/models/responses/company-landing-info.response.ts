@@ -57,5 +57,5 @@ export type TCompanyLandingInfo = {
    * Сумма
    */
   bgSum: string;
-  competitor: TCompanyLandingInfo;
+  competitor: TCompanyLandingInfo & { bgSavingEconomy: number };
 };

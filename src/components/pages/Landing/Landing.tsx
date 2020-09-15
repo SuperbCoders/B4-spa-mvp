@@ -42,7 +42,7 @@ export function Landing({ match }: RouteChildrenProps): JSX.Element {
               Кто ты в мире госзакупок?
             </h2>
             <p className="landing-comparsion-header-subtitle">
-              АО «Уралтрансмаш»{' '}
+              {info.companyShortName}
               <SvgIcon className="landing-comparsion-header-subtitle-icon">
                 <CheckRound width="22" height="22" />
               </SvgIcon>
@@ -58,19 +58,23 @@ export function Landing({ match }: RouteChildrenProps): JSX.Element {
                   <span className="landing-features-item-label">
                     Побед в торгах
                   </span>
-                  <span className="landing-features-item-text">5 из 23</span>
+                  <span className="landing-features-item-text">
+                    {`${info.purchasesWins} из ${info.purchasesTotal}`}
+                  </span>
                 </div>
                 <div className="landing-features-item">
                   <span className="landing-features-item-label">
                     Рост выручки на
                   </span>
-                  <span className="landing-features-item-text">10%</span>
+                  <span className="landing-features-item-text">{`${info.revenueGrowthPerc}%`}</span>
                 </div>
                 <div className="landing-features-item">
                   <span className="landing-features-item-label">
                     Получил гарантий на
                   </span>
-                  <span className="landing-features-item-text">2 000 000₽</span>
+                  <span className="landing-features-item-text">
+                    {`${Number(info.revenueGrowth)}₽`}
+                  </span>
                 </div>
               </div>
 
@@ -119,21 +123,23 @@ export function Landing({ match }: RouteChildrenProps): JSX.Element {
                     Пропустил <br />
                     потенциально торгов
                   </span>
-                  <span className="landing-features-item-text">30</span>
+                  <span className="landing-features-item-text">
+                    {info.purchasesLost}
+                  </span>
                 </div>
                 <div className="landing-features-item">
                   <span className="landing-features-item-label">
                     Упущенная выгода
                   </span>
                   <span className="landing-features-item-text">
-                    23 000 000 ₽
+                    {`${Number(info.revenueLost)} ₽`}
                   </span>
                 </div>
                 <div className="landing-features-item">
                   <span className="landing-features-item-label">
                     Переплатил за гарантии
                   </span>
-                  <span className="landing-features-item-text">20%</span>
+                  <span className="landing-features-item-text">{`${info.bgOverpaymentPerc}%`}</span>
                 </div>
               </div>
             </div>
@@ -147,7 +153,7 @@ export function Landing({ match }: RouteChildrenProps): JSX.Element {
             <section className="landing-comparsion-card landing-comparsion-card-you-can-better">
               <header className="landing-comparsion-card-header">
                 <h3 className="landing-comparsion-card-header-title">
-                  Как конкурент ООО «Кранстрой»
+                  {`Как конкурент ${info.competitor.companyShortName}`}
                 </h3>
                 <p className="landing-comparsion-card-header-subtitle">
                   ОКВЭД 72.20 Мордовская обл
@@ -158,19 +164,19 @@ export function Landing({ match }: RouteChildrenProps): JSX.Element {
                   <span className="landing-features-item-label">
                     Рост за год
                   </span>
-                  <span className="landing-features-item-text">50%</span>
+                  <span className="landing-features-item-text">{`${info.competitor.revenueGrowthPerc}%`}</span>
                 </div>
                 <div className="landing-features-item">
                   <span className="landing-features-item-label">
                     Побед в тендерах
                   </span>
-                  <span className="landing-features-item-text">56 из 97</span>
+                  <span className="landing-features-item-text">{`${info.competitor.purchasesWins} из ${info.competitor.purchasesTotal}`}</span>
                 </div>
                 <div className="landing-features-item">
                   <span className="landing-features-item-label">
                     Экономия на получении гарантий
                   </span>
-                  <span className="landing-features-item-text">150 000 ₽</span>
+                  <span className="landing-features-item-text">{`${info.competitor.bgSavingEconomy} ₽`}</span>
                 </div>
               </div>
             </section>
