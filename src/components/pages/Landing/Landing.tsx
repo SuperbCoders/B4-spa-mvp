@@ -4,11 +4,11 @@ import { PageLayout } from '../../common/PageLayout';
 import { SvgIcon } from '../../common/SvgIcon';
 import { Button } from '../../common/Button';
 
-import { ReactComponent as CheckRound } from './assets/images/svg/check-round.svg';
-import { ReactComponent as Shield } from './assets/images/svg/shield.svg';
-import { ReactComponent as Bolt } from './assets/images/svg/bolt.svg';
-import { ReactComponent as Search } from './assets/images/svg/search.svg';
-import { ReactComponent as Smile } from './assets/images/svg/smile.svg';
+import { ReactComponent as CheckRound } from './assets/check-round.svg';
+import { ReactComponent as Shield } from './assets/shield.svg';
+import { ReactComponent as Bolt } from './assets/bolt.svg';
+import { ReactComponent as Search } from './assets/search.svg';
+import { ReactComponent as Smile } from './assets/smile.svg';
 
 import './style.scss';
 

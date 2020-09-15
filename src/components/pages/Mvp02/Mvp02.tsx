@@ -15,8 +15,8 @@ import {
   CardControls
 } from '../../../components/common/Card';
 
-import { ReactComponent as DocumentsSearch } from './assets/images/svg/documents-search.svg';
-import { ReactComponent as DocumentsAdd } from './assets/images/svg/documents-add.svg';
+import { ReactComponent as DocumentsSearch } from '../../../assets/images/svg/documents-search.svg';
+import { ReactComponent as DocumentsAdd } from '../../../assets/images/svg/documents-add.svg';
 
 import './style.scss';
 

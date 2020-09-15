@@ -11,9 +11,9 @@ import { GuaranteeModal } from '../../../components/common/Modals';
 
 import { Card, CardContent, CardFooter } from '../../../components/common/Card';
 
-import { ReactComponent as Featured } from './assets/images/svg/featured.svg';
-import { ReactComponent as FeaturedOutline } from './assets/images/svg/featured-outline.svg';
-import { ReactComponent as Plus } from './assets/images/svg/plus.svg';
+import { ReactComponent as Featured } from '../../../assets/images/svg/featured.svg';
+import { ReactComponent as FeaturedOutline } from '../../../assets/images/svg/featured-outline.svg';
+import { ReactComponent as Plus } from '../../../assets/images/svg/plus.svg';
 
 import './style.scss';
 
