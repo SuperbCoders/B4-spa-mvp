@@ -1,4 +1,4 @@
-import * as firebase from 'firebase';
+import firebase from 'firebase';
 import config from 'config';
 
 firebase.initializeApp(config.firebase);
@@ -19,6 +19,6 @@ export default () => {
     isLoggedIn,
     currentUser: isLoggedIn ? currentUser : null,
 
-    recheck,
+    recheck
   };
 };
