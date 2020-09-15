@@ -41,7 +41,7 @@ export function GuaranteeModal({
               className="form-select"
               cleanable={false}
               searchable={false}
-              data={((): Array<ItemDataType> => {
+              data={((): ItemDataType[] => {
                 return [
                   {
                     value: 'first',
@@ -102,7 +102,7 @@ export function GuaranteeModal({
                   className="form-select"
                   cleanable={false}
                   searchable={false}
-                  data={((): Array<ItemDataType> => {
+                  data={((): ItemDataType[] => {
                     return [
                       {
                         value: 'first',
