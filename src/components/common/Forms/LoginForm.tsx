@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import * as React from 'react';
 
 import { Form, FormGroup, FormControl, ControlLabel } from 'rsuite';
 import { auth } from 'firebase';
@@ -19,15 +19,16 @@ type TLoginFormProps = {
 export function LoginForm(props: TLoginFormProps): JSX.Element {
   const { done, ...forwardingProps } = props;
 
-  const [appVerifier, setAppVerifier] = useState<auth.RecaptchaVerifier | null>(
-    null
-  );
-  const [currentStep, setCurrentStep] = useState(STEPS.PHONE_NUMBER_STEP);
-  const [errorMessage, setErrorMessage] = useState<string>('');
-  const [isSubmitting, updateSubmittingState] = useState(false);
+  const [
+    appVerifier,
+    setAppVerifier
+  ] = React.useState<auth.RecaptchaVerifier | null>(null);
+  const [currentStep, setCurrentStep] = React.useState(STEPS.PHONE_NUMBER_STEP);
+  const [errorMessage, setErrorMessage] = React.useState('');
+  const [isSubmitting, updateSubmittingState] = React.useState(false);
 
-  const recaptchaRef = useRef<HTMLDivElement | null>();
-  const codeConsumer = useRef<auth.ConfirmationResult | null>(null);
+  const recaptchaRef = React.useRef<HTMLDivElement | null>();
+  const codeConsumer = React.useRef<auth.ConfirmationResult | null>(null);
 
   const setRef = (ref: HTMLDivElement): void => {
     if (!ref || appVerifier) {

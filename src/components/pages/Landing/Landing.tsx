@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { PageLayout } from '../../common/PageLayout';
 
 import { SvgIcon } from '../../common/SvgIcon';

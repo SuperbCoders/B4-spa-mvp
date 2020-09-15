@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import * as React from 'react';
 
 import { Logo } from '../Logo';
 import { SvgIcon } from '../SvgIcon';
@@ -33,8 +33,8 @@ function renderTitle(
 
 export const Header = observer(
   (): JSX.Element => {
-    const [isDropdownOpen, setDropdownState] = useState(false);
-    const ref = useRef<HTMLDivElement | null>(null);
+    const [isDropdownOpen, setDropdownState] = React.useState(false);
+    const ref = React.useRef<HTMLDivElement | null>(null);
 
     console.log(':L:: header', FireBaseStore.instance);
 

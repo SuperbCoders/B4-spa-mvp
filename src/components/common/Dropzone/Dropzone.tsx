@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import * as React from 'react';
 import classnames from 'classnames';
 import { useDropzone } from 'react-dropzone';
 
@@ -12,7 +12,7 @@ import './style.scss';
 type TDropZoneProps = {};
 
 export function Dropzone(props: TDropZoneProps): JSX.Element {
-  const onDrop = useCallback((acceptedFiles: Array<File>): void => {
+  const onDrop = React.useCallback((acceptedFiles: Array<File>): void => {
     console.log('::: drop', acceptedFiles);
     // Do something with the files
   }, []);

@@ -1,6 +1,5 @@
-import React from 'react';
+import * as React from 'react';
 import classNames from 'classnames';
-// import { useState } from 'react';
 
 import { Badge } from '../Badge';
 import { Button } from '../Button';
@@ -17,8 +16,6 @@ type TProcessNotificationProps = {
 export function ProcessNotification(
   props: TProcessNotificationProps
 ): JSX.Element {
-  // const [setProcessState] = useState(true);
-
   const { className: passedClassName, ...transferringProps } = props;
 
   const className = classNames(props.className, {

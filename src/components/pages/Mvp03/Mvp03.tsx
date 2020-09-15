@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import * as React from 'react';
 
 import { WithAuth } from '../../../WithAuth';
 
@@ -19,7 +19,7 @@ import './style.scss';
 
 export const MVP03 = WithAuth(
   (): JSX.Element => {
-    const [modalOpen, processModalOpen] = useState(false);
+    const [modalOpen, processModalOpen] = React.useState(false);
     const modalToggle = () => processModalOpen(!modalOpen);
 
     return (

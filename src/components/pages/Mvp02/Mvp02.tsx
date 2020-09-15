@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import * as React from 'react';
 
 import { WithAuth } from '../../../WithAuth';
 
@@ -24,8 +24,8 @@ export const MVP02 = WithAuth(
   (): JSX.Element => {
     const processState = true;
 
-    const [modalOpen, processModalOpen] = useState(false);
-    const [modalResultOpen, processModalResultOpen] = useState(false);
+    const [modalOpen, processModalOpen] = React.useState(false);
+    const [modalResultOpen, processModalResultOpen] = React.useState(false);
 
     const modalToggle = (): void => processModalOpen(!modalOpen);
     const modalResultToggle = (): void =>
