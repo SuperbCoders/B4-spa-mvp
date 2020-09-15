@@ -1,4 +1,4 @@
-import React, { useRef, useState, useContext } from 'react';
+import React, { useRef, useState } from 'react';
 
 import { Logo } from '../Logo';
 import { SvgIcon } from '../SvgIcon';
@@ -6,7 +6,7 @@ import { Button } from '../Button';
 import { IconButton } from '../IconButton';
 
 import { useOnClickOutside } from '../../../effects/useOnClickOutside';
-import { FirebaseContext } from '../../../contexts/FirebaseContext';
+import { FireBaseStore } from '../../../stores';
 
 import { ReactComponent as CaretDown } from 'assets/images/svg/caret-down.svg';
 import { ReactComponent as Featured } from 'assets/images/svg/featured.svg';
@@ -17,7 +17,6 @@ import { observer } from 'mobx-react';
 import { Dropdown } from 'rsuite';
 
 import './style.scss';
-import { ModalsStore } from 'stores/modals';
 
 function renderTitle(
   toggle: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
@@ -32,20 +31,15 @@ function renderTitle(
   );
 }
 
-type THeaderProps = {
-  store: ModalsStore;
-};
-
 export const Header = observer(
-  (props: THeaderProps): JSX.Element => {
+  (): JSX.Element => {
     const [isDropdownOpen, setDropdownState] = useState(false);
-    const firebase = useContext(FirebaseContext);
     const ref = useRef<HTMLDivElement | null>(null);
 
-    console.log(':L:: header', firebase);
+    console.log(':L:: header', FireBaseStore.instance);
 
     const onLoginButtonClick = (): void => {
-      props.store.openLoginModal();
+      ModalsStore.instance.openLoginModal();
     };
 
     const toggle = (
@@ -84,7 +78,7 @@ export const Header = observer(
 
         <div className="header-controls">
           {((): JSX.Element => {
-            if (firebase.isLoggedIn) {
+            if (FireBaseStore.instance.isLoggedIn) {
               return (
                 <>
                   <IconButton

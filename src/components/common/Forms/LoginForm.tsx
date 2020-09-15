@@ -1,11 +1,11 @@
-import React, { useContext, useState, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 
 import { Form, FormGroup, FormControl, ControlLabel } from 'rsuite';
 import { auth } from 'firebase';
 import { Button } from '../Button';
 
 import { initRecaptcha } from 'effects/useRecaptcha';
-import { FirebaseContext } from '../../../contexts/FirebaseContext';
+import { FireBaseStore } from '../../../stores';
 
 const enum STEPS {
   PHONE_NUMBER_STEP = 'phone',
@@ -25,7 +25,6 @@ export function LoginForm(props: TLoginFormProps): JSX.Element {
   const [currentStep, setCurrentStep] = useState(STEPS.PHONE_NUMBER_STEP);
   const [errorMessage, setErrorMessage] = useState(null);
   const [isSubmitting, updateSubmittingState] = useState(false);
-  const firebase = useContext(FirebaseContext);
 
   const recaptchaRef = useRef<HTMLDivElement | null>();
   const codeConsumer = useRef(null);
@@ -58,7 +57,8 @@ export function LoginForm(props: TLoginFormProps): JSX.Element {
       case currentStep === STEPS.PHONE_NUMBER_STEP:
         const phone = form && form.elements.phone.value;
 
-        firebase.auth
+        FireBaseStore.instance
+          .auth()
           .signInWithPhoneNumber(phone, appVerifier)
           .then(confirmationResult => {
             setCurrentStep(STEPS.SMS_CODE_STEP);
@@ -78,7 +78,7 @@ export function LoginForm(props: TLoginFormProps): JSX.Element {
         codeConsumer.current
           .confirm(code)
           .then(result => {
-            firebase.recheck();
+            FireBaseStore.instance.recheck();
 
             updateSubmittingState(false);
 

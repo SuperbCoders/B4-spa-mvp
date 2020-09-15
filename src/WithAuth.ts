@@ -1,14 +1,11 @@
-import React, { useContext } from 'react';
-
-import { Auth } from './components/screen/Auth';
-
-import FirebaseContext from './contexts/FirebaseContext';
+import React from 'react';
+import { FireBaseStore } from './stores';
+import { Auth } from './components/pages';
 
 export function WithAuth(Component: React.Component): React.ReactNode {
   return function WrappedComponent(): React.ReactNode {
-    const firebase = useContext(FirebaseContext);
-    console.log(':: fb', firebase);
+    console.log(':: fb', FireBaseStore.instance);
 
-    return firebase.isLoggedIn ? Component : Auth;
+    return FireBaseStore.instance.isLoggedIn ? Component : Auth;
   };
 }
