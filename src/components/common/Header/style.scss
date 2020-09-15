@@ -15,16 +15,10 @@
   }
 
   &-logo {
-    width: 100%;
-    text-align: center;
+    width: 161px;
+    height: 69px;
 
-    imt {
-      margin-left: -20px;
-    }
-
-    @media screen and (min-width: 576px) {
-      width: auto;
-    }
+    margin-left: -10px;
   }
 }
 
@@ -95,6 +89,7 @@
 
 .header-controls-button {
   position: relative;
+  min-width: auto;
 
   &:not(:last-child) {
     margin-right: 40px;
@@ -117,5 +112,9 @@
 
   &.logout {
     color: #567DF4;
+  }
+
+  &.login {
+    //
   }
 }

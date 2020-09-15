@@ -1,5 +1,6 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
+
+import WithAuth from 'WithAuth';
 
 import { Tooltip, Whisper } from 'rsuite';
 
@@ -16,7 +17,7 @@ import { ReactComponent as Plus } from 'assets/images/svg/plus.svg';
 
 import './style.scss';
 
-export default function MVP() {
+const MVP03 = () => {
   const [modalOpen, processModalOpen] = useState(false);
   const modalToggle = () => processModalOpen(!modalOpen);
 
@@ -164,4 +165,6 @@ export default function MVP() {
       </Whisper>
     </PageLayout>
   );
-}
+};
+
+export default WithAuth(MVP03);

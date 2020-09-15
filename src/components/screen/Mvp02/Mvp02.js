@@ -1,6 +1,8 @@
 import React from 'react';
 import { useState } from 'react';
 
+import WithAuth from 'WithAuth';
+
 import PageLayout from 'components/common/PageLayout';
 import Button from 'components/common/Button';
 import SvgIcon from 'components/common/SvgIcon';
@@ -13,7 +15,7 @@ import { ReactComponent as DocumentsAdd } from 'assets/images/svg/documents-add.
 
 import './style.scss';
 
-export default function MVP() {
+const MVP02 = () => {
   const processState = true;
 
   const [modalOpen, processModalOpen] = useState(false);
@@ -79,4 +81,6 @@ export default function MVP() {
       <InfoModal show={ modalResultOpen } toggle={ modalResultToggle } />
     </PageLayout>
   );
-}
+};
+
+export default WithAuth(MVP02);

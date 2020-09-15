@@ -1,3 +1,3 @@
-import { auth } from './auth';
+import modalsStore from './modals';
 
-export { auth };
+export { modalsStore };

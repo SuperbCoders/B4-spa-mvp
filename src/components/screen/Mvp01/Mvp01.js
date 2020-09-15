@@ -1,12 +1,14 @@
 import React from 'react';
 
+import WithAuth from 'WithAuth';
+
 import PageLayout from 'components/common/PageLayout';
 import AttentionAlert from 'components/common/AttentionAlert';
 import Button from 'components/common/Button';
 
 import './style.scss';
 
-export default function MVP() {
+const MVP01 = () => {
   return (
     <PageLayout>
       <div className="mvp-01-content">
@@ -19,4 +21,6 @@ export default function MVP() {
       </div>
     </PageLayout>
   );
-}
+};
+
+export default WithAuth(MVP01);
