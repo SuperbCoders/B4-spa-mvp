@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "allowUnusedLabels": false,
+    "noUnusedLocals": true,
+    "rootDir": "src",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "noEmitHelpers": true,
+    "module": "ES6",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "target": "es5",
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "importHelpers": true,
+    "strictNullChecks": true,
+    "jsx": "react",
+    "lib": ["dom", "es7"],
+    "baseUrl": "./src",
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true
+  },
+  "exclude": ["node_modules", "build"],
+  "include": ["src"]
+}
