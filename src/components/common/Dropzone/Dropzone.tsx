@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import classnames from 'classnames';
 import { useDropzone } from 'react-dropzone';
 
-import SvgIcon from 'components/common/SvgIcon';
+import { SvgIcon } from '../SvgIcon';
 import { Button } from '../Button';
 
 import { ReactComponent as DocumentsAdd } from 'assets/images/svg/documents-add.svg';

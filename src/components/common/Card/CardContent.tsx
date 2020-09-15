@@ -3,13 +3,12 @@ import classNames from 'classnames';
 
 type TCardContentProps = {
   children: React.ReactNode;
-  className: string;
+  className?: string;
 };
 
 export function CardContent(props: TCardContentProps): JSX.Element {
-  const className = classNames({
-    'card-content': true,
-    [props.className]: props.className
+  const className = classNames(props.className, {
+    'card-content': true
   });
 
   return <div className={className}>{props.children}</div>;

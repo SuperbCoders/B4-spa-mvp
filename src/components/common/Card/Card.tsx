@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import { Panel, PanelProps } from 'rsuite';
 
 type TCardProps = {
-  horizontal: boolean;
+  horizontal?: boolean;
   className: string;
   children: React.ReactNode;
 } & PanelProps;

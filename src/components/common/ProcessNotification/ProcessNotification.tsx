@@ -9,7 +9,7 @@ import { Card, CardContent, CardControls } from '../Card';
 import './style.scss';
 
 type TProcessNotificationProps = {
-  className: string;
+  className?: string;
   label: string;
   children: React.ReactNode;
 };
@@ -21,9 +21,8 @@ export function ProcessNotification(
 
   const { className: passedClassName, ...transferringProps } = props;
 
-  const className = classNames({
-    'process-notification': true,
-    [props.className]: !!passedClassName
+  const className = classNames(props.className, {
+    'process-notification': true
   });
 
   return (

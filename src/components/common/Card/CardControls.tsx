@@ -3,16 +3,14 @@ import classNames from 'classnames';
 
 type TCardControlsProps = {
   position: string;
-  className: string;
+  className?: string;
   children: React.ReactNode;
 };
 
 export function CardControls(props: TCardControlsProps): JSX.Element {
-  const className = classNames({
+  const className = classNames(props.className, {
     'card-controls': true,
-    [`position-${props.position}`]: !!props.position,
-
-    [props.className]: props.className
+    [`position-${props.position}`]: !!props.position
   });
 
   return <div className={className}>{props.children}</div>;

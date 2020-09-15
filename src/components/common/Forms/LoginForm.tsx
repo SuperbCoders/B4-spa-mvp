@@ -7,13 +7,13 @@ import { Button } from '../Button';
 import { initRecaptcha } from 'effects/useRecaptcha';
 import { FireBaseStore } from '../../../stores';
 
-const enum STEPS {
+enum STEPS {
   PHONE_NUMBER_STEP = 'phone',
   SMS_CODE_STEP = 'code'
 }
 
 type TLoginFormProps = {
-  done: VoidFunction;
+  done?: VoidFunction;
 };
 
 export function LoginForm(props: TLoginFormProps): JSX.Element {
@@ -23,11 +23,11 @@ export function LoginForm(props: TLoginFormProps): JSX.Element {
     null
   );
   const [currentStep, setCurrentStep] = useState(STEPS.PHONE_NUMBER_STEP);
-  const [errorMessage, setErrorMessage] = useState(null);
+  const [errorMessage, setErrorMessage] = useState<string>('');
   const [isSubmitting, updateSubmittingState] = useState(false);
 
   const recaptchaRef = useRef<HTMLDivElement | null>();
-  const codeConsumer = useRef(null);
+  const codeConsumer = useRef<auth.ConfirmationResult | null>(null);
 
   const setRef = (ref: HTMLDivElement): void => {
     if (!ref || appVerifier) {
@@ -55,39 +55,42 @@ export function LoginForm(props: TLoginFormProps): JSX.Element {
     switch (true) {
       default:
       case currentStep === STEPS.PHONE_NUMBER_STEP:
+        // @ts-ignore (щас лень типы тут просчитывать)
         const phone = form && form.elements.phone.value;
 
         FireBaseStore.instance
           .auth()
           .signInWithPhoneNumber(phone, appVerifier)
-          .then(confirmationResult => {
+          .then((confirmationResult: auth.ConfirmationResult): void => {
             setCurrentStep(STEPS.SMS_CODE_STEP);
             updateSubmittingState(false);
 
             codeConsumer.current = confirmationResult;
           })
-          .catch(err => {
+          .catch((err: Error): void => {
             setErrorMessage(err.message);
             updateSubmittingState(false);
           });
         break;
 
       case currentStep === STEPS.SMS_CODE_STEP:
+        // @ts-ignore (щас лень типы тут просчитывать)
         const code = form && form.elements.code.value;
 
-        codeConsumer.current
-          .confirm(code)
-          .then(result => {
-            FireBaseStore.instance.recheck();
+        codeConsumer.current &&
+          codeConsumer.current
+            .confirm(code)
+            .then((result: auth.UserCredential): void => {
+              FireBaseStore.instance.recheck();
 
-            updateSubmittingState(false);
+              updateSubmittingState(false);
 
-            done && done();
-          })
-          .catch(err => {
-            setErrorMessage(err.message);
-            updateSubmittingState(false);
-          });
+              done && done();
+            })
+            .catch((err: Error): void => {
+              setErrorMessage(err.message);
+              updateSubmittingState(false);
+            });
         break;
     }
   };

@@ -3,7 +3,7 @@ import classNames from 'classnames';
 
 import { Button as NativeButton, ButtonProps } from 'rsuite';
 
-import SvgIcon from 'components/common/SvgIcon';
+import { SvgIcon } from '../SvgIcon';
 
 import { ReactComponent as CaretDown } from 'assets/images/svg/caret-down.svg';
 
@@ -22,7 +22,7 @@ export function Button({
   className: passedClassName,
   ...transferringProps
 }: TButtonProps): JSX.Element {
-  const className = classNames({
+  const className = classNames(passedClassName, {
     btn: true,
 
     'is-primary': transferringProps.appearance === 'primary',
@@ -31,9 +31,7 @@ export function Button({
     'is-arrow': !!arrow,
 
     [`skin-${skin}`]: !!skin,
-    [`size-${transferringProps.size}`]: !!transferringProps.size,
-
-    [passedClassName]: !!passedClassName
+    [`size-${transferringProps.size}`]: !!transferringProps.size
   });
 
   return (

@@ -19,10 +19,9 @@ export function Logo(props: TLogoProps): JSX.Element {
   return (
     <img
       src={logoImage}
-      className={classnames({
+      className={classnames(className, {
         logo: true,
-        [`is-${mode}`]: !!mode,
-        [className]: !!className
+        [`is-${mode}`]: !!mode
       })}
       alt="B4ALL"
       {...forwardingProps}

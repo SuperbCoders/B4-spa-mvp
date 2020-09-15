@@ -2,14 +2,13 @@ import React from 'react';
 import classNames from 'classnames';
 
 type TCardTitleProps = {
-  className: string;
+  className?: string;
   children: React.ReactNode;
 };
 
 export function CardTitle(props: TCardTitleProps): JSX.Element {
-  const className = classNames({
-    'card-title': true,
-    [props.className]: props.className
+  const className = classNames(props.className, {
+    'card-title': true
   });
 
   return <div className={className}>{props.children}</div>;

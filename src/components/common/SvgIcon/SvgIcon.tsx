@@ -13,16 +13,14 @@ type TSVGIconProps = {
 };
 
 // TODO replace with NativeIcon component
-export function SvgIcon(props: TSVGIconProps) {
+export function SvgIcon(props: TSVGIconProps): JSX.Element {
   const { width = '16', height = '16' } = props;
 
-  const className = classnames({
+  const className = classnames(props.className, {
     'svg-icon': true,
 
     'is-round': !!props.round,
-    'is-rounded': !!props.rounded,
-
-    [props.className]: !!props.className
+    'is-rounded': !!props.rounded
   });
 
   return (

@@ -4,12 +4,12 @@ import { WithAuth } from '../../../WithAuth';
 
 import { Tooltip, Whisper } from 'rsuite';
 
-import PageLayout from 'components/common/PageLayout';
-import Button from 'components/common/Button';
-import IconButton from 'components/common/IconButton';
-import { GuaranteeModal } from 'components/common/Modals';
+import { PageLayout } from '../../../components/common/PageLayout';
+import { Button } from '../../../components/common/Button';
+import { IconButton } from '../../../components/common/IconButton';
+import { GuaranteeModal } from '../../../components/common/Modals';
 
-import { Card, CardContent, CardFooter } from 'components/common/Card';
+import { Card, CardContent, CardFooter } from '../../../components/common/Card';
 
 import { ReactComponent as Featured } from 'assets/images/svg/featured.svg';
 import { ReactComponent as FeaturedOutline } from 'assets/images/svg/featured-outline.svg';
@@ -27,7 +27,7 @@ export const MVP03 = WithAuth(
         <div className="mvp-content">
           <section className="tenders-group">
             <aside className="tenders-group-date">
-              <date>24 мая</date>
+              <span>24 мая</span>
             </aside>
             <div className="tenders-group-cards">
               <Card className="tender">
@@ -91,7 +91,7 @@ export const MVP03 = WithAuth(
 
           <section className="tenders-group">
             <aside className="tenders-group-date">
-              <date>24 мая</date>
+              <span>24 мая</span>
             </aside>
             <div className="tenders-group-cards">
               <Card className="tender">
@@ -154,7 +154,7 @@ export const MVP03 = WithAuth(
 
           <section className="tenders-group">
             <aside className="tenders-group-date">
-              <date>24 мая</date>
+              <span>24 мая</span>
             </aside>
             <div className="tenders-group-cards">
               <Card className="tender">

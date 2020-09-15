@@ -1,8 +1,8 @@
 import React from 'react';
-import PageLayout from 'components/common/PageLayout';
+import { PageLayout } from '../../common/PageLayout';
 
-import SvgIcon from 'components/common/SvgIcon';
-import Button from 'components/common/Button';
+import { SvgIcon } from '../../common/SvgIcon';
+import { Button } from '../../common/Button';
 
 import { ReactComponent as CheckRound } from 'assets/images/svg/check-round.svg';
 import { ReactComponent as Shield } from 'assets/images/svg/shield.svg';

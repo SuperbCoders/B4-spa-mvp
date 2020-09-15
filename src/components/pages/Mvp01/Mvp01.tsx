@@ -2,9 +2,9 @@ import React from 'react';
 
 import { WithAuth } from '../../../WithAuth';
 
-import PageLayout from 'components/common/PageLayout';
-import AttentionAlert from 'components/common/AttentionAlert';
-import Button from 'components/common/Button';
+import { PageLayout } from '../../../components/common/PageLayout';
+import { AttentionAlert } from '../../../components/common/AttentionAlert';
+import { Button } from '../../../components/common/Button';
 
 import './style.scss';
 

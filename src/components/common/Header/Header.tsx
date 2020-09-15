@@ -6,7 +6,7 @@ import { Button } from '../Button';
 import { IconButton } from '../IconButton';
 
 import { useOnClickOutside } from '../../../effects/useOnClickOutside';
-import { FireBaseStore } from '../../../stores';
+import { FireBaseStore, ModalsStore } from '../../../stores';
 
 import { ReactComponent as CaretDown } from 'assets/images/svg/caret-down.svg';
 import { ReactComponent as Featured } from 'assets/images/svg/featured.svg';

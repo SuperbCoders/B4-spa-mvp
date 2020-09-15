@@ -1,20 +1,19 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 import { WithAuth } from '../../../WithAuth';
 
-import PageLayout from 'components/common/PageLayout';
-import Button from 'components/common/Button';
-import SvgIcon from 'components/common/SvgIcon';
-import ProcessNotification from 'components/common/ProcessNotification';
-import { InfoModal, UploadModal } from 'components/common/Modals';
+import { PageLayout } from '../../../components/common/PageLayout';
+import { Button } from '../../../components/common/Button';
+import { SvgIcon } from '../../../components/common/SvgIcon';
+import { ProcessNotification } from '../../../components/common/ProcessNotification';
+import { InfoModal, UploadModal } from '../../../components/common/Modals';
 import {
   Card,
   CardTitle,
   CardContent,
   CardIcon,
   CardControls
-} from 'components/common/Card';
+} from '../../../components/common/Card';
 
 import { ReactComponent as DocumentsSearch } from 'assets/images/svg/documents-search.svg';
 import { ReactComponent as DocumentsAdd } from 'assets/images/svg/documents-add.svg';
@@ -28,8 +27,9 @@ export const MVP02 = WithAuth(
     const [modalOpen, processModalOpen] = useState(false);
     const [modalResultOpen, processModalResultOpen] = useState(false);
 
-    const modalToggle = () => processModalOpen(!modalOpen);
-    const modalResultToggle = () => processModalResultOpen(!modalResultOpen);
+    const modalToggle = (): void => processModalOpen(!modalOpen);
+    const modalResultToggle = (): void =>
+      processModalResultOpen(!modalResultOpen);
 
     return (
       <PageLayout>
