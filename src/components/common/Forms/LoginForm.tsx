@@ -4,7 +4,7 @@ import { Form, FormGroup, FormControl, ControlLabel } from 'rsuite';
 import { auth } from 'firebase';
 import { Button } from '../Button';
 
-import { initRecaptcha } from 'effects/useRecaptcha';
+import { initRecaptcha } from '../../../effects/useRecaptcha';
 import { FireBaseStore } from '../../../stores';
 
 enum STEPS {

@@ -11,16 +11,16 @@ import { GuaranteeModal } from '../../../components/common/Modals';
 
 import { Card, CardContent, CardFooter } from '../../../components/common/Card';
 
-import { ReactComponent as Featured } from 'assets/images/svg/featured.svg';
-import { ReactComponent as FeaturedOutline } from 'assets/images/svg/featured-outline.svg';
-import { ReactComponent as Plus } from 'assets/images/svg/plus.svg';
+import { ReactComponent as Featured } from './assets/images/svg/featured.svg';
+import { ReactComponent as FeaturedOutline } from './assets/images/svg/featured-outline.svg';
+import { ReactComponent as Plus } from './assets/images/svg/plus.svg';
 
 import './style.scss';
 
 export const MVP03 = WithAuth(
   (): JSX.Element => {
     const [modalOpen, processModalOpen] = React.useState(false);
-    const modalToggle = () => processModalOpen(!modalOpen);
+    const modalToggle = (): void => processModalOpen(!modalOpen);
 
     return (
       <PageLayout>

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { LoginForm } from 'components/common/Forms';
+import { LoginForm } from '../../common/Forms';
 
 import './style.scss';
 

@@ -8,9 +8,9 @@ import { IconButton } from '../IconButton';
 import { useOnClickOutside } from '../../../effects/useOnClickOutside';
 import { FireBaseStore, ModalsStore } from '../../../stores';
 
-import { ReactComponent as CaretDown } from 'assets/images/svg/caret-down.svg';
-import { ReactComponent as Featured } from 'assets/images/svg/featured.svg';
-import { ReactComponent as Logout } from 'assets/images/svg/logout.svg';
+import { ReactComponent as CaretDown } from './assets/images/svg/caret-down.svg';
+import { ReactComponent as Featured } from './assets/images/svg/featured.svg';
+import { ReactComponent as Logout } from './assets/images/svg/logout.svg';
 
 import { observer } from 'mobx-react';
 

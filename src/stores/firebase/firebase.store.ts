@@ -22,7 +22,7 @@ export class FireBaseStore {
 
   auth = (): firebase.auth.Auth => {
     return this.firebaseInstance.auth();
-  };
+  }
 
   recheck(): void {
     this.firebaseInstance.auth();

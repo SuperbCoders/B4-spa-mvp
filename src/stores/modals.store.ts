@@ -5,7 +5,7 @@ const LOGIN_MODAL_ID = 'modals:login';
 export class ModalsStore {
   private static _instance: ModalsStore | null = null;
 
-  @observable modals: Array<string> = [];
+  @observable modals: string[] = [];
 
   static get instance(): ModalsStore {
     if (!this._instance) {
@@ -31,7 +31,7 @@ export class ModalsStore {
     } else {
       this.openLoginModal();
     }
-  };
+  }
 
   @action openLoginModal(): void {
     if (this.modals.includes(LOGIN_MODAL_ID)) {

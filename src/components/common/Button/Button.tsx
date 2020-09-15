@@ -5,7 +5,7 @@ import { Button as NativeButton, ButtonProps } from 'rsuite';
 
 import { SvgIcon } from '../SvgIcon';
 
-import { ReactComponent as CaretDown } from 'assets/images/svg/caret-down.svg';
+import { ReactComponent as CaretDown } from './assets/images/svg/caret-down.svg';
 
 import './style.scss';
 

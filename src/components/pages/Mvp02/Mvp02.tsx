@@ -15,8 +15,8 @@ import {
   CardControls
 } from '../../../components/common/Card';
 
-import { ReactComponent as DocumentsSearch } from 'assets/images/svg/documents-search.svg';
-import { ReactComponent as DocumentsAdd } from 'assets/images/svg/documents-add.svg';
+import { ReactComponent as DocumentsSearch } from './assets/images/svg/documents-search.svg';
+import { ReactComponent as DocumentsAdd } from './assets/images/svg/documents-add.svg';
 
 import './style.scss';
 
@@ -28,6 +28,8 @@ export const MVP02 = WithAuth(
     const [modalResultOpen, processModalResultOpen] = React.useState(false);
 
     const modalToggle = (): void => processModalOpen(!modalOpen);
+    const handleOpenResultModal = (): void => processModalResultOpen(true);
+    const handleOpenModal = (): void => processModalOpen(true);
     const modalResultToggle = (): void =>
       processModalResultOpen(!modalResultOpen);
 
@@ -50,10 +52,7 @@ export const MVP02 = WithAuth(
               </CardContent>
 
               <CardControls position="right">
-                <Button
-                  theme="light"
-                  onClick={() => processModalResultOpen(true)}
-                >
+                <Button theme="light" onClick={handleOpenResultModal}>
                   Перейти
                 </Button>
               </CardControls>
@@ -74,14 +73,14 @@ export const MVP02 = WithAuth(
               </CardContent>
 
               <CardControls position="right">
-                <Button theme="light" onClick={() => processModalOpen(true)}>
+                <Button theme="light" onClick={handleOpenModal}>
                   Перейти
                 </Button>
               </CardControls>
             </Card>
           </div>
 
-          {(() => {
+          {((): JSX.Element | null => {
             if (!processState) {
               return null;
             }

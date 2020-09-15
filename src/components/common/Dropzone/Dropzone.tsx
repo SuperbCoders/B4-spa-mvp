@@ -5,14 +5,14 @@ import { useDropzone } from 'react-dropzone';
 import { SvgIcon } from '../SvgIcon';
 import { Button } from '../Button';
 
-import { ReactComponent as DocumentsAdd } from 'assets/images/svg/documents-add.svg';
+import { ReactComponent as DocumentsAdd } from './assets/images/svg/documents-add.svg';
 
 import './style.scss';
 
 type TDropZoneProps = {};
 
 export function Dropzone(props: TDropZoneProps): JSX.Element {
-  const onDrop = React.useCallback((acceptedFiles: Array<File>): void => {
+  const onDrop = React.useCallback((acceptedFiles: File[]): void => {
     console.log('::: drop', acceptedFiles);
     // Do something with the files
   }, []);
