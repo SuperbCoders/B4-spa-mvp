@@ -1,13 +1,14 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { TCompanyInn, TCompanyLandingInfo } from './models';
 
+const target = 'http://35.228.15.198';
 class B4Transport {
   private static ENDPOINT: string = '/api/v1';
 
   public getCompanyLandingInfoByINN(
     inn: TCompanyInn
   ): Promise<TCompanyLandingInfo> {
-    return this.get(`${B4Transport.ENDPOINT}/companies/${inn}`);
+    return this.get(`${target}${B4Transport.ENDPOINT}/companies/${inn}`);
   }
 
   private get<T>(url: string, config: AxiosRequestConfig = {}): Promise<T> {
