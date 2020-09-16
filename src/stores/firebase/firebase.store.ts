@@ -5,8 +5,8 @@ export class FireBaseStore {
   private static _instance: FireBaseStore | null = null;
 
   private firebaseInstance: firebase.app.App;
-  readonly currentUser: firebase.auth.Auth | null = null;
-  readonly isLoggedIn: boolean = false;
+  private currentUser: firebase.User | null = null;
+  private _isLoggedIn: boolean = false;
 
   static get instance(): FireBaseStore {
     if (!this._instance) {
@@ -16,8 +16,17 @@ export class FireBaseStore {
     return this._instance;
   }
 
+  public get isLoggedIn(): boolean {
+    return this._isLoggedIn;
+  }
+
   private constructor() {
     this.firebaseInstance = firebase.initializeApp(firebaseConfig);
+  }
+
+  setCurrentUser(user: firebase.User | null): void {
+    this.currentUser = user;
+    this._isLoggedIn = this.currentUser !== null;
   }
 
   auth = (): firebase.auth.Auth => {

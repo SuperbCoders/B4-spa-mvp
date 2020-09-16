@@ -82,7 +82,8 @@ export function LoginForm(props: TLoginFormProps): JSX.Element {
           codeConsumer.current
             .confirm(code)
             .then((result: auth.UserCredential): void => {
-              FireBaseStore.instance.recheck();
+              FireBaseStore.instance.setCurrentUser(result.user);
+              // FireBaseStore.instance.recheck();
 
               updateSubmittingState(false);
 
