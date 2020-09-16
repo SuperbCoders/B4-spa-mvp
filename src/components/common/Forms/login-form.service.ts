@@ -1,6 +1,7 @@
-import { FireBaseStore } from '../../../stores';
+import { firebaseStore } from '../../../stores';
 import { auth } from 'firebase';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { routerHistory } from '../../../router-history';
 
 export enum STEPS {
   PHONE_NUMBER_STEP = 'phone',
@@ -43,10 +44,10 @@ export class LoginFormService {
       this.confirmator
         .confirm(code)
         .then((response: auth.UserCredential): void => {
-          console.log(response, 'confirm');
           this.setState(false, STEPS.SMS_CODE_STEP);
-          FireBaseStore.instance.setCurrentUser(response.user);
+          firebaseStore.setCurrentUser(response.user);
           this.loginProcesssEndHandler && this.loginProcesssEndHandler();
+          routerHistory.push('/dashboard/01');
         })
         .catch((error: Error): void =>
           this.setState(false, STEPS.SMS_CODE_STEP, error.message)
@@ -55,14 +56,13 @@ export class LoginFormService {
 
   private signInWithPhoneNumber(phone: string): void {
     const verifierContainer = this.getContainer();
-    const recaptchaVerifier = FireBaseStore.instance.getRecaptchaVerifier(
+    const recaptchaVerifier = firebaseStore.getRecaptchaVerifier(
       verifierContainer
     );
 
-    FireBaseStore.instance
+    firebaseStore
       .signInWithPhoneNumber(phone, recaptchaVerifier)
       .then((response: auth.ConfirmationResult): void => {
-        console.log(response, 'phoneNumber');
         document.body.removeChild(verifierContainer);
         this.confirmator = response;
         this.setState(false, STEPS.SMS_CODE_STEP);

@@ -1,7 +1,5 @@
 import * as React from 'react';
 
-import { WithAuth } from '../../../WithAuth';
-
 import { PageLayout } from '../../../components/common/PageLayout';
 import { Button } from '../../../components/common/Button';
 import { SvgIcon } from '../../../components/common/SvgIcon';
@@ -19,6 +17,7 @@ import { ReactComponent as DocumentsSearch } from '../../../assets/images/svg/do
 import { ReactComponent as DocumentsAdd } from '../../../assets/images/svg/documents-add.svg';
 
 import './style.scss';
+import { WithAuth } from '../../../WithAuth';
 
 export const MVP02 = WithAuth(
   (): JSX.Element => {

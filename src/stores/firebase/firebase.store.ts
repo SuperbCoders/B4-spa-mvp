@@ -1,32 +1,34 @@
 import firebase from 'firebase';
 import { firebaseConfig } from './firebase.config';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { AuthStore } from '../auth.store';
 
-export class FireBaseStore {
-  private static _instance: FireBaseStore | null = null;
-
+class FireBaseStore {
   private firebaseInstance: firebase.app.App;
-  private currentUser: firebase.User | null = null;
-  private _isLoggedIn: boolean = false;
+  // @ts-ignore
+  private _isLoggedIn$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
-  static get instance(): FireBaseStore {
-    if (!this._instance) {
-      this._instance = new FireBaseStore();
-    }
+  private _token: string | null = null;
 
-    return this._instance;
-  }
+  public isLoggedIn$: Observable<boolean> = this._isLoggedIn$.asObservable();
 
-  public get isLoggedIn(): boolean {
-    return this._isLoggedIn;
-  }
-
-  private constructor() {
+  constructor() {
     this.firebaseInstance = firebase.initializeApp(firebaseConfig);
+    this.tryToSignWithToken();
+  }
+
+  public get token(): string | null {
+    return this._token;
   }
 
   public setCurrentUser(user: firebase.User | null): void {
-    this.currentUser = user;
-    this._isLoggedIn = this.currentUser !== null;
+    if (user) {
+      user.getIdToken().then((token: string): void => {
+        AuthStore.saveUserJWTToken(token);
+        AuthStore.saveUserRefreshToken(user.refreshToken);
+        this._isLoggedIn$.next(true);
+      });
+    }
   }
 
   public signInWithPhoneNumber(
@@ -48,4 +50,15 @@ export class FireBaseStore {
         console.log(anything, 'expired-callback')
     });
   }
+
+  private tryToSignWithToken(): void {
+    const token = AuthStore.getUserJWTToken();
+
+    if (token) {
+      this._token = token;
+      this._isLoggedIn$.next(true);
+    }
+  }
 }
+
+export const firebaseStore = new FireBaseStore();

@@ -1,12 +1,11 @@
 import * as React from 'react';
 
-import { WithAuth } from '../../../WithAuth';
-
 import { PageLayout } from '../../../components/common/PageLayout';
 import { AttentionAlert } from '../../../components/common/AttentionAlert';
 import { Button } from '../../../components/common/Button';
 
 import './style.scss';
+import { WithAuth } from '../../../WithAuth';
 
 export const MVP01 = WithAuth(
   (): JSX.Element => {

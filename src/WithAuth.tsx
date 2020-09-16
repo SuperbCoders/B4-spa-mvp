@@ -1,11 +1,18 @@
 import * as React from 'react';
-import { FireBaseStore } from './stores';
+import { firebaseStore } from './stores';
 import { Auth } from './components/pages';
 
 export function WithAuth(Component: React.ElementType): () => JSX.Element {
   return function WrappedComponent(): JSX.Element {
-    console.log(':: fb', FireBaseStore.instance);
+    const [isLoggedIn, setLoggedIn] = React.useState(false);
+    console.log(':: fb', firebaseStore);
 
-    return FireBaseStore.instance.isLoggedIn ? <Component /> : <Auth />;
+    React.useEffect((): VoidFunction => {
+      const sub = firebaseStore.isLoggedIn$.subscribe(setLoggedIn);
+
+      return (): void => sub.unsubscribe();
+    }, []);
+
+    return isLoggedIn ? <Component /> : <Auth />;
   };
 }
