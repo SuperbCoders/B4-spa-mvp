@@ -15,24 +15,17 @@
     "importHelpers": true,
     "strictNullChecks": true,
     "jsx": "react",
-    "lib": [
-      "dom",
-      "es7"
-    ],
+    "lib": ["dom", "es7"],
     "baseUrl": "./src",
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
+    "suppressImplicitAnyIndexErrors": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
     "allowJs": true
   },
-  "exclude": [
-    "node_modules",
-    "build"
-  ],
-  "include": [
-    "src"
-  ]
+  "exclude": ["node_modules", "build"],
+  "include": ["src"]
 }

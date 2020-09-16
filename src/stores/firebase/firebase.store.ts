@@ -24,16 +24,28 @@ export class FireBaseStore {
     this.firebaseInstance = firebase.initializeApp(firebaseConfig);
   }
 
-  setCurrentUser(user: firebase.User | null): void {
+  public setCurrentUser(user: firebase.User | null): void {
     this.currentUser = user;
     this._isLoggedIn = this.currentUser !== null;
   }
 
-  auth = (): firebase.auth.Auth => {
-    return this.firebaseInstance.auth();
+  public signInWithPhoneNumber(
+    phone: string,
+    recapthaVerifier: firebase.auth.RecaptchaVerifier
+  ): Promise<firebase.auth.ConfirmationResult> {
+    return this.firebaseInstance
+      .auth()
+      .signInWithPhoneNumber(phone, recapthaVerifier);
   }
 
-  recheck(): void {
-    this.firebaseInstance.auth();
+  public getRecaptchaVerifier(
+    container: HTMLDivElement
+  ): firebase.auth.RecaptchaVerifier {
+    return new firebase.auth.RecaptchaVerifier(container, {
+      size: 'invisible',
+      callback: (response: unknown): void => console.log(response, 'callback'),
+      'expired-callback': (anything: unknown): void =>
+        console.log(anything, 'expired-callback')
+    });
   }
 }
