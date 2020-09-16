@@ -8,19 +8,11 @@ import { Landing, MVP01, MVP02, MVP03 } from './components/pages';
 import { COMPANY_INN_ROUTE_KEY } from './components/pages/Landing';
 
 import { LoginModal } from './components/common/Modals';
-import { firebaseStore, ModalsStore } from './stores';
+import { ModalsStore } from './stores';
 import { routerHistory } from './router-history';
 
 export const RouterLayer = observer(
   (): JSX.Element => {
-    const [isAuthorised, setIsAuthorised] = React.useState(false);
-
-    React.useEffect((): (() => void) => {
-      const sub = firebaseStore.isLoggedIn$.subscribe(setIsAuthorised);
-
-      return (): void => sub.unsubscribe();
-    }, []);
-    console.log(isAuthorised);
     return (
       <ErrorBoundary>
         <Router history={routerHistory}>
