@@ -1,7 +1,42 @@
 import * as React from 'react';
-import { Form, FormGroup, FormControl, ControlLabel } from 'rsuite';
+import {
+  Form,
+  FormGroup,
+  FormControl,
+  ControlLabel,
+  FormControlProps
+} from 'rsuite';
 import { Button } from '../../Button';
 import { TFormProps } from './prop-types';
+import MaskedInput from 'react-text-mask';
+
+function PhoneMaskInput(
+  props: Omit<FormControlProps, 'onChange'>
+): JSX.Element {
+  return (
+    <MaskedInput
+      mask={[
+        '+',
+        '7',
+        ' ',
+        /[1-9]/,
+        /\d/,
+        /\d/,
+        ' ',
+        /\d/,
+        /\d/,
+        /\d/,
+        ' ',
+        /\d/,
+        /\d/,
+        /\d/,
+        /\d/
+      ]}
+      className="rs-input"
+      {...props}
+    />
+  );
+}
 
 export function PhoneTypingForm({
   isRequestProcessing,
@@ -19,6 +54,7 @@ export function PhoneTypingForm({
           required
           name={controlName}
           placeholder="+7 900 123 4565"
+          accepter={PhoneMaskInput}
         />
       </FormGroup>
 
