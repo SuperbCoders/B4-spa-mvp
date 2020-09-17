@@ -1,12 +1,13 @@
 import * as React from 'react';
 
-import { WithAuth } from '../../../WithAuth';
-
 import { PageLayout } from '../../../components/common/PageLayout';
 import { Button } from '../../../components/common/Button';
 import { SvgIcon } from '../../../components/common/SvgIcon';
 import { ProcessNotification } from '../../../components/common/ProcessNotification';
-import { InfoModal, UploadModal } from '../../../components/common/Modals';
+import {
+  CompanyAccounts,
+  UploadModal
+} from '../../../components/common/Modals';
 import {
   Card,
   CardTitle,
@@ -19,6 +20,7 @@ import { ReactComponent as DocumentsSearch } from '../../../assets/images/svg/do
 import { ReactComponent as DocumentsAdd } from '../../../assets/images/svg/documents-add.svg';
 
 import './style.scss';
+import { WithAuth } from '../../../WithAuth';
 
 export const MVP02 = WithAuth(
   (): JSX.Element => {
@@ -96,7 +98,7 @@ export const MVP02 = WithAuth(
         </div>
 
         <UploadModal show={modalOpen} toggle={modalToggle} />
-        <InfoModal show={modalResultOpen} toggle={modalResultToggle} />
+        <CompanyAccounts show={modalResultOpen} toggle={modalResultToggle} />
       </PageLayout>
     );
   }

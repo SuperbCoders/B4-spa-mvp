@@ -1,7 +1,5 @@
 import * as React from 'react';
 
-import { WithAuth } from '../../../WithAuth';
-
 import { Tooltip, Whisper } from 'rsuite';
 
 import { PageLayout } from '../../../components/common/PageLayout';
@@ -16,6 +14,7 @@ import { ReactComponent as FeaturedOutline } from '../../../assets/images/svg/fe
 import { ReactComponent as Plus } from '../../../assets/images/svg/plus.svg';
 
 import './style.scss';
+import { WithAuth } from '../../../WithAuth';
 
 export const MVP03 = WithAuth(
   (): JSX.Element => {

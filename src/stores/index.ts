@@ -1,2 +1,2 @@
 export { ModalsStore } from './modals.store';
-export { FireBaseStore } from './firebase';
+export { firebaseStore } from './firebase';

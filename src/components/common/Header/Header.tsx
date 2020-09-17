@@ -6,7 +6,7 @@ import { Button } from '../Button';
 import { IconButton } from '../IconButton';
 
 import { useOnClickOutside } from '../../../effects/useOnClickOutside';
-import { FireBaseStore, ModalsStore } from '../../../stores';
+import { firebaseStore, ModalsStore } from '../../../stores';
 
 import { ReactComponent as CaretDown } from '../../../assets/images/svg/caret-down.svg';
 import { ReactComponent as Featured } from '../../../assets/images/svg/featured.svg';
@@ -34,9 +34,16 @@ function renderTitle(
 export const Header = observer(
   (): JSX.Element => {
     const [isDropdownOpen, setDropdownState] = React.useState(false);
+    const [isLoggedIn, setIsLoggedIn] = React.useState(false);
     const ref = React.useRef<HTMLDivElement | null>(null);
 
-    console.log(':L:: header', FireBaseStore.instance);
+    React.useEffect((): VoidFunction => {
+      const sub = firebaseStore.isLoggedIn$.subscribe(setIsLoggedIn);
+
+      return (): void => sub.unsubscribe();
+    }, []);
+
+    console.log(':L:: header', firebaseStore);
 
     const onLoginButtonClick = (): void => {
       ModalsStore.instance.openLoginModal();
@@ -63,22 +70,24 @@ export const Header = observer(
           <Logo className="header-logo" />
         </a>
 
-        <div className="header-company" ref={ref}>
-          <Dropdown
-            placement="bottomEnd"
-            className="header-dropdown"
-            open={isDropdownOpen}
-            renderTitle={renderTitle(toggle)}
-          >
-            <Dropdown.Item eventKey={1}>Action</Dropdown.Item>
-            <Dropdown.Item eventKey={2}>Another action</Dropdown.Item>
-            <Dropdown.Item eventKey={3}>Otherwise</Dropdown.Item>
-          </Dropdown>
-        </div>
+        {isLoggedIn && (
+          <div className="header-company" ref={ref}>
+            <Dropdown
+              placement="bottomEnd"
+              className="header-dropdown"
+              open={isDropdownOpen}
+              renderTitle={renderTitle(toggle)}
+            >
+              <Dropdown.Item eventKey={1}>Action</Dropdown.Item>
+              <Dropdown.Item eventKey={2}>Another action</Dropdown.Item>
+              <Dropdown.Item eventKey={3}>Otherwise</Dropdown.Item>
+            </Dropdown>
+          </div>
+        )}
 
         <div className="header-controls">
           {((): JSX.Element => {
-            if (FireBaseStore.instance.isLoggedIn) {
+            if (isLoggedIn) {
               return (
                 <>
                   <IconButton
