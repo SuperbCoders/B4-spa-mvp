@@ -14,15 +14,18 @@ class FireBaseStore {
     this.onAuthStateChanged();
   }
 
-  public setCurrentUser(user: firebase.User | null): void {
+  public setCurrentUser(user: firebase.User | null): Promise<void> {
     if (user) {
-      user.getIdToken().then((token: string): void => {
+      return user.getIdToken().then((token: string): void => {
+        console.log('1');
         AuthStore.saveUserJWTToken(token);
         this._isLoggedIn$.next(true);
       });
     } else {
       AuthStore.deleteUserJSWToken();
       this._isLoggedIn$.next(false);
+
+      return Promise.resolve();
     }
   }
 
@@ -30,7 +33,7 @@ class FireBaseStore {
     this.firebaseInstance
       .auth()
       .signOut()
-      .then((): void => this.setCurrentUser(null));
+      .then((): Promise<void> => this.setCurrentUser(null));
   }
 
   public signInWithPhoneNumber(
@@ -56,8 +59,8 @@ class FireBaseStore {
   private onAuthStateChanged(): void {
     this.firebaseInstance
       .auth()
-      .onAuthStateChanged((user: firebase.User | null): void =>
-        this.setCurrentUser(user)
+      .onAuthStateChanged(
+        (user: firebase.User | null): Promise<void> => this.setCurrentUser(user)
       );
   }
 }
