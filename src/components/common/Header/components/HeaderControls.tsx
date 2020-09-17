@@ -19,6 +19,8 @@ export function HeaderControls(): JSX.Element {
     ModalsStore.instance.openLoginModal();
   };
 
+  const onLogoutButtonClick = (): void => firebaseStore.signOut();
+
   if (isLoggedIn) {
     return (
       <div className="header-controls">
@@ -31,6 +33,7 @@ export function HeaderControls(): JSX.Element {
         <IconButton
           skin="default"
           className="header-controls-button logout"
+          onClick={onLogoutButtonClick}
           icon={<Logout width="20" height="20" />}
         />
       </div>

@@ -18,10 +18,19 @@ class FireBaseStore {
     if (user) {
       user.getIdToken().then((token: string): void => {
         AuthStore.saveUserJWTToken(token);
-        AuthStore.saveUserRefreshToken(user.refreshToken);
         this._isLoggedIn$.next(true);
       });
+    } else {
+      AuthStore.deleteUserJSWToken();
+      this._isLoggedIn$.next(false);
     }
+  }
+
+  public signOut(): void {
+    this.firebaseInstance
+      .auth()
+      .signOut()
+      .then((): void => this.setCurrentUser(null));
   }
 
   public signInWithPhoneNumber(
