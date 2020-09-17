@@ -7,18 +7,11 @@ class FireBaseStore {
   private firebaseInstance: firebase.app.App;
   // @ts-ignore
   private _isLoggedIn$: BehaviorSubject<boolean> = new BehaviorSubject(false);
-
-  private _token: string | null = null;
-
   public isLoggedIn$: Observable<boolean> = this._isLoggedIn$.asObservable();
 
   constructor() {
     this.firebaseInstance = firebase.initializeApp(firebaseConfig);
-    this.tryToSignWithToken();
-  }
-
-  public get token(): string | null {
-    return this._token;
+    this.onAuthStateChanged();
   }
 
   public setCurrentUser(user: firebase.User | null): void {
@@ -51,13 +44,12 @@ class FireBaseStore {
     });
   }
 
-  private tryToSignWithToken(): void {
-    const token = AuthStore.getUserJWTToken();
-
-    if (token) {
-      this._token = token;
-      this._isLoggedIn$.next(true);
-    }
+  private onAuthStateChanged(): void {
+    this.firebaseInstance
+      .auth()
+      .onAuthStateChanged((user: firebase.User | null): void =>
+        this.setCurrentUser(user)
+      );
   }
 }
 
