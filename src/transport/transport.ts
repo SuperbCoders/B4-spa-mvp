@@ -12,7 +12,7 @@ class B4Transport {
     return this.get(`${target}${B4Transport.ENDPOINT}/companies/${inn}`);
   }
 
-  public getCompanyAccounts(): Promise<TCompanyAccount> {
+  public getCompanyAccounts(): Promise<TCompanyAccount[]> {
     return this.get(`${target}${B4Transport.ENDPOINT}/company_props`);
   }
 
@@ -22,6 +22,15 @@ class B4Transport {
     return this.post(
       `${target}${B4Transport.ENDPOINT}/company_props`,
       newAccount
+    );
+  }
+
+  public editCompanyAccount(
+    editedAccount: TCompanyAccount
+  ): Promise<TCompanyAccount> {
+    return this.put(
+      `${target}${B4Transport.ENDPOINT}/company_props`,
+      editedAccount
     );
   }
 
@@ -42,6 +51,18 @@ class B4Transport {
 
     return axios
       .post(url, userData, { ...defaultConfig, ...config })
+      .then(({ data }: AxiosResponse<M>): M => data);
+  }
+
+  private put<T, M>(
+    url: string,
+    userData: T,
+    config: AxiosRequestConfig = {}
+  ): Promise<M> {
+    const defaultConfig = this.getDefaultConfig();
+
+    return axios
+      .put(url, userData, { ...defaultConfig, ...config })
       .then(({ data }: AxiosResponse<M>): M => data);
   }
 
