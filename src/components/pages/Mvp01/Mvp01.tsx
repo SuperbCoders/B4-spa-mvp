@@ -6,6 +6,11 @@ import { Button } from '../../../components/common/Button';
 
 import './style.scss';
 import { WithAuth } from '../../../WithAuth';
+import { routerHistory } from '../../../router-history';
+
+function goToNextPage(): void {
+  routerHistory.push('/dashboard/02');
+}
 
 export const MVP01 = WithAuth(
   (): JSX.Element => {
@@ -23,7 +28,11 @@ export const MVP01 = WithAuth(
               Чтобы начать работу нужно заполнить анкету компании и приложить
               основные документы.
             </p>
-            <Button skin="inverse" className="mvp-01-welcome-button">
+            <Button
+              skin="inverse"
+              className="mvp-01-welcome-button"
+              onClick={goToNextPage}
+            >
               Начать
             </Button>
           </AttentionAlert>
