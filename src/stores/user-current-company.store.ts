@@ -7,13 +7,12 @@ class UserCurrentCompanyStorage {
   private _allCompanies$: BehaviorSubject<
     TCompanyLandingInfo[]
   > = new BehaviorSubject([]);
-  private _currentCompany$: BehaviorSubject<TCompanyInn> = new BehaviorSubject(
-    ''
+  // @ts-ignore
+  private _currentCompany$: BehaviorSubject<TCompanyLandingInfo | null> = new BehaviorSubject(
+    null
   );
 
-  public currentCompany$: Observable<
-    TCompanyInn
-  > = this._currentCompany$.asObservable();
+  public currentCompany$: Observable<TCompanyLandingInfo | null> = this._currentCompany$.asObservable();
 
   public allCompanies$: Observable<
     TCompanyLandingInfo[]
@@ -34,7 +33,10 @@ class UserCurrentCompanyStorage {
   }
 
   public setCurrentCompany(currentCompany: TCompanyInn): void {
-    this._currentCompany$.next(currentCompany);
+    const fullInfo: TCompanyLandingInfo = this._allCompanies$.value.find(
+      ({ inn }: TCompanyLandingInfo): boolean => inn === currentCompany
+    ) as TCompanyLandingInfo;
+    this._currentCompany$.next(fullInfo);
   }
 }
 

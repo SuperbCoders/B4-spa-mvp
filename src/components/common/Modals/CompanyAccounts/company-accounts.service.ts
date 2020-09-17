@@ -2,13 +2,14 @@ import {
   b4Transport,
   TCompanyAccount,
   TCompanyAccountRequest,
-  TCompanyInn
+  TCompanyInn,
+  TCompanyLandingInfo
 } from '../../../../transport';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { currentCompanyStorage } from '../../../../stores';
 
 class CompanyAccountsService {
-  private currentCompany: TCompanyInn = '';
+  private currentCompany: TCompanyInn | null = null;
   // @ts-ignore
   private _accounts$: BehaviorSubject<TCompanyAccount[]> = new BehaviorSubject(
     []
@@ -20,8 +21,8 @@ class CompanyAccountsService {
 
   constructor() {
     currentCompanyStorage.currentCompany$.subscribe(
-      (company: TCompanyInn): void => {
-        this.currentCompany = company;
+      (company: TCompanyLandingInfo | null): void => {
+        this.currentCompany = company?.inn || null;
       }
     );
   }
@@ -37,11 +38,17 @@ class CompanyAccountsService {
   public setNewCompanyAccount(
     newAccount: Omit<TCompanyAccountRequest, 'company'>
   ): void {
+    if (!this.currentCompany) {
+      throw new Error(
+        'InvalidProgrammState: компания должна быть уже назначена к этому моменту'
+      );
+    }
     b4Transport
       .setCompanyAccount({ ...newAccount, company: this.currentCompany })
       .then((data: TCompanyAccount): void => {
         const newList = this._accounts$.value.map(
           (account: TCompanyAccount): TCompanyAccount =>
+            // @ts-ignore тайпскрипт не раздупляет, что проверка уже была
             account.accountNumber === newAccount.accountNumber
               ? {
                   ...newAccount,
