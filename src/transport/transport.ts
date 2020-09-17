@@ -1,6 +1,11 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { AuthStore } from '../stores/auth.store';
-import { TCompanyInn, TCompanyLandingInfo, TCompanyAccount } from './models';
+import {
+  TCompanyInn,
+  TCompanyLandingInfo,
+  TCompanyAccount,
+  TCompanyAccountRequest
+} from './models';
 
 const target = 'http://35.228.15.198';
 class B4Transport {
@@ -17,7 +22,7 @@ class B4Transport {
   }
 
   public setCompanyAccount(
-    newAccount: Partial<TCompanyAccount>
+    newAccount: TCompanyAccountRequest
   ): Promise<TCompanyAccount> {
     return this.post(
       `${target}${B4Transport.ENDPOINT}/company_props`,
@@ -32,6 +37,10 @@ class B4Transport {
       `${target}${B4Transport.ENDPOINT}/company_props`,
       editedAccount
     );
+  }
+
+  public getCurrentUserCompanies(): Promise<TCompanyLandingInfo[]> {
+    return this.get(`${target}${B4Transport.ENDPOINT}/user/me`);
   }
 
   private get<T>(url: string, config: AxiosRequestConfig = {}): Promise<T> {

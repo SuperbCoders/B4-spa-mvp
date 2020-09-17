@@ -1,7 +1,14 @@
-import { b4Transport, TCompanyAccount } from '../../../../transport';
+import {
+  b4Transport,
+  TCompanyAccount,
+  TCompanyAccountRequest,
+  TCompanyInn
+} from '../../../../transport';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { currentCompanyStorage } from '../../../../stores';
 
 class CompanyAccountsService {
+  private currentCompany: TCompanyInn = '';
   // @ts-ignore
   private _accounts$: BehaviorSubject<TCompanyAccount[]> = new BehaviorSubject(
     []
@@ -11,6 +18,14 @@ class CompanyAccountsService {
     TCompanyAccount[]
   > = this._accounts$.asObservable();
 
+  constructor() {
+    currentCompanyStorage.currentCompany$.subscribe(
+      (company: TCompanyInn): void => {
+        this.currentCompany = company;
+      }
+    );
+  }
+
   public getCompanyAccounts(): void {
     b4Transport
       .getCompanyAccounts()
@@ -19,15 +34,21 @@ class CompanyAccountsService {
       );
   }
 
-  public setNewCompanyAccount(newAccount: Partial<TCompanyAccount>): void {
+  public setNewCompanyAccount(
+    newAccount: Omit<TCompanyAccountRequest, 'company'>
+  ): void {
     b4Transport
-      .setCompanyAccount(newAccount)
+      .setCompanyAccount({ ...newAccount, company: this.currentCompany })
       .then((data: TCompanyAccount): void => {
         const newList = this._accounts$.value.map(
           (account: TCompanyAccount): TCompanyAccount =>
-            // @ts-ignore
             account.accountNumber === newAccount.accountNumber
-              ? { ...newAccount, id: account.id }
+              ? {
+                  ...newAccount,
+                  id: data.id,
+                  dadata: data.dadata,
+                  company: this.currentCompany
+                }
               : account
         );
 
