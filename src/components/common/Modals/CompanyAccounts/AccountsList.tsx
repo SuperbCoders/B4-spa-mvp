@@ -7,14 +7,12 @@ export const AccountsList = React.memo(
   (): JSX.Element => {
     const [accounts, setAccounts] = React.useState<TCompanyAccount[]>([]);
 
-    React.useEffect(
-      (): VoidFunction => {
-        const sub = companyAccountsService.accounts$.subscribe(setAccounts);
-        companyAccountsService.getCompanyAccounts();
+    React.useEffect((): VoidFunction => {
+      const sub = companyAccountsService.accounts$.subscribe(setAccounts);
+      companyAccountsService.getCompanyAccounts();
 
-        return (): void => sub.unsubscribe();
-      }
-    );
+      return (): void => sub.unsubscribe();
+    }, []);
 
     return (
       <div className="accounts-list">

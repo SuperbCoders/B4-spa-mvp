@@ -4,6 +4,7 @@ import { Modal, Form, FormGroup, ControlLabel, Input } from 'rsuite';
 import { TCompanyAccount } from '../../../../transport';
 
 import { Button } from '../../Button';
+import { AccountsList } from './AccountsList';
 import { companyAccountsService } from './company-accounts.service';
 
 type TGuaranteeModalProps = {
@@ -76,6 +77,7 @@ export function CompanyAccounts({
             </Button>
           </FormGroup>
         </Form>
+        <AccountsList />
       </Modal.Body>
     </Modal>
   );
