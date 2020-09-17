@@ -32,15 +32,6 @@ export function PhoneTypingForm({
         >
           Выслать код
         </Button>
-        <Button
-          block
-          loading={isRequestProcessing}
-          className="login-form-alternate"
-          skin="light"
-          appearance="ghost"
-        >
-          Вход по ЭЦП
-        </Button>
       </FormGroup>
     </Form>
   );
