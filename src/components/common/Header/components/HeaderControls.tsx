@@ -21,7 +21,7 @@ export function HeaderControls(): JSX.Element {
 
   if (isLoggedIn) {
     return (
-      <>
+      <div className="header-controls">
         <IconButton
           skin="light"
           circle
@@ -33,17 +33,19 @@ export function HeaderControls(): JSX.Element {
           className="header-controls-button logout"
           icon={<Logout width="20" height="20" />}
         />
-      </>
+      </div>
     );
   }
 
   return (
-    <Button
-      skin="inverse"
-      className="header-controls-button login"
-      onClick={onLoginButtonClick}
-    >
-      Войти
-    </Button>
+    <div className="header-controls">
+      <Button
+        skin="inverse"
+        className="header-controls-button login"
+        onClick={onLoginButtonClick}
+      >
+        Войти
+      </Button>
+    </div>
   );
 }
