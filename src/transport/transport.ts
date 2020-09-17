@@ -9,6 +9,7 @@ import {
 } from './models';
 
 const target = 'http://35.228.15.198';
+
 class B4Transport {
   private static ENDPOINT: string = '/api/v1';
 
@@ -45,13 +46,9 @@ class B4Transport {
   }
 
   public addCompany(inn: string): Promise<{ inn: TCompanyInn }> {
-    const params = { inn };
-
-    return this.patch(
-      `${target}${B4Transport.ENDPOINT}/user/add_company`,
-      // @ts-ignore
-      params
-    );
+    return this.patch(`${target}${B4Transport.ENDPOINT}/user/add_company`, {
+      inn
+    });
   }
 
   public uploadFile(file: FormData): Promise<TFileUploadResponse> {
@@ -79,12 +76,16 @@ class B4Transport {
       .then(({ data }: AxiosResponse<T>): T => data);
   }
 
-  private patch<T>(url: string, config: AxiosRequestConfig = {}): Promise<T> {
+  private patch<T, M>(
+    url: string,
+    userData: T,
+    config: AxiosRequestConfig = {}
+  ): Promise<M> {
     const defaultConfig = this.getDefaultConfig();
 
     return axios
-      .patch(url, { ...defaultConfig, ...config })
-      .then(({ data }: AxiosResponse<T>): T => data);
+      .patch(url, userData, { ...defaultConfig, ...config })
+      .then(({ data }: AxiosResponse<M>): M => data);
   }
 
   private post<T, M>(
