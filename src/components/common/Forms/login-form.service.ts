@@ -1,4 +1,4 @@
-import { firebaseStore } from '../../../stores';
+import { firebaseStore, landingCurrentCompanyStorage } from '../../../stores';
 import { auth } from 'firebase';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { routerHistory } from '../../../router-history';
@@ -48,7 +48,10 @@ export class LoginFormService {
 
           firebaseStore.setCurrentUser(response.user);
 
+          landingCurrentCompanyStorage.addCompany();
+
           this.loginProcesssEndHandler && this.loginProcesssEndHandler();
+
           routerHistory.push(
             response.additionalUserInfo?.isNewUser
               ? '/dashboard/01'

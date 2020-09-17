@@ -43,11 +43,29 @@ class B4Transport {
     return this.get(`${target}${B4Transport.ENDPOINT}/user/me`);
   }
 
+  public addCompany(inn: string): Promise<{ inn: TCompanyInn }> {
+    const params = { inn };
+
+    return this.patch(
+      `${target}${B4Transport.ENDPOINT}/user/add_company`,
+      // @ts-ignore
+      params
+    );
+  }
+
   private get<T>(url: string, config: AxiosRequestConfig = {}): Promise<T> {
     const defaultConfig = this.getDefaultConfig();
 
     return axios
       .get(url, { ...defaultConfig, ...config })
+      .then(({ data }: AxiosResponse<T>): T => data);
+  }
+
+  private patch<T>(url: string, config: AxiosRequestConfig = {}): Promise<T> {
+    const defaultConfig = this.getDefaultConfig();
+
+    return axios
+      .patch(url, { ...defaultConfig, ...config })
       .then(({ data }: AxiosResponse<T>): T => data);
   }
 
