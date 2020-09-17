@@ -1,6 +1,8 @@
+import { TCompanyInn } from './company-landing-info.response';
+
 export type TCompanyAccount = {
   id: number;
-  company: number;
+  company: TCompanyInn;
   bankName: string;
   accountNumber: string;
   bik: string;

@@ -1,9 +1,11 @@
 import * as React from 'react';
 
 import { Modal, Form, FormGroup, ControlLabel, Input } from 'rsuite';
-import { b4Transport, TCompanyAccount } from '../../../transport';
+import { TCompanyAccountRequest } from '../../../../transport';
 
-import { Button } from '../Button';
+import { Button } from '../../Button';
+import { AccountsList } from './AccountsList';
+import { companyAccountsService } from './company-accounts.service';
 
 type TGuaranteeModalProps = {
   toggle: VoidFunction;
@@ -14,20 +16,22 @@ export function CompanyAccounts({
   show,
   toggle
 }: TGuaranteeModalProps): JSX.Element {
-  const [state, setState] = React.useState<Partial<TCompanyAccount>>({
+  const [state, setState] = React.useState<
+    Omit<TCompanyAccountRequest, 'company'>
+  >({
     bankName: '',
     accountNumber: '',
     bik: ''
   });
 
   function getFieldUpdater(
-    field: keyof TCompanyAccount
+    field: keyof TCompanyAccountRequest
   ): (value: string) => void {
     return (value: string): void => setState({ ...state, [field]: value });
   }
 
-  function handleSumbit() {
-    b4Transport.setCompanyAccount(state);
+  function handleSumbit(): void {
+    companyAccountsService.setNewCompanyAccount(state);
   }
 
   return (
@@ -75,6 +79,7 @@ export function CompanyAccounts({
             </Button>
           </FormGroup>
         </Form>
+        <AccountsList />
       </Modal.Body>
     </Modal>
   );

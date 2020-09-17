@@ -8,20 +8,19 @@ import { Button } from '../Button';
 import { ReactComponent as DocumentsAdd } from '../../../assets/images/svg/documents-add.svg';
 
 import './style.scss';
+import { fileUploadService } from './file-upload.service';
 
 type TDropZoneProps = {};
 
 export function Dropzone(props: TDropZoneProps): JSX.Element {
   const onDrop = React.useCallback((acceptedFiles: File[]): void => {
     console.log('::: drop', acceptedFiles);
-    // Do something with the files
+    fileUploadService.uploadFiles(acceptedFiles);
   }, []);
 
   const {
-    // acceptedFiles,
     getRootProps,
     getInputProps,
-
     isDragActive,
     isDragAccept,
     isDragReject

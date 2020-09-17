@@ -1,7 +1,8 @@
-import { firebaseStore } from '../../../stores';
+import { firebaseStore, landingCurrentCompanyStorage } from '../../../stores';
 import { auth } from 'firebase';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { routerHistory } from '../../../router-history';
+import { b4Transport, TCompanyInn } from '../../../transport';
 
 export enum STEPS {
   PHONE_NUMBER_STEP = 'phone',
@@ -40,20 +41,24 @@ export class LoginFormService {
   }
 
   private confirmCode(code: string): void {
+    const companyInn = landingCurrentCompanyStorage.companyInn as TCompanyInn;
+
     this.confirmator &&
       this.confirmator
         .confirm(code)
         .then((response: auth.UserCredential): void => {
           this.setState(false, STEPS.SMS_CODE_STEP);
 
-          firebaseStore.setCurrentUser(response.user);
+          firebaseStore.setCurrentUser(response.user).then((): void => {
+            b4Transport.addCompany(companyInn);
+            this.loginProcesssEndHandler && this.loginProcesssEndHandler();
 
-          this.loginProcesssEndHandler && this.loginProcesssEndHandler();
-          routerHistory.push(
-            response.additionalUserInfo?.isNewUser
-              ? '/dashboard/01'
-              : '/dashboard/02'
-          );
+            routerHistory.push(
+              response.additionalUserInfo?.isNewUser
+                ? '/dashboard/01'
+                : '/dashboard/02'
+            );
+          });
         })
         .catch((error: Error): void =>
           this.setState(false, STEPS.SMS_CODE_STEP, error.message)

@@ -15,23 +15,35 @@ import { LandingDataService } from './landing-data.service';
 import './style.scss';
 import { TCompanyInn, TCompanyLandingInfo } from '../../../transport';
 import { RouteChildrenProps } from 'react-router-dom';
+import { firebaseStore, landingCurrentCompanyStorage } from '../../../stores';
 
 export const COMPANY_INN_ROUTE_KEY: string = 'company';
 
 export function Landing({ match }: RouteChildrenProps): JSX.Element {
   const [info, setInfo] = React.useState<TCompanyLandingInfo | null>(null);
+  const [isUserLoggedIn, setIsLoggedIn] = React.useState(false);
   const companyInn: TCompanyInn = (match as {
     params: { [key: string]: TCompanyInn };
   })?.params[COMPANY_INN_ROUTE_KEY];
 
   React.useEffect((): VoidFunction => {
     const dataService = new LandingDataService();
-    const sub = dataService.data$.subscribe(setInfo);
+    const sub1 = dataService.data$.subscribe(setInfo);
+    const sub2 = firebaseStore.isLoggedIn$.subscribe(setIsLoggedIn);
     dataService.getLandingDataByInn(companyInn);
 
-    return (): void => sub.unsubscribe();
+    return (): void => {
+      sub1.unsubscribe();
+      sub2.unsubscribe();
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  React.useEffect((): void => {
+    landingCurrentCompanyStorage.companyInn = isUserLoggedIn
+      ? null
+      : companyInn;
+  }, [isUserLoggedIn, companyInn]);
 
   return info ? (
     <PageLayout>
@@ -79,36 +91,22 @@ export function Landing({ match }: RouteChildrenProps): JSX.Element {
               </div>
 
               <div className="landing-comparsion-card-bottom landing-features">
-                <div className="landing-features-item">
-                  <span className="landing-features-item-label">I квартал</span>
-                  <span className="landing-features-item-text">
-                    24 654 928 ₽
-                  </span>
-                </div>
-                <div className="landing-features-item">
-                  <span className="landing-features-item-label">
-                    II квартал
-                  </span>
-                  <span className="landing-features-item-text">
-                    345 234 928 ₽
-                  </span>
-                </div>
-                <div className="landing-features-item">
-                  <span className="landing-features-item-label">
-                    III квартал
-                  </span>
-                  <span className="landing-features-item-text">
-                    782 677 988 ₽
-                  </span>
-                </div>
-                <div className="landing-features-item">
-                  <span className="landing-features-item-label">
-                    IV квартал
-                  </span>
-                  <span className="landing-features-item-text">
-                    963 758 928 ₽
-                  </span>
-                </div>
+                {info.revenue2018 && (
+                  <div className="landing-features-item">
+                    <span className="landing-features-item-label">2018</span>
+                    <span className="landing-features-item-text">
+                      {`${Number(info.revenue2018)} ₽`}
+                    </span>
+                  </div>
+                )}
+                {info.revenue2019 && (
+                  <div className="landing-features-item">
+                    <span className="landing-features-item-label">2019</span>
+                    <span className="landing-features-item-text">
+                      {`${Number(info.revenue2019)} ₽`}
+                    </span>
+                  </div>
+                )}
               </div>
             </div>
           </article>

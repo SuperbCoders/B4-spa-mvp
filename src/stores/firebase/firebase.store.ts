@@ -7,28 +7,33 @@ class FireBaseStore {
   private firebaseInstance: firebase.app.App;
   // @ts-ignore
   private _isLoggedIn$: BehaviorSubject<boolean> = new BehaviorSubject(false);
-
-  private _token: string | null = null;
-
   public isLoggedIn$: Observable<boolean> = this._isLoggedIn$.asObservable();
 
   constructor() {
     this.firebaseInstance = firebase.initializeApp(firebaseConfig);
-    this.tryToSignWithToken();
+    this.onAuthStateChanged();
   }
 
-  public get token(): string | null {
-    return this._token;
-  }
-
-  public setCurrentUser(user: firebase.User | null): void {
+  public setCurrentUser(user: firebase.User | null): Promise<void> {
     if (user) {
-      user.getIdToken().then((token: string): void => {
+      return user.getIdToken().then((token: string): void => {
+        console.log('1');
         AuthStore.saveUserJWTToken(token);
-        AuthStore.saveUserRefreshToken(user.refreshToken);
         this._isLoggedIn$.next(true);
       });
+    } else {
+      AuthStore.deleteUserJSWToken();
+      this._isLoggedIn$.next(false);
+
+      return Promise.resolve();
     }
+  }
+
+  public signOut(): void {
+    this.firebaseInstance
+      .auth()
+      .signOut()
+      .then((): Promise<void> => this.setCurrentUser(null));
   }
 
   public signInWithPhoneNumber(
@@ -51,13 +56,12 @@ class FireBaseStore {
     });
   }
 
-  private tryToSignWithToken(): void {
-    const token = AuthStore.getUserJWTToken();
-
-    if (token) {
-      this._token = token;
-      this._isLoggedIn$.next(true);
-    }
+  private onAuthStateChanged(): void {
+    this.firebaseInstance
+      .auth()
+      .onAuthStateChanged(
+        (user: firebase.User | null): Promise<void> => this.setCurrentUser(user)
+      );
   }
 }
 

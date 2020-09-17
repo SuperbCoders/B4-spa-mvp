@@ -6,7 +6,8 @@ import {
   FormGroup,
   ControlLabel,
   Input,
-  SelectPicker
+  SelectPicker,
+  DatePicker
 } from 'rsuite';
 import { ItemDataType } from 'rsuite/lib/@types/common';
 
@@ -69,7 +70,11 @@ export function GuaranteeModal({
                 <ControlLabel className="form-label">
                   Дата начала гарантии
                 </ControlLabel>
-                <Input type="text" placeholder="дд/мм/гггг" />
+                <DatePicker
+                  type="text"
+                  placeholder="дд/мм/гггг"
+                  format="DD-MM-YYYY"
+                />
               </FormGroup>
             </div>
             <div className="form-column">
@@ -77,7 +82,7 @@ export function GuaranteeModal({
                 <ControlLabel className="form-label">
                   Дата окончания гарантии
                 </ControlLabel>
-                <Input type="text" placeholder="дд/мм/гггг" />
+                <DatePicker placeholder="дд/мм/гггг" format="DD-MM-YYYY" />
               </FormGroup>
             </div>
             <div className="form-column bank-guarantee-form">
@@ -122,7 +127,7 @@ export function GuaranteeModal({
                 <ControlLabel className="form-label">
                   Дата тендера(аукциона)
                 </ControlLabel>
-                <Input type="text" placeholder="дд/мм/гггг" />
+                <DatePicker placeholder="дд/мм/гггг" format="DD-MM-YYYY" />
               </FormGroup>
             </div>
           </div>

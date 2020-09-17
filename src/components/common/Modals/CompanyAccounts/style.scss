@@ -1,0 +1,34 @@
+.accounts-list {
+  &__item {
+    display: flex;
+    justify-content: space-between;
+    height: 60px;
+
+    &:not(:last-child) {
+      border-bottom: 2px solid #ececf4;
+    }
+
+    &--column {
+      display: flex;
+      flex-direction: column;
+
+      &-name {
+        font-family: TT Norms;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 17px;
+        color: #242232;
+      }
+
+      &-value {
+        font-family: TT Norms;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 18px;
+        line-height: 21px;
+        color: #242232;
+      }
+    }
+  }
+}
