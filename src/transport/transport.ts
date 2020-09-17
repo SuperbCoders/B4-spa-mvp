@@ -53,7 +53,7 @@ class B4Transport {
 
   public uploadFile(file: FormData): Promise<TFileUploadResponse> {
     return this.post(
-      `${target}${B4Transport.ENDPOINT}/filestorage/api_files`,
+      `${target}${B4Transport.ENDPOINT}/filestorage/api_files/`,
       file
     );
   }
