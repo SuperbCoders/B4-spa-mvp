@@ -25,6 +25,7 @@ class UserCurrentCompanyStorage {
           .getCurrentUserCompanies()
           .then((companies: TCompanyLandingInfo[]): void => {
             this._allCompanies$.next(companies);
+            this._currentCompany$.next(companies[0]);
           });
       } else {
         this._allCompanies$.next([]);
