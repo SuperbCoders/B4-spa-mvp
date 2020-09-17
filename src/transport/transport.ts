@@ -4,7 +4,8 @@ import {
   TCompanyInn,
   TCompanyLandingInfo,
   TCompanyAccount,
-  TCompanyAccountRequest
+  TCompanyAccountRequest,
+  TFileUploadResponse
 } from './models';
 
 const target = 'http://35.228.15.198';
@@ -51,6 +52,23 @@ class B4Transport {
       // @ts-ignore
       params
     );
+  }
+
+  public uploadFile(file: FormData): Promise<TFileUploadResponse> {
+    return this.post(
+      `${target}${B4Transport.ENDPOINT}/filestorage/api_files`,
+      file
+    );
+  }
+
+  public mapFileIdWithCompany(
+    file: number,
+    company: TCompanyInn
+  ): Promise<unknown> {
+    return this.post(`${target}${B4Transport.ENDPOINT}/company_files`, {
+      file,
+      company
+    });
   }
 
   private get<T>(url: string, config: AxiosRequestConfig = {}): Promise<T> {

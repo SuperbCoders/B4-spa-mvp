@@ -13,6 +13,8 @@ class UserCurrentCompanyStorage {
   );
 
   public currentCompany$: Observable<TCompanyLandingInfo | null> = this._currentCompany$.asObservable();
+  public currentCompany: TCompanyLandingInfo | null = this._currentCompany$
+    .value;
 
   public allCompanies$: Observable<
     TCompanyLandingInfo[]
