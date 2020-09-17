@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { CompaniesSelect, HeaderControls } from './components';
+import { HeaderControls } from './components';
 import { Logo } from '../Logo';
 
 import { firebaseStore } from '../../../stores';
@@ -18,7 +18,7 @@ export const Header = observer(
           <Logo className="header-logo" />
         </a>
 
-        <CompaniesSelect />
+        {/* <CompaniesSelect /> */}
         <HeaderControls />
       </header>
     );
