@@ -4,7 +4,10 @@ import { PageLayout } from '../../../components/common/PageLayout';
 import { Button } from '../../../components/common/Button';
 import { SvgIcon } from '../../../components/common/SvgIcon';
 import { ProcessNotification } from '../../../components/common/ProcessNotification';
-import { InfoModal, UploadModal } from '../../../components/common/Modals';
+import {
+  CompanyAccounts,
+  UploadModal
+} from '../../../components/common/Modals';
 import {
   Card,
   CardTitle,
@@ -95,7 +98,7 @@ export const MVP02 = WithAuth(
         </div>
 
         <UploadModal show={modalOpen} toggle={modalToggle} />
-        <InfoModal show={modalResultOpen} toggle={modalResultToggle} />
+        <CompanyAccounts show={modalResultOpen} toggle={modalResultToggle} />
       </PageLayout>
     );
   }
