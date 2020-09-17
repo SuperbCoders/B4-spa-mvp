@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
 
-import { Router, Switch, Route } from 'react-router-dom';
+import { Router, Switch, Route, Redirect } from 'react-router-dom';
 
 import { ErrorBoundary } from './ErrorBoundary';
 import { Landing, MVP01, MVP02, MVP03 } from './components/pages';
@@ -24,6 +24,7 @@ function AppComponent(): JSX.Element {
           <Route path="/dashboard/01" component={MVP01} />
           <Route path="/dashboard/02" component={MVP02} />
           <Route path="/dashboard/03" component={MVP03} />
+          <Redirect from="/" to="/dashboard/02" />
         </Switch>
         <LoginModal
           show={ModalsStore.instance.isLoginModalOpened}
