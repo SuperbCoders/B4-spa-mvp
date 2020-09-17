@@ -33,7 +33,7 @@
 
       &-icon {
         margin-left: 10px;
-        color: #4BD40B;
+        color: #4bd40b;
       }
     }
   }
@@ -86,8 +86,6 @@
     }
   }
 
-
-
   &-top {
     flex-wrap: wrap;
 
@@ -100,11 +98,11 @@
       padding-bottom: 40px;
 
       &::after {
-        content: "";
+        content: '';
         height: 2px;
         width: 100%;
         margin-top: 40px;
-        background-color: rgba(255, 255, 255, .25);
+        background-color: rgba(255, 255, 255, 0.25);
       }
     }
   }
@@ -135,7 +133,7 @@
   font-size: 35px;
 
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   flex-direction: column;
 
   color: #fff;
@@ -152,7 +150,7 @@
     flex-direction: column;
 
     &:not(:last-child) {
-      margin-bottom: 40px;  
+      margin-bottom: 40px;
 
       @media screen and (min-width: 992px) {
         margin-bottom: 0;
@@ -162,13 +160,13 @@
     @media screen and (min-width: 992px) {
       min-width: 250px;
     }
-    
+
     @media screen and (min-width: 1200px) {
       min-width: 250px;
     }
 
     &-label {
-      font-size: 0.40em;
+      font-size: 0.4em;
       text-transform: uppercase;
       letter-spacing: 0.05em;
       margin-bottom: 6px;
@@ -185,7 +183,7 @@
     }
 
     &-text {
-      font-size: .6em;
+      font-size: 0.6em;
       font-weight: bold;
 
       line-height: 1;
@@ -218,9 +216,6 @@
     }
   }
 }
-
-
-
 
 .landing-cta {
   text-align: center;
@@ -255,11 +250,11 @@
       margin-bottom: 20px;
 
       .dont-miss & {
-        color: #FCB316;
+        color: #fcb316;
       }
 
       .guarantee & {
-        color: #2FB7F5;
+        color: #2fb7f5;
       }
     }
   }
@@ -300,7 +295,7 @@
   text-align: center;
   flex-basis: calc(50% - 24px);
 
-  border: 2px solid #E1DBF0;
+  border: 2px solid #e1dbf0;
   border-radius: 35px;
   padding: 17px 50px;
 
@@ -310,7 +305,7 @@
     margin-bottom: 40px;
   }
 
-  &:nth-child(1n+1) {
+  &:nth-child(1n + 1) {
     margin-right: 0;
 
     @media screen and (min-width: 768px) {

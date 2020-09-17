@@ -79,36 +79,22 @@ export function Landing({ match }: RouteChildrenProps): JSX.Element {
               </div>
 
               <div className="landing-comparsion-card-bottom landing-features">
-                <div className="landing-features-item">
-                  <span className="landing-features-item-label">I квартал</span>
-                  <span className="landing-features-item-text">
-                    24 654 928 ₽
-                  </span>
-                </div>
-                <div className="landing-features-item">
-                  <span className="landing-features-item-label">
-                    II квартал
-                  </span>
-                  <span className="landing-features-item-text">
-                    345 234 928 ₽
-                  </span>
-                </div>
-                <div className="landing-features-item">
-                  <span className="landing-features-item-label">
-                    III квартал
-                  </span>
-                  <span className="landing-features-item-text">
-                    782 677 988 ₽
-                  </span>
-                </div>
-                <div className="landing-features-item">
-                  <span className="landing-features-item-label">
-                    IV квартал
-                  </span>
-                  <span className="landing-features-item-text">
-                    963 758 928 ₽
-                  </span>
-                </div>
+                {info.revenue2018 && (
+                  <div className="landing-features-item">
+                    <span className="landing-features-item-label">2018</span>
+                    <span className="landing-features-item-text">
+                      {`${Number(info.revenue2018)} ₽`}
+                    </span>
+                  </div>
+                )}
+                {info.revenue2019 && (
+                  <div className="landing-features-item">
+                    <span className="landing-features-item-label">2019</span>
+                    <span className="landing-features-item-text">
+                      {`${Number(info.revenue2019)} ₽`}
+                    </span>
+                  </div>
+                )}
               </div>
             </div>
           </article>
