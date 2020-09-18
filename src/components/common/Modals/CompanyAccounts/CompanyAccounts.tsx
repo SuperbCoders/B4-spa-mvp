@@ -54,6 +54,7 @@ export function CompanyAccounts({
               <Input
                 type="text"
                 placeholder="ПАО Абсолют-банк"
+                className="big-input"
                 required
                 onChange={getFieldUpdater('bankName')}
               />
@@ -63,6 +64,7 @@ export function CompanyAccounts({
               <Input
                 type="text"
                 placeholder="3453 1243 3621 1211"
+                className="big-input"
                 required
                 onChange={getFieldUpdater('accountNumber')}
               />
@@ -72,6 +74,7 @@ export function CompanyAccounts({
               <Input
                 type="text"
                 placeholder="0292341542113"
+                className="big-input"
                 required
                 onChange={getFieldUpdater('bik')}
               />

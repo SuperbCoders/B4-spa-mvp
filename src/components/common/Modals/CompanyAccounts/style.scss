@@ -5,7 +5,8 @@
     height: 60px;
 
     &:not(:last-child) {
-      border-bottom: 2px solid #ececf4;
+      border-bottom: 1px solid #ececf4;
+      margin-bottom: 25px;
     }
 
     &--column {
@@ -39,4 +40,9 @@
 
 .accounts-list-wrapper {
   margin-top: 50px;
+}
+
+.big-input {
+  padding: 14px;
+  border-radius: 15px;
 }

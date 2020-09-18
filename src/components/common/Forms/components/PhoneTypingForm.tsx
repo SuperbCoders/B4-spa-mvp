@@ -32,7 +32,7 @@ function PhoneMaskInput(
         /\d/,
         /\d/
       ]}
-      className="rs-input"
+      className="rs-input big-input"
       {...props}
     />
   );

@@ -19,6 +19,7 @@ export function CodeConfirmForm({
           errorMessage={errorText}
           type="text"
           name={controlName}
+          className="big-input"
           required
           placeholder="123456"
         />
