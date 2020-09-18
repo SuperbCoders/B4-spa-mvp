@@ -5,7 +5,8 @@ import {
   TCompanyLandingInfo,
   TCompanyAccount,
   TCompanyAccountRequest,
-  TFileUploadResponse
+  TFileUploadResponse,
+  TCompanyFileResponse
 } from './models';
 
 const target = 'http://35.228.15.198';
@@ -58,10 +59,14 @@ class B4Transport {
     );
   }
 
+  public getFilesList(): Promise<TCompanyFileResponse[]> {
+    return this.get(`${target}${B4Transport.ENDPOINT}/company_files`);
+  }
+
   public mapFileIdWithCompany(
     file: number,
     company: TCompanyInn
-  ): Promise<unknown> {
+  ): Promise<TCompanyFileResponse> {
     return this.post(`${target}${B4Transport.ENDPOINT}/company_files`, {
       file,
       company

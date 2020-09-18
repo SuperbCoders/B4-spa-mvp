@@ -9,7 +9,6 @@ export const AccountsList = React.memo(
 
     React.useEffect((): VoidFunction => {
       const sub = companyAccountsService.accounts$.subscribe(setAccounts);
-      companyAccountsService.getCompanyAccounts();
 
       return (): void => sub.unsubscribe();
     }, []);

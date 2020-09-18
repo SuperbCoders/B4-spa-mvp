@@ -1,6 +1,10 @@
 import { BehaviorSubject, Observable } from 'rxjs';
 import { currentCompanyStorage, userCompanyDataSended } from '../../../stores';
-import { b4Transport, TFileUploadResponse } from '../../../transport';
+import {
+  b4Transport,
+  TCompanyFileResponse,
+  TFileUploadResponse
+} from '../../../transport';
 
 class FileUploadService {
   // @ts-ignore
@@ -11,6 +15,16 @@ class FileUploadService {
   public allFilesUploaded$: Observable<
     boolean
   > = this._allFilesUploaded$.asObservable();
+
+  constructor() {
+    this.getFilesList();
+  }
+
+  public getFilesList(): void {
+    b4Transport.getFilesList().then((files: TCompanyFileResponse[]): void => {
+      files.length && userCompanyDataSended.setDocumentsSended();
+    });
+  }
 
   public uploadFiles(files: File[]): void {
     const uploads = files.map(

@@ -26,6 +26,8 @@ class CompanyAccountsService {
     currentCompanyStorage.currentCompany$.subscribe(
       (company: TCompanyLandingInfo | null): void => {
         this.currentCompany = company?.inn || null;
+
+        this.getCompanyAccounts();
       }
     );
   }
@@ -33,9 +35,10 @@ class CompanyAccountsService {
   public getCompanyAccounts(): void {
     b4Transport
       .getCompanyAccounts()
-      .then((accounts: TCompanyAccount[]): void =>
-        this._accounts$.next(accounts)
-      );
+      .then((accounts: TCompanyAccount[]): void => {
+        accounts.length && userCompanyDataSended.setCompanyAccountsSended();
+        this._accounts$.next(accounts);
+      });
   }
 
   public setNewCompanyAccount(
