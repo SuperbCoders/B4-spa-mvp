@@ -14,9 +14,13 @@ class UserCompanyDataSended {
     false
   );
 
-  public allDataSended$: Observable<
+  public companyAccountsSended$: Observable<
     boolean
-  > = this._allDataSended$.asObservable();
+  > = this._companyAccountsSended$.asObservable();
+
+  public documentsSended$: Observable<
+    boolean
+  > = this._documentsSended$.asObservable();
 
   constructor() {
     this.checkDocumentsSended();

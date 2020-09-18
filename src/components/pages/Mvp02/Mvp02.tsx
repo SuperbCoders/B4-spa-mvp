@@ -27,7 +27,10 @@ export const MVP02 = WithAuth(
   (): JSX.Element => {
     const [modalOpen, processModalOpen] = React.useState(false);
     const [modalResultOpen, processModalResultOpen] = React.useState(false);
-    const [processState, setProcessState] = React.useState(false);
+    const [documentsSended, setDocumentsSended] = React.useState(false);
+    const [companyAccountsSended, setCompanyAccountsSended] = React.useState(
+      false
+    );
 
     const modalToggle = (): void => processModalOpen(!modalOpen);
     const handleOpenResultModal = (): void => processModalResultOpen(true);
@@ -36,73 +39,76 @@ export const MVP02 = WithAuth(
       processModalResultOpen(!modalResultOpen);
 
     React.useEffect((): VoidFunction => {
-      const sub = userCompanyDataSended.allDataSended$.subscribe(
-        setProcessState
+      const sub1 = userCompanyDataSended.documentsSended$.subscribe(
+        setDocumentsSended
       );
 
-      return (): void => sub.unsubscribe();
+      const sub2 = userCompanyDataSended.companyAccountsSended$.subscribe(
+        setCompanyAccountsSended
+      );
+
+      return (): void => {
+        sub1.unsubscribe();
+        sub2.unsubscribe();
+      };
     }, []);
 
     return (
       <PageLayout>
         <div className="mvp-content">
           <div className="mvp-action-cards">
-            <Card className="mvp-action-card" horizontal>
-              <CardIcon className="mvp-action-card-icon">
-                <SvgIcon round>
-                  <DocumentsSearch width="36" height="36" />
-                </SvgIcon>
-              </CardIcon>
+            {!companyAccountsSended && (
+              <Card className="mvp-action-card" horizontal>
+                <CardIcon className="mvp-action-card-icon">
+                  <SvgIcon round>
+                    <DocumentsSearch width="36" height="36" />
+                  </SvgIcon>
+                </CardIcon>
 
-              <CardContent>
-                <CardTitle>Проверить и заполнить анкету компании</CardTitle>
-                Добавьте контактные данные, банковские счета, сведения о
-                ключевых персонах. Часть данных заполнена из открытых
-                источников.
-              </CardContent>
+                <CardContent>
+                  <CardTitle>Проверить и заполнить анкету компании</CardTitle>
+                  Добавьте контактные данные, банковские счета, сведения о
+                  ключевых персонах. Часть данных заполнена из открытых
+                  источников.
+                </CardContent>
 
-              <CardControls position="right">
-                <Button theme="light" onClick={handleOpenResultModal}>
-                  Перейти
-                </Button>
-              </CardControls>
-            </Card>
+                <CardControls position="right">
+                  <Button theme="light" onClick={handleOpenResultModal}>
+                    Перейти
+                  </Button>
+                </CardControls>
+              </Card>
+            )}
 
-            <Card className="mvp-action-card" horizontal>
-              <CardIcon className="mvp-action-card-icon">
-                <SvgIcon round>
-                  <DocumentsAdd width="36" height="36" />
-                </SvgIcon>
-              </CardIcon>
+            {!documentsSended && (
+              <Card className="mvp-action-card" horizontal>
+                <CardIcon className="mvp-action-card-icon">
+                  <SvgIcon round>
+                    <DocumentsAdd width="36" height="36" />
+                  </SvgIcon>
+                </CardIcon>
 
-              <CardContent>
-                <CardTitle>Приложить сканы документов</CardTitle>
-                Вам потребуются сканы устава, паспорта генерального директора,
-                отчетность за пошлый год – и другие стандартные документы о
-                компании.
-              </CardContent>
+                <CardContent>
+                  <CardTitle>Приложить сканы документов</CardTitle>
+                  Вам потребуются сканы устава, паспорта генерального директора,
+                  отчетность за пошлый год – и другие стандартные документы о
+                  компании.
+                </CardContent>
 
-              <CardControls position="right">
-                <Button theme="light" onClick={handleOpenModal}>
-                  Приложить
-                </Button>
-              </CardControls>
-            </Card>
+                <CardControls position="right">
+                  <Button theme="light" onClick={handleOpenModal}>
+                    Приложить
+                  </Button>
+                </CardControls>
+              </Card>
+            )}
           </div>
-
-          {((): JSX.Element | null => {
-            if (!processState) {
-              return null;
-            }
-
-            // :todo: add animation
-            return (
-              <ProcessNotification label="Фоновый процесс">
-                Обратабываем ваши документы и анкету. Уведомим, как все будет
-                готово.
-              </ProcessNotification>
-            );
-          })()}
+          {documentsSended && companyAccountsSended && (
+            <ProcessNotification label="Фоновый процесс">
+              Обратабываем ваши документы и анкету. Уведомим, как все будет
+              готово.
+            </ProcessNotification>
+          )}
         </div>
 
         <UploadModal show={modalOpen} toggle={modalToggle} />
