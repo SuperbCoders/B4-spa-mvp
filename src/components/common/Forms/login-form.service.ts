@@ -2,7 +2,6 @@ import { firebaseStore, landingCurrentCompanyStorage } from '../../../stores';
 import { auth } from 'firebase';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { routerHistory } from '../../../router-history';
-import { b4Transport, TCompanyInn } from '../../../transport';
 
 export enum STEPS {
   PHONE_NUMBER_STEP = 'phone',
@@ -41,8 +40,6 @@ export class LoginFormService {
   }
 
   private confirmCode(code: string): void {
-    const companyInn = landingCurrentCompanyStorage.companyInn as TCompanyInn;
-
     this.confirmator &&
       this.confirmator
         .confirm(code)
@@ -50,7 +47,7 @@ export class LoginFormService {
           this.setState(false, STEPS.SMS_CODE_STEP);
 
           firebaseStore.setCurrentUser(response.user).then((): void => {
-            b4Transport.addCompany(companyInn);
+            landingCurrentCompanyStorage.addCompany();
             this.loginProcesssEndHandler && this.loginProcesssEndHandler();
 
             routerHistory.push(

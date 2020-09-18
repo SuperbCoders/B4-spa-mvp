@@ -35,6 +35,9 @@ export function Landing({ match }: RouteChildrenProps): JSX.Element {
     const sub1 = dataService.data$.subscribe(setInfo);
     const sub2 = firebaseStore.isLoggedIn$.subscribe(setIsLoggedIn);
     dataService.getLandingDataByInn(companyInn);
+    landingCurrentCompanyStorage.companyInn = isUserLoggedIn
+      ? null
+      : companyInn;
 
     return (): void => {
       sub1.unsubscribe();
@@ -42,12 +45,6 @@ export function Landing({ match }: RouteChildrenProps): JSX.Element {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  React.useEffect((): void => {
-    landingCurrentCompanyStorage.companyInn = isUserLoggedIn
-      ? null
-      : companyInn;
-  }, [isUserLoggedIn, companyInn]);
 
   const onLoginButtonClick = (): void => {
     ModalsStore.instance.openLoginModal();
