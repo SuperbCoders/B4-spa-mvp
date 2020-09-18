@@ -21,19 +21,27 @@ import { ReactComponent as DocumentsAdd } from '../../../assets/images/svg/docum
 
 import './style.scss';
 import { WithAuth } from '../../../WithAuth';
+import { userCompanyDataSended } from '../../../stores';
 
 export const MVP02 = WithAuth(
   (): JSX.Element => {
-    const processState = true;
-
     const [modalOpen, processModalOpen] = React.useState(false);
     const [modalResultOpen, processModalResultOpen] = React.useState(false);
+    const [processState, setProcessState] = React.useState(false);
 
     const modalToggle = (): void => processModalOpen(!modalOpen);
     const handleOpenResultModal = (): void => processModalResultOpen(true);
     const handleOpenModal = (): void => processModalOpen(true);
     const modalResultToggle = (): void =>
       processModalResultOpen(!modalResultOpen);
+
+    React.useEffect((): VoidFunction => {
+      const sub = userCompanyDataSended.allDataSended$.subscribe(
+        setProcessState
+      );
+
+      return (): void => sub.unsubscribe();
+    }, []);
 
     return (
       <PageLayout>

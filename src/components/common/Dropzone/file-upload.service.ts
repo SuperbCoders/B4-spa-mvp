@@ -1,5 +1,5 @@
 import { BehaviorSubject, Observable } from 'rxjs';
-import { currentCompanyStorage } from '../../../stores';
+import { currentCompanyStorage, userCompanyDataSended } from '../../../stores';
 import { b4Transport, TFileUploadResponse } from '../../../transport';
 
 class FileUploadService {
@@ -39,9 +39,10 @@ class FileUploadService {
         }
       );
 
-      Promise.all(dataPromises).then((): void =>
-        this._allFilesUploaded$.next(true)
-      );
+      Promise.all(dataPromises).then((): void => {
+        this._allFilesUploaded$.next(true);
+        userCompanyDataSended.setDocumentsSended();
+      });
     });
   }
 }
