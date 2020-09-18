@@ -6,7 +6,8 @@ import {
   TCompanyAccount,
   TCompanyAccountRequest,
   TFileUploadResponse,
-  TCompanyFileResponse
+  TCompanyFileResponse,
+  TUserCompaniesResponse
 } from './models';
 
 const target = 'http://35.228.15.198';
@@ -42,7 +43,7 @@ class B4Transport {
     );
   }
 
-  public getCurrentUserCompanies(): Promise<TCompanyLandingInfo[]> {
+  public getCurrentUserCompanies(): Promise<TUserCompaniesResponse> {
     return this.get(`${target}${B4Transport.ENDPOINT}/user/me`);
   }
 

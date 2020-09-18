@@ -1,5 +1,10 @@
 import { BehaviorSubject, Observable } from 'rxjs';
-import { b4Transport, TCompanyInn, TCompanyLandingInfo } from '../transport';
+import {
+  b4Transport,
+  TCompanyInn,
+  TCompanyLandingInfo,
+  TUserCompaniesResponse
+} from '../transport';
 import { firebaseStore } from './firebase';
 
 class UserCurrentCompanyStorage {
@@ -25,7 +30,7 @@ class UserCurrentCompanyStorage {
       if (isLoggedIn) {
         b4Transport
           .getCurrentUserCompanies()
-          .then((companies: TCompanyLandingInfo[]): void => {
+          .then(({ companies }: TUserCompaniesResponse): void => {
             this._allCompanies$.next(companies);
             this._currentCompany$.next(companies[0]);
           });
