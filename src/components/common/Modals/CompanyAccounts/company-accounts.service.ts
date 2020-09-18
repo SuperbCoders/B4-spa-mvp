@@ -25,14 +25,15 @@ class CompanyAccountsService {
 
   constructor() {
     firebaseStore.isLoggedIn$.subscribe((isLoggedIn: boolean): void => {
-      isLoggedIn &&
+      if (isLoggedIn) {
+        this.getCompanyAccounts();
+
         currentCompanyStorage.currentCompany$.subscribe(
           (company: TCompanyLandingInfo | null): void => {
             this.currentCompany = company?.inn || null;
-
-            this.getCompanyAccounts();
           }
         );
+      }
     });
   }
 
