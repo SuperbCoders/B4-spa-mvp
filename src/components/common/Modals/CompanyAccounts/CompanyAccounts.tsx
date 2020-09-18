@@ -82,7 +82,9 @@ export function CompanyAccounts({
             </Button>
           </FormGroup>
         </Form>
-        <AccountsList />
+        <div className="accounts-list-wrapper">
+          <AccountsList />
+        </div>
       </Modal.Body>
     </Modal>
   );

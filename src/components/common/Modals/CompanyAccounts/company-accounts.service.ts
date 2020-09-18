@@ -6,7 +6,10 @@ import {
   TCompanyLandingInfo
 } from '../../../../transport';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { currentCompanyStorage } from '../../../../stores';
+import {
+  currentCompanyStorage,
+  userCompanyDataSended
+} from '../../../../stores';
 
 class CompanyAccountsService {
   private currentCompany: TCompanyInn | null = null;
@@ -46,20 +49,10 @@ class CompanyAccountsService {
     b4Transport
       .setCompanyAccount({ ...newAccount, company: this.currentCompany })
       .then((data: TCompanyAccount): void => {
-        const newList = this._accounts$.value.map(
-          (account: TCompanyAccount): TCompanyAccount =>
-            // @ts-ignore тайпскрипт не раздупляет, что проверка уже была
-            account.accountNumber === newAccount.accountNumber
-              ? {
-                  ...newAccount,
-                  id: data.id,
-                  dadata: data.dadata,
-                  company: this.currentCompany
-                }
-              : account
-        );
-
+        const newList = this._accounts$.value.slice();
+        newList.push(data);
         this._accounts$.next(newList);
+        userCompanyDataSended.setCompanyAccountsSended();
       });
   }
 
