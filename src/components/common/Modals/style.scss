@@ -11,7 +11,7 @@
 
     > * {
       background: #fff;
-      border: 1px solid #ECECF4;
+      border: 1px solid #ececf4;
       border-radius: 20px;
       padding: 30px;
     }
@@ -29,7 +29,6 @@
     margin-right: 12px;
   }
 }
-
 
 .info-modal {
   &-results {
@@ -52,14 +51,14 @@
   }
 }
 
-
 .login-modal {
+  margin: 55% auto;
   &-logo {
     width: 50px;
-    margin-right: 100%;
+    margin: 0 auto;
   }
 
   &-backdrop {
-    background-color: #567DF4 !important;
+    background-color: #567df4 !important;
   }
 }
