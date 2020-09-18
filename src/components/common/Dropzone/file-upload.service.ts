@@ -1,5 +1,9 @@
 import { BehaviorSubject, Observable } from 'rxjs';
-import { currentCompanyStorage, userCompanyDataSended } from '../../../stores';
+import {
+  currentCompanyStorage,
+  firebaseStore,
+  userCompanyDataSended
+} from '../../../stores';
 import {
   b4Transport,
   TCompanyFileResponse,
@@ -21,8 +25,13 @@ class FileUploadService {
   }
 
   public getFilesList(): void {
-    b4Transport.getFilesList().then((files: TCompanyFileResponse[]): void => {
-      files.length && userCompanyDataSended.setDocumentsSended();
+    firebaseStore.isLoggedIn$.subscribe((isLoggedIn: boolean): void => {
+      isLoggedIn &&
+        b4Transport
+          .getFilesList()
+          .then((files: TCompanyFileResponse[]): void => {
+            files.length && userCompanyDataSended.setDocumentsSended();
+          });
     });
   }
 
@@ -35,29 +44,31 @@ class FileUploadService {
       }
     );
 
-    Promise.all(uploads).then((serverDatas: TFileUploadResponse[]): void => {
-      const dataPromises = serverDatas.map(
-        (serverData: TFileUploadResponse): Promise<unknown> => {
-          const { currentCompany } = currentCompanyStorage;
+    Promise.all(uploads)
+      .then((serverDatas: TFileUploadResponse[]): void => {
+        const dataPromises = serverDatas.map(
+          (serverData: TFileUploadResponse): Promise<unknown> => {
+            const { currentCompany } = currentCompanyStorage;
 
-          if (!currentCompany) {
-            throw new Error(
-              'InvalidProgrammState: Компания уже должна быть указана'
+            if (!currentCompany) {
+              throw new Error(
+                'InvalidProgrammState: Компания уже должна быть указана'
+              );
+            }
+
+            return b4Transport.mapFileIdWithCompany(
+              serverData.id,
+              currentCompany.inn
             );
           }
+        );
 
-          return b4Transport.mapFileIdWithCompany(
-            serverData.id,
-            currentCompany.inn
-          );
-        }
-      );
-
-      Promise.all(dataPromises).then((): void => {
-        this._allFilesUploaded$.next(true);
-        userCompanyDataSended.setDocumentsSended();
-      });
-    });
+        Promise.all(dataPromises).then((): void => {
+          this._allFilesUploaded$.next(true);
+          userCompanyDataSended.setDocumentsSended();
+        });
+      })
+      .catch(() => userCompanyDataSended.setDocumentsSended());
   }
 }
 

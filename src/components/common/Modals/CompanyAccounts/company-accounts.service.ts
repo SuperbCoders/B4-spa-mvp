@@ -8,6 +8,7 @@ import {
 import { BehaviorSubject, Observable } from 'rxjs';
 import {
   currentCompanyStorage,
+  firebaseStore,
   userCompanyDataSended
 } from '../../../../stores';
 
@@ -23,13 +24,16 @@ class CompanyAccountsService {
   > = this._accounts$.asObservable();
 
   constructor() {
-    currentCompanyStorage.currentCompany$.subscribe(
-      (company: TCompanyLandingInfo | null): void => {
-        this.currentCompany = company?.inn || null;
+    firebaseStore.isLoggedIn$.subscribe((isLoggedIn: boolean): void => {
+      isLoggedIn &&
+        currentCompanyStorage.currentCompany$.subscribe(
+          (company: TCompanyLandingInfo | null): void => {
+            this.currentCompany = company?.inn || null;
 
-        this.getCompanyAccounts();
-      }
-    );
+            this.getCompanyAccounts();
+          }
+        );
+    });
   }
 
   public getCompanyAccounts(): void {
