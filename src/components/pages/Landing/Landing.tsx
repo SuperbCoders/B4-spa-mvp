@@ -15,34 +15,24 @@ import { LandingDataService } from './landing-data.service';
 import './style.scss';
 import { TCompanyInn, TCompanyLandingInfo } from '../../../transport';
 import { RouteChildrenProps } from 'react-router-dom';
-import {
-  firebaseStore,
-  landingCurrentCompanyStorage,
-  ModalsStore
-} from '../../../stores';
+import { landingCurrentCompanyStorage, ModalsStore } from '../../../stores';
 
 export const COMPANY_INN_ROUTE_KEY: string = 'company';
 
 export function Landing({ match }: RouteChildrenProps): JSX.Element {
   const [info, setInfo] = React.useState<TCompanyLandingInfo | null>(null);
-  const [isUserLoggedIn, setIsLoggedIn] = React.useState(false);
   const companyInn: TCompanyInn = (match as {
     params: { [key: string]: TCompanyInn };
   })?.params[COMPANY_INN_ROUTE_KEY];
 
   React.useEffect((): VoidFunction => {
     const dataService = new LandingDataService();
-    const sub1 = dataService.data$.subscribe(setInfo);
-    const sub2 = firebaseStore.isLoggedIn$.subscribe(setIsLoggedIn);
-    dataService.getLandingDataByInn(companyInn);
-    landingCurrentCompanyStorage.companyInn = isUserLoggedIn
-      ? null
-      : companyInn;
+    const sub = dataService.data$.subscribe(setInfo);
 
-    return (): void => {
-      sub1.unsubscribe();
-      sub2.unsubscribe();
-    };
+    dataService.getLandingDataByInn(companyInn);
+    landingCurrentCompanyStorage.companyInn = companyInn;
+
+    return (): void => sub.unsubscribe();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
