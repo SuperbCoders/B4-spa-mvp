@@ -84,7 +84,7 @@ export const MVP02 = WithAuth(
 
               <CardControls position="right">
                 <Button theme="light" onClick={handleOpenModal}>
-                  Перейти
+                  Приложить
                 </Button>
               </CardControls>
             </Card>
