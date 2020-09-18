@@ -15,7 +15,11 @@ import { LandingDataService } from './landing-data.service';
 import './style.scss';
 import { TCompanyInn, TCompanyLandingInfo } from '../../../transport';
 import { RouteChildrenProps } from 'react-router-dom';
-import { firebaseStore, landingCurrentCompanyStorage } from '../../../stores';
+import {
+  firebaseStore,
+  landingCurrentCompanyStorage,
+  ModalsStore
+} from '../../../stores';
 
 export const COMPANY_INN_ROUTE_KEY: string = 'company';
 
@@ -44,6 +48,10 @@ export function Landing({ match }: RouteChildrenProps): JSX.Element {
       ? null
       : companyInn;
   }, [isUserLoggedIn, companyInn]);
+
+  const onLoginButtonClick = (): void => {
+    ModalsStore.instance.openLoginModal();
+  };
 
   return info ? (
     <PageLayout>
@@ -207,7 +215,7 @@ export function Landing({ match }: RouteChildrenProps): JSX.Element {
           <div className="landing-cta-button">
             <p className="landing-cta-button-label">Чтобы начать</p>
 
-            <Button appearance="primary" size="lg">
+            <Button appearance="primary" size="lg" onClick={onLoginButtonClick}>
               Cоздай досье своей компании
             </Button>
           </div>
