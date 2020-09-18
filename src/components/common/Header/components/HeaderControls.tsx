@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Button } from '../../Button';
 import { IconButton } from '../../IconButton';
 
-import { ReactComponent as Featured } from '../../../../assets/images/svg/featured.svg';
+// import { ReactComponent as Featured } from '../../../../assets/images/svg/featured.svg';
 import { ReactComponent as Logout } from '../../../../assets/images/svg/logout.svg';
 import { firebaseStore, ModalsStore } from '../../../../stores';
 
@@ -24,12 +24,12 @@ export function HeaderControls(): JSX.Element {
   if (isLoggedIn) {
     return (
       <div className="header-controls">
-        <IconButton
+        {/* <IconButton
           skin="light"
           circle
           className="header-controls-button favorites"
           icon={<Featured width="20" height="20" />}
-        />
+        /> */}
         <IconButton
           skin="default"
           className="header-controls-button logout"
