@@ -8,31 +8,16 @@ import {
 } from 'rsuite';
 import { Button } from '../../Button';
 import { TFormProps } from './prop-types';
-import MaskedInput from 'react-text-mask';
+import MaskedInput from 'react-input-mask';
 
 function PhoneMaskInput(
   props: Omit<FormControlProps, 'onChange'>
 ): JSX.Element {
   return (
     <MaskedInput
-      mask={[
-        '+',
-        '7',
-        ' ',
-        /[1-9]/,
-        /\d/,
-        /\d/,
-        ' ',
-        /\d/,
-        /\d/,
-        /\d/,
-        ' ',
-        /\d/,
-        /\d/,
-        /\d/,
-        /\d/
-      ]}
+      mask="+7 999 99 99 999"
       className="rs-input big-input"
+      maskChar={null}
       {...props}
     />
   );
