@@ -1,19 +1,13 @@
 import * as React from 'react';
 
-import {
-  Modal,
-  Form,
-  FormGroup,
-  ControlLabel,
-  Input,
-  FormControl
-} from 'rsuite';
+import { Modal, Form, FormGroup, ControlLabel, FormControl } from 'rsuite';
 import { TCompanyAccountRequest } from '../../../../transport';
 
 import { Button } from '../../Button';
 import { AccountsList } from './AccountsList';
 import { companyAccountsService } from './company-accounts.service';
-import { AccountNumberAccepter, BicAccepter } from './field-accepters';
+import { AccountNumberAccepter } from './field-accepters';
+import { BankSelect, TBankItem } from './BankSelect';
 
 type TGuaranteeModalProps = {
   toggle: VoidFunction;
@@ -32,15 +26,20 @@ export function CompanyAccounts({
     bik: ''
   });
 
-  function getFieldUpdater(
-    field: keyof TCompanyAccountRequest
-  ): (value: string) => void {
-    return (value: string): void => setState({ ...state, [field]: value });
-  }
-
   function handleSumbit(): void {
     companyAccountsService.setNewCompanyAccount(state);
   }
+
+  const onSelectBank = React.useCallback(
+    ({ bankName, bik }: TBankItem): void =>
+      setState({ ...state, bankName, bik }),
+    [state]
+  );
+
+  const handleAccountNumberType = React.useCallback(
+    (accountNumber: string): void => setState({ ...state, accountNumber }),
+    [state]
+  );
 
   return (
     <Modal
@@ -56,16 +55,8 @@ export function CompanyAccounts({
         <Form className="form bank-guarantee-form">
           <FormGroup className="form-group bank-guarantee-form-type">
             <div className="form-field-row">
-              <ControlLabel className="form-label">
-                Наименование банка
-              </ControlLabel>
-              <Input
-                type="text"
-                placeholder="ПАО Абсолют-банк"
-                className="big-input"
-                required
-                onChange={getFieldUpdater('bankName')}
-              />
+              <ControlLabel className="form-label">Банк</ControlLabel>
+              <BankSelect onSelect={onSelectBank} />
             </div>
             <div className="form-field-row">
               <ControlLabel className="form-label">Номер счета</ControlLabel>
@@ -74,17 +65,7 @@ export function CompanyAccounts({
                 placeholder="3453 1243 3621 1211"
                 required
                 accepter={AccountNumberAccepter}
-                onChange={getFieldUpdater('accountNumber')}
-              />
-            </div>
-            <div className="form-field-row">
-              <ControlLabel className="form-label">БИК</ControlLabel>
-              <FormControl
-                type="text"
-                placeholder="0292341542113"
-                required
-                accepter={BicAccepter}
-                onChange={getFieldUpdater('bik')}
+                onChange={handleAccountNumberType}
               />
             </div>
 
