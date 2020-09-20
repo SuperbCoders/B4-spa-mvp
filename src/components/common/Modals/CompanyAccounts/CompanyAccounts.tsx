@@ -1,11 +1,19 @@
 import * as React from 'react';
 
-import { Modal, Form, FormGroup, ControlLabel, Input } from 'rsuite';
+import {
+  Modal,
+  Form,
+  FormGroup,
+  ControlLabel,
+  Input,
+  FormControl
+} from 'rsuite';
 import { TCompanyAccountRequest } from '../../../../transport';
 
 import { Button } from '../../Button';
 import { AccountsList } from './AccountsList';
 import { companyAccountsService } from './company-accounts.service';
+import { AccountNumberAccepter, BicAccepter } from './field-accepters';
 
 type TGuaranteeModalProps = {
   toggle: VoidFunction;
@@ -61,21 +69,21 @@ export function CompanyAccounts({
             </div>
             <div className="form-field-row">
               <ControlLabel className="form-label">Номер счета</ControlLabel>
-              <Input
+              <FormControl
                 type="text"
                 placeholder="3453 1243 3621 1211"
-                className="big-input"
                 required
+                accepter={AccountNumberAccepter}
                 onChange={getFieldUpdater('accountNumber')}
               />
             </div>
             <div className="form-field-row">
               <ControlLabel className="form-label">БИК</ControlLabel>
-              <Input
+              <FormControl
                 type="text"
                 placeholder="0292341542113"
-                className="big-input"
                 required
+                accepter={BicAccepter}
                 onChange={getFieldUpdater('bik')}
               />
             </div>
