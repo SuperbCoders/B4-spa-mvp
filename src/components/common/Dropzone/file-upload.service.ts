@@ -44,31 +44,29 @@ class FileUploadService {
       }
     );
 
-    Promise.all(uploads)
-      .then((serverDatas: TFileUploadResponse[]): void => {
-        const dataPromises = serverDatas.map(
-          (serverData: TFileUploadResponse): Promise<unknown> => {
-            const { currentCompany } = currentCompanyStorage;
+    Promise.all(uploads).then((serverDatas: TFileUploadResponse[]): void => {
+      const dataPromises = serverDatas.map(
+        (serverData: TFileUploadResponse): Promise<unknown> => {
+          const { currentCompany } = currentCompanyStorage;
 
-            if (!currentCompany) {
-              throw new Error(
-                'InvalidProgrammState: Компания уже должна быть указана'
-              );
-            }
-
-            return b4Transport.mapFileIdWithCompany(
-              serverData.id,
-              currentCompany.inn
+          if (!currentCompany) {
+            throw new Error(
+              'InvalidProgrammState: Компания уже должна быть указана'
             );
           }
-        );
 
-        Promise.all(dataPromises).then((): void => {
-          this._allFilesUploaded$.next(true);
-          userCompanyDataSended.setDocumentsSended();
-        });
-      })
-      .catch(() => userCompanyDataSended.setDocumentsSended());
+          return b4Transport.mapFileIdWithCompany(
+            serverData.id,
+            currentCompany.inn
+          );
+        }
+      );
+
+      Promise.all(dataPromises).then((): void => {
+        this._allFilesUploaded$.next(true);
+        userCompanyDataSended.setDocumentsSended();
+      });
+    });
   }
 }
 
