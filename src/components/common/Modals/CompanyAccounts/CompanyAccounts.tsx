@@ -62,7 +62,6 @@ export function CompanyAccounts({
               <ControlLabel className="form-label">Номер счета</ControlLabel>
               <FormControl
                 type="text"
-                placeholder="3453 1243 3621 1211"
                 required
                 accepter={AccountNumberAccepter}
                 onChange={handleAccountNumberType}
