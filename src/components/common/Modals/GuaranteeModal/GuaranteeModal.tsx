@@ -27,16 +27,25 @@ function calculateDays(from: Date, to: Date): number {
   return Math.floor(diff / (1000 * 3600 * 24));
 }
 
+type TGuaranteeModalState = Omit<
+  TGuaranteeRequest,
+  'startDate' | 'endDate' | 'purchaseDate'
+> & {
+  startDate: Date | null;
+  endDate: Date | null;
+  purchaseDate: Date | null;
+};
+
 export function GuaranteeModal({
   show,
   toggle
 }: TGuaranteeModalProps): JSX.Element {
-  const [data, setData] = React.useState<TGuaranteeRequest>({
+  const [data, setData] = React.useState<TGuaranteeModalState>({
     purchaseNumber: '',
     bgType: '',
-    purchaseDate: '',
-    startDate: '',
-    endDate: ''
+    purchaseDate: null,
+    startDate: null,
+    endDate: null
   });
 
   function setFieldUpdater(
@@ -45,18 +54,40 @@ export function GuaranteeModal({
     return (value: string | Date): void =>
       setData({
         ...data,
-        [field]: typeof value === 'string' ? value : value.toISOString()
+        [field]: value
       });
   }
 
+  function setDateUpdater(
+    field: keyof TGuaranteeRequest
+  ): (value: Date) => void {
+    return (value: Date): void => {
+      ((field === 'startDate' &&
+        ((data.endDate && value < data.endDate) || !data.endDate)) ||
+        (field === 'endDate' &&
+          ((data.startDate && value > data.startDate) || !data.startDate)) ||
+        field === 'purchaseDate') &&
+        setData({ ...data, [field]: value });
+    };
+  }
+
   function handleSubmit(): void {
-    guaranteeService.sendGuarantee(data).then((): void => toggle());
+    if (Object.values(data).every(Boolean)) {
+      const tender = {
+        ...data,
+        startDate: data.startDate?.toISOString(),
+        endDate: data.endDate?.toISOString(),
+        purchaseDate: data.purchaseDate?.toISOString()
+      };
+      // @ts-ignore не раздупляет ts проверку выше
+      guaranteeService.sendGuarantee(tender).then((): void => toggle());
+    }
   }
 
   const daysCounter =
     (data.startDate &&
       data.endDate &&
-      calculateDays(new Date(data.startDate), new Date(data.endDate))) ||
+      calculateDays(data.startDate, data.endDate)) ||
     '';
 
   return (
@@ -112,7 +143,8 @@ export function GuaranteeModal({
                   type="text"
                   placeholder="дд/мм/гггг"
                   format="DD-MM-YYYY"
-                  onOk={setFieldUpdater('startDate')}
+                  value={data.startDate || void 0}
+                  onOk={setDateUpdater('startDate')}
                 />
               </FormGroup>
             </div>
@@ -124,7 +156,8 @@ export function GuaranteeModal({
                 <DatePicker
                   placeholder="дд/мм/гггг"
                   format="DD-MM-YYYY"
-                  onOk={setFieldUpdater('endDate')}
+                  onOk={setDateUpdater('endDate')}
+                  value={data.endDate || void 0}
                 />
               </FormGroup>
             </div>
@@ -179,7 +212,7 @@ export function GuaranteeModal({
                 <DatePicker
                   placeholder="дд/мм/гггг"
                   format="DD-MM-YYYY"
-                  onOk={setFieldUpdater('purchaseDate')}
+                  onOk={setDateUpdater('purchaseDate')}
                 />
               </FormGroup>
             </div>
