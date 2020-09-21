@@ -1,6 +1,8 @@
+import { SvgIcon } from '../../SvgIcon';
 import * as React from 'react';
 import { TCompanyAccount } from '../../../../transport';
 import { companyAccountsService } from './company-accounts.service';
+import { ReactComponent as Pencil } from './shape.svg';
 import './style.scss';
 
 export const AccountsList = React.memo(
@@ -42,6 +44,20 @@ export const AccountsList = React.memo(
               <div className="accounts-list__item--column">
                 <div className="accounts-list__item--column-name">БИК</div>
                 <div className="accounts-list__item--column-value">{bik}</div>
+              </div>
+              <div className="accounts-list__item--column accounts-list__item--column-button-wrap">
+                <div className="accounts-list__item--column-button">
+                  <SvgIcon>
+                    <Pencil
+                      width="20"
+                      height="20"
+                      className="accounts-list__item--column-button__icon"
+                    />
+                  </SvgIcon>
+                  <div className="accounts-list__item--column-button__text">
+                    Изменить
+                  </div>
+                </div>
               </div>
             </div>
           )

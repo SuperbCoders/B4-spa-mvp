@@ -30,6 +30,31 @@
         line-height: 21px;
         color: #242232;
       }
+
+      &-button {
+        display: flex;
+        flex-direction: row;
+        cursor: pointer;
+        color: #567df4;
+        align-self: center;
+        margin-top: -20px;
+
+        &:hover {
+          color: rgba(#567df4, 0.9);
+        }
+
+        &__icon path {
+          fill: #567df4;
+        }
+
+        &__text {
+          margin-left: 12px;
+        }
+
+        &-wrap {
+          flex-direction: row;
+        }
+      }
     }
   }
 }
