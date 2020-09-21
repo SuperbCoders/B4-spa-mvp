@@ -28,7 +28,6 @@ export function GuaranteeModal({
   const [data, setData] = React.useState<TGuaranteeRequest>({
     purchaseNumber: '',
     bgType: '',
-    bgSum: '',
     purchaseDate: '',
     startDate: '',
     endDate: ''
