@@ -36,6 +36,7 @@ export function GuaranteeModal({
   const [data, setData] = React.useState<TGuaranteeModalState>({
     purchaseNumber: '',
     bgType: '',
+    law: '',
     purchaseDate: null,
     startDate: null,
     endDate: null
@@ -172,6 +173,7 @@ export function GuaranteeModal({
                   cleanable={false}
                   searchable={false}
                   data={lawSelectItems}
+                  onSelect={setFieldUpdater('law')}
                 />
               </FormGroup>
             </div>

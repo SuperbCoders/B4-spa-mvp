@@ -37,4 +37,8 @@ export type TGuaranteeRequest = {
    * Дата конца гарантии
    */
   endDate: string;
+  /**
+   * Закон
+   */
+  law: string;
 };
