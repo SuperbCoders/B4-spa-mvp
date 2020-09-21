@@ -42,7 +42,9 @@ export function Tender(props: TCompanyRecommendsResponse): JSX.Element {
           <CardFooter className="tender-footer">
             <div className="tender-meta">
               <span className="tender-number">{`№ ${props.accountNumber}`}</span>
-              <span className="tender-date">{`№ ${props.publishedAt}`}</span>
+              <span className="tender-date">
+                {new Date(props.publishedAt).toLocaleDateString()}
+              </span>
               <span className="tender-jurisdiction">{props.federalLaw}</span>
             </div>
             <IconButton
