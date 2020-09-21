@@ -24,7 +24,6 @@ export function GuaranteeModal({
   show,
   toggle
 }: TGuaranteeModalProps): JSX.Element {
-  const [isSended, setIsSended] = React.useState(false);
   const [data, setData] = React.useState<TGuaranteeRequest>({
     purchaseNumber: '',
     bgType: '',
@@ -32,16 +31,6 @@ export function GuaranteeModal({
     startDate: '',
     endDate: ''
   });
-
-  React.useEffect((): VoidFunction => {
-    const sub = guaranteeService.isSended$.subscribe(setIsSended);
-
-    return (): void => sub.unsubscribe();
-  }, []);
-
-  React.useEffect((): void => {
-    isSended && toggle();
-  }, [isSended, toggle]);
 
   function setFieldUpdater(
     field: keyof TGuaranteeRequest
@@ -54,8 +43,9 @@ export function GuaranteeModal({
   }
 
   function handleSubmit(): void {
-    guaranteeService.sendGuarantee(data);
+    guaranteeService.sendGuarantee(data).then((): void => toggle());
   }
+
   return (
     <Modal
       dialogClassName="modal guarantee-modal"
