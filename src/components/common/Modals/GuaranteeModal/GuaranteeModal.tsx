@@ -9,23 +9,16 @@ import {
   SelectPicker,
   DatePicker
 } from 'rsuite';
-import { ItemDataType } from 'rsuite/lib/@types/common';
 import { TGuaranteeRequest } from '../../../../transport';
 
 import { Button } from '../../Button';
 import { guaranteeService } from './guarantee.service';
+import { calculateDays, guaranteeTypesItems, lawSelectItems } from './utils';
 
 type TGuaranteeModalProps = {
   toggle: VoidFunction;
   show: boolean;
 };
-
-function calculateDays(from: Date, to: Date): number {
-  const diff = to.getTime() - from.getTime();
-
-  // tslint:disable-next-line:no-magic-numbers
-  return Math.floor(diff / (1000 * 3600 * 24));
-}
 
 type TGuaranteeModalState = Omit<
   TGuaranteeRequest,
@@ -88,7 +81,7 @@ export function GuaranteeModal({
     (data.startDate &&
       data.endDate &&
       calculateDays(data.startDate, data.endDate)) ||
-    '';
+    0;
 
   return (
     <Modal
@@ -111,18 +104,7 @@ export function GuaranteeModal({
               cleanable={false}
               searchable={false}
               onSelect={setFieldUpdater('bgType')}
-              data={((): ItemDataType[] => {
-                return [
-                  {
-                    value: 'first',
-                    label: 'This is the first option'
-                  },
-                  {
-                    value: 'second',
-                    label: 'This is the second option'
-                  }
-                ];
-              })()}
+              data={guaranteeTypesItems}
             />
           </FormGroup>
           <p className="bank-guarantee-form-disclaimer">
@@ -189,18 +171,7 @@ export function GuaranteeModal({
                   className="form-select"
                   cleanable={false}
                   searchable={false}
-                  data={((): ItemDataType[] => {
-                    return [
-                      {
-                        value: 'first',
-                        label: 'This is the first option'
-                      },
-                      {
-                        value: 'second',
-                        label: 'This is the second option'
-                      }
-                    ];
-                  })()}
+                  data={lawSelectItems}
                 />
               </FormGroup>
             </div>
