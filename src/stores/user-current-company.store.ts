@@ -6,6 +6,7 @@ import {
   TUserCompaniesResponse
 } from '../transport';
 import { firebaseStore } from './firebase';
+import { landingCurrentCompanyStorage } from './landing-current-company.store';
 
 class UserCurrentCompanyStorage {
   // @ts-ignore
@@ -30,7 +31,12 @@ class UserCurrentCompanyStorage {
           .getCurrentUserCompanies()
           .then(({ companies }: TUserCompaniesResponse): void => {
             this._allCompanies$.next(companies);
-            this._currentCompany$.next(companies[0]);
+            const currentCompany =
+              companies.find(
+                (company: TCompanyLandingInfo): boolean =>
+                  company.inn === landingCurrentCompanyStorage.companyInn
+              ) || companies[0];
+            this._currentCompany$.next(currentCompany);
           });
       } else {
         this._allCompanies$.next([]);

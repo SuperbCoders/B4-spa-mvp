@@ -55,7 +55,7 @@ export class LoginFormService {
               this.loginProcesssEndHandler && this.loginProcesssEndHandler();
 
               routerHistory.push(
-                response.additionalUserInfo?.isNewUser
+                landingCurrentCompanyStorage.companyInn
                   ? '/dashboard/01'
                   : '/dashboard/02'
               );
