@@ -14,12 +14,18 @@ class FireBaseStore {
     this.onAuthStateChanged();
   }
 
-  public setCurrentUser(user: firebase.User | null): Promise<void> {
+  public setCurrentUser(
+    user: firebase.User | null,
+    cb?: () => Promise<void>
+  ): Promise<void> {
     if (user) {
       return user.getIdToken().then((token: string): void => {
-        console.log('1');
         AuthStore.saveUserJWTToken(token);
-        this._isLoggedIn$.next(true);
+        if (cb) {
+          cb().then((): void => this._isLoggedIn$.next(true));
+        } else {
+          this._isLoggedIn$.next(true);
+        }
       });
     } else {
       AuthStore.deleteUserJSWToken();

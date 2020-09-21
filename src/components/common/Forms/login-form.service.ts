@@ -46,16 +46,20 @@ export class LoginFormService {
         .then((response: auth.UserCredential): void => {
           this.setState(false, STEPS.SMS_CODE_STEP);
 
-          firebaseStore.setCurrentUser(response.user).then((): void => {
-            landingCurrentCompanyStorage.addCompany();
-            this.loginProcesssEndHandler && this.loginProcesssEndHandler();
+          firebaseStore
+            .setCurrentUser(
+              response.user,
+              landingCurrentCompanyStorage.addCompany
+            )
+            .then((): void => {
+              this.loginProcesssEndHandler && this.loginProcesssEndHandler();
 
-            routerHistory.push(
-              response.additionalUserInfo?.isNewUser
-                ? '/dashboard/01'
-                : '/dashboard/02'
-            );
-          });
+              routerHistory.push(
+                response.additionalUserInfo?.isNewUser
+                  ? '/dashboard/01'
+                  : '/dashboard/02'
+              );
+            });
         })
         .catch((error: Error): void =>
           this.setState(false, STEPS.SMS_CODE_STEP, error.message)
