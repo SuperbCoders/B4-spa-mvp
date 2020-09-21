@@ -21,7 +21,6 @@ export function CodeConfirmForm({
           name={controlName}
           className="big-input"
           required
-          placeholder="123456"
         />
       </FormGroup>
 

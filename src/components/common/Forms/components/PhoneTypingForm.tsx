@@ -38,7 +38,7 @@ export function PhoneTypingForm({
           type="text"
           required
           name={controlName}
-          placeholder="+7 900 123 4565"
+          placeholder="+7"
           accepter={PhoneMaskInput}
         />
       </FormGroup>
