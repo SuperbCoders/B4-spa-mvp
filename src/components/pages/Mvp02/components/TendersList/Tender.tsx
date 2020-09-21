@@ -5,10 +5,10 @@ import {
   CardContent,
   CardFooter
 } from '../../../../../components/common/Card';
-import { IconButton } from '../../../../../components/common/IconButton';
+// import { IconButton } from '../../../../../components/common/IconButton';
 import { Button } from '../../../../../components/common/Button';
 
-import { ReactComponent as FeaturedOutline } from '../../../../../assets/images/svg/featured-outline.svg';
+// import { ReactComponent as FeaturedOutline } from '../../../../../assets/images/svg/featured-outline.svg';
 
 export function Tender(props: TCompanyRecommendsResponse): JSX.Element {
   return (
@@ -47,12 +47,12 @@ export function Tender(props: TCompanyRecommendsResponse): JSX.Element {
               </span>
               <span className="tender-jurisdiction">{props.federalLaw}</span>
             </div>
-            <IconButton
+            {/* <IconButton
               skin="orange"
               appearance="ghost"
               className="tender-favorites"
               icon={<FeaturedOutline width="20" height="20" />}
-            />
+            /> */}
             <div className="tender-guarantee-status">
               {props.warrantyApproved
                 ? 'Гарантия одобрена'
