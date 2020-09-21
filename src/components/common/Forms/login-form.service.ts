@@ -49,7 +49,7 @@ export class LoginFormService {
           firebaseStore
             .setCurrentUser(
               response.user,
-              landingCurrentCompanyStorage.addCompany
+              (): Promise<void> => landingCurrentCompanyStorage.addCompany()
             )
             .then((): void => {
               this.loginProcesssEndHandler && this.loginProcesssEndHandler();
