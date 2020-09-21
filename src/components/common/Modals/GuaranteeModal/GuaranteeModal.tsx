@@ -10,8 +10,10 @@ import {
   DatePicker
 } from 'rsuite';
 import { ItemDataType } from 'rsuite/lib/@types/common';
+import { TGuaranteeRequest } from '../../../../transport';
 
-import { Button } from '../Button';
+import { Button } from '../../Button';
+import { guaranteeService } from './guarantee.service';
 
 type TGuaranteeModalProps = {
   toggle: VoidFunction;
@@ -22,6 +24,39 @@ export function GuaranteeModal({
   show,
   toggle
 }: TGuaranteeModalProps): JSX.Element {
+  const [isSended, setIsSended] = React.useState(false);
+  const [data, setData] = React.useState<TGuaranteeRequest>({
+    purchaseNumber: '',
+    bgType: '',
+    bgSum: '',
+    purchaseDate: '',
+    startDate: '',
+    endDate: ''
+  });
+
+  React.useEffect((): VoidFunction => {
+    const sub = guaranteeService.isSended$.subscribe(setIsSended);
+
+    return (): void => sub.unsubscribe();
+  }, []);
+
+  React.useEffect((): void => {
+    isSended && toggle();
+  }, [isSended, toggle]);
+
+  function setFieldUpdater(
+    field: keyof TGuaranteeRequest
+  ): (value: string | Date) => void {
+    return (value: string | Date): void =>
+      setData({
+        ...data,
+        [field]: typeof value === 'string' ? value : value.toISOString()
+      });
+  }
+
+  function handleSubmit(): void {
+    guaranteeService.sendGuarantee(data);
+  }
   return (
     <Modal
       dialogClassName="modal guarantee-modal"
@@ -42,6 +77,7 @@ export function GuaranteeModal({
               className="form-select"
               cleanable={false}
               searchable={false}
+              onSelect={setFieldUpdater('bgType')}
               data={((): ItemDataType[] => {
                 return [
                   {
@@ -74,6 +110,7 @@ export function GuaranteeModal({
                   type="text"
                   placeholder="дд/мм/гггг"
                   format="DD-MM-YYYY"
+                  onSelect={setFieldUpdater('startDate')}
                 />
               </FormGroup>
             </div>
@@ -82,7 +119,11 @@ export function GuaranteeModal({
                 <ControlLabel className="form-label">
                   Дата окончания гарантии
                 </ControlLabel>
-                <DatePicker placeholder="дд/мм/гггг" format="DD-MM-YYYY" />
+                <DatePicker
+                  placeholder="дд/мм/гггг"
+                  format="DD-MM-YYYY"
+                  onSelect={setFieldUpdater('endDate')}
+                />
               </FormGroup>
             </div>
             <div className="form-column bank-guarantee-form">
@@ -97,7 +138,11 @@ export function GuaranteeModal({
                 <ControlLabel className="form-label">
                   Реестровый № торгов
                 </ControlLabel>
-                <Input type="text" placeholder="2343523532" />
+                <Input
+                  type="text"
+                  placeholder="2343523532"
+                  onChange={setFieldUpdater('purchaseNumber')}
+                />
               </FormGroup>
             </div>
             <div className="form-column">
@@ -127,12 +172,20 @@ export function GuaranteeModal({
                 <ControlLabel className="form-label">
                   Дата тендера(аукциона)
                 </ControlLabel>
-                <DatePicker placeholder="дд/мм/гггг" format="DD-MM-YYYY" />
+                <DatePicker
+                  placeholder="дд/мм/гггг"
+                  format="DD-MM-YYYY"
+                  onSelect={setFieldUpdater('purchaseDate')}
+                />
               </FormGroup>
             </div>
           </div>
           <FormGroup>
-            <Button className="bank-guarantee-form-submit" skin="inverse">
+            <Button
+              className="bank-guarantee-form-submit"
+              skin="inverse"
+              onClick={handleSubmit}
+            >
               Отправить заявку
             </Button>
           </FormGroup>

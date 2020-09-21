@@ -8,7 +8,8 @@ import {
   TFileUploadResponse,
   TCompanyFileResponse,
   TUserCompaniesResponse,
-  TCompanyRecommendsResponse
+  TCompanyRecommendsResponse,
+  TGuaranteeRequest
 } from './models';
 
 const target = 'http://35.228.15.198';
@@ -77,6 +78,10 @@ class B4Transport {
 
   public getRecommends(): Promise<TCompanyRecommendsResponse[]> {
     return this.get(`${target}${B4Transport.ENDPOINT}/company_recommends`);
+  }
+
+  public sendGuarantee(guarantee: TGuaranteeRequest): Promise<void> {
+    return this.post(`${target}${B4Transport.ENDPOINT}/warranties`, guarantee);
   }
 
   private get<T>(url: string, config: AxiosRequestConfig = {}): Promise<T> {

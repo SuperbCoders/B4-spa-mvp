@@ -31,18 +31,23 @@ import { TendersList } from './components';
 
 export const MVP02 = WithAuth(
   (): JSX.Element => {
-    const [modalOpen, processModalOpen] = React.useState(false);
+    const [uploadModalOpen, processUploadModalOpen] = React.useState(false);
     const [modalResultOpen, processModalResultOpen] = React.useState(false);
+    const [guaranteeModalOpen, processGuaranteeModalOpen] = React.useState(
+      false
+    );
+
     const [documentsSended, setDocumentsSended] = React.useState(false);
     const [companyAccountsSended, setCompanyAccountsSended] = React.useState(
       false
     );
 
-    const modalToggle = (): void => processModalOpen(!modalOpen);
-    const handleOpenResultModal = (): void => processModalResultOpen(true);
-    const handleOpenModal = (): void => processModalOpen(true);
+    const uploadModalToggle = (): void =>
+      processUploadModalOpen(!uploadModalOpen);
     const modalResultToggle = (): void =>
       processModalResultOpen(!modalResultOpen);
+    const guaranteeModalToggle = (): void =>
+      processGuaranteeModalOpen(!guaranteeModalOpen);
 
     React.useEffect((): VoidFunction => {
       const sub1 = userCompanyDataSended.documentsSended$.subscribe(
@@ -79,7 +84,7 @@ export const MVP02 = WithAuth(
                 </CardContent>
 
                 <CardControls position="right">
-                  <Button theme="light" onClick={handleOpenResultModal}>
+                  <Button theme="light" onClick={modalResultToggle}>
                     Перейти
                   </Button>
                 </CardControls>
@@ -102,7 +107,7 @@ export const MVP02 = WithAuth(
                 </CardContent>
 
                 <CardControls position="right">
-                  <Button theme="light" onClick={handleOpenModal}>
+                  <Button theme="light" onClick={uploadModalToggle}>
                     Приложить
                   </Button>
                 </CardControls>
@@ -125,15 +130,18 @@ export const MVP02 = WithAuth(
           }
         >
           <IconButton
-            onClick={modalToggle}
+            onClick={guaranteeModalToggle}
             className="guarantee-add-button"
             skin="primary"
             circle
             icon={<Plus width="24" height="24" />}
           />
         </Whisper>
-        <GuaranteeModal show={modalOpen} toggle={modalToggle} />
-        <UploadModal show={modalOpen} toggle={modalToggle} />
+        <GuaranteeModal
+          show={guaranteeModalOpen}
+          toggle={guaranteeModalToggle}
+        />
+        <UploadModal show={uploadModalOpen} toggle={uploadModalToggle} />
         <CompanyAccounts show={modalResultOpen} toggle={modalResultToggle} />
       </PageLayout>
     );
