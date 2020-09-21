@@ -37,10 +37,10 @@ class B4Transport {
   }
 
   public editCompanyAccount(
-    editedAccount: TCompanyAccount
+    editedAccount: Partial<TCompanyAccount>
   ): Promise<TCompanyAccount> {
-    return this.put(
-      `${target}${B4Transport.ENDPOINT}/company_props`,
+    return this.patch(
+      `${target}${B4Transport.ENDPOINT}/company_props/${editedAccount.id}`,
       editedAccount
     );
   }
@@ -116,17 +116,17 @@ class B4Transport {
       .then(({ data }: AxiosResponse<M>): M => data);
   }
 
-  private put<T, M>(
-    url: string,
-    userData: T,
-    config: AxiosRequestConfig = {}
-  ): Promise<M> {
-    const defaultConfig = this.getDefaultConfig();
+  // private put<T, M>(
+  //   url: string,
+  //   userData: T,
+  //   config: AxiosRequestConfig = {}
+  // ): Promise<M> {
+  //   const defaultConfig = this.getDefaultConfig();
 
-    return axios
-      .put(url, userData, { ...defaultConfig, ...config })
-      .then(({ data }: AxiosResponse<M>): M => data);
-  }
+  //   return axios
+  //     .put(url, userData, { ...defaultConfig, ...config })
+  //     .then(({ data }: AxiosResponse<M>): M => data);
+  // }
 
   private getDefaultConfig(): AxiosRequestConfig {
     const defaultConfig: AxiosRequestConfig = {};

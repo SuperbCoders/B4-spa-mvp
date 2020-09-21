@@ -5,16 +5,17 @@ export type TBankItem = { bik: string; bankName: string };
 
 type TBankSelectProps = {
   onSelect: (value: TBankItem) => void;
+  value: { bik: string; bankName: string };
 };
 
 const customStyle = { 'react-dadata__suggestions': { borderRadius: '15px' } };
 
-export function BankSelect({ onSelect }: TBankSelectProps): JSX.Element {
+export function BankSelect({ onSelect, value }: TBankSelectProps): JSX.Element {
   const handleSelect = React.useCallback(
-    (value: BankResponseType): void =>
+    (res: BankResponseType): void =>
       onSelect({
-        bik: value.data.bic || '',
-        bankName: value.data.name?.payment || ''
+        bik: res.data.bic || '',
+        bankName: res.data.name?.payment || ''
       }),
     [onSelect]
   );
@@ -22,7 +23,7 @@ export function BankSelect({ onSelect }: TBankSelectProps): JSX.Element {
   return (
     <ReactDadataBox
       token="6df51bc0b039ab7994d1745c428d95c3e18088e0"
-      query=""
+      query={value.bankName}
       type="bank"
       placeholder="Введите название или БИК банка"
       customStyles={customStyle}

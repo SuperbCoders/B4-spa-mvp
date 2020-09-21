@@ -5,13 +5,19 @@ import { TCompanyAccountRequest } from '../../../../transport';
 
 import { Button } from '../../Button';
 import { AccountsList } from './AccountsList';
-import { companyAccountsService } from './company-accounts.service';
 import { AccountNumberAccepter } from './field-accepters';
-import { BankSelect, TBankItem } from './BankSelect';
+import { BankSelect } from './BankSelect';
+import { accountsServiceEditor } from './accounts-editor.service';
 
 type TGuaranteeModalProps = {
   toggle: VoidFunction;
   show: boolean;
+};
+
+const initialState = {
+  bankName: '',
+  accountNumber: '',
+  bik: ''
 };
 
 export function CompanyAccounts({
@@ -20,26 +26,19 @@ export function CompanyAccounts({
 }: TGuaranteeModalProps): JSX.Element {
   const [state, setState] = React.useState<
     Omit<TCompanyAccountRequest, 'company'>
-  >({
-    bankName: '',
-    accountNumber: '',
-    bik: ''
-  });
+  >(initialState);
+  const [isEditing, setIsEditing] = React.useState(false);
 
-  function handleSumbit(): void {
-    companyAccountsService.setNewCompanyAccount(state);
-  }
+  React.useEffect((): VoidFunction => {
+    const sub = accountsServiceEditor.account$.subscribe(setState);
+    const sub2 = accountsServiceEditor.isEditing$.subscribe(setIsEditing);
 
-  const onSelectBank = React.useCallback(
-    ({ bankName, bik }: TBankItem): void =>
-      setState({ ...state, bankName, bik }),
-    [state]
-  );
-
-  const handleAccountNumberType = React.useCallback(
-    (accountNumber: string): void => setState({ ...state, accountNumber }),
-    [state]
-  );
+    return (): void => {
+      accountsServiceEditor.reset();
+      sub.unsubscribe();
+      sub2.unsubscribe();
+    };
+  }, []);
 
   return (
     <Modal
@@ -56,7 +55,10 @@ export function CompanyAccounts({
           <FormGroup className="form-group bank-guarantee-form-type">
             <div className="form-field-row">
               <ControlLabel className="form-label">Банк</ControlLabel>
-              <BankSelect onSelect={onSelectBank} />
+              <BankSelect
+                onSelect={accountsServiceEditor.handleSelectBank}
+                value={{ bankName: state.bankName, bik: state.bik }}
+              />
             </div>
             <div className="form-field-row">
               <ControlLabel className="form-label">Номер счета</ControlLabel>
@@ -64,16 +66,19 @@ export function CompanyAccounts({
                 type="text"
                 required
                 accepter={AccountNumberAccepter}
-                onChange={handleAccountNumberType}
+                onChange={accountsServiceEditor.handleTypeAccountNumber}
+                value={state.accountNumber}
               />
             </div>
           </FormGroup>
-          <Button skin="inverse" onClick={handleSumbit}>
-            Добавить
+          <Button skin="inverse" onClick={accountsServiceEditor.saveAccount}>
+            {isEditing ? 'Сохранить' : 'Добавить'}
           </Button>
         </Form>
         <div className="accounts-list-wrapper">
-          <AccountsList />
+          <AccountsList
+            onSelectEdit={accountsServiceEditor.handleSelectEditAccount}
+          />
         </div>
       </Modal.Body>
     </Modal>

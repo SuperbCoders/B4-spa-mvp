@@ -13,6 +13,10 @@
       display: flex;
       flex-direction: column;
 
+      &:first-child {
+        width: 300px;
+      }
+
       &-name {
         font-family: TT Norms;
         font-style: normal;

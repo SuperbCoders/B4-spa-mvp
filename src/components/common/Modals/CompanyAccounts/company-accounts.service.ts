@@ -50,13 +50,13 @@ class CompanyAccountsService {
 
   public setNewCompanyAccount(
     newAccount: Omit<TCompanyAccountRequest, 'company'>
-  ): void {
+  ): Promise<void> {
     if (!this.currentCompany) {
       throw new Error(
         'InvalidProgrammState: компания должна быть уже назначена к этому моменту'
       );
     }
-    b4Transport
+    return b4Transport
       .setCompanyAccount({ ...newAccount, company: this.currentCompany })
       .then((data: TCompanyAccount): void => {
         this.accounts.push(data);
@@ -67,14 +67,18 @@ class CompanyAccountsService {
       });
   }
 
-  public editCompanyAccount(editedAccount: TCompanyAccount): void {
-    const newList = this._accounts$.value.map(
-      (account: TCompanyAccount): TCompanyAccount =>
-        account.id === editedAccount.id ? editedAccount : account
-    );
-    b4Transport
-      .editCompanyAccount(editedAccount)
-      .then((): void => this._accounts$.next(newList));
+  public editCompanyAccount(
+    editedAccount: Partial<TCompanyAccount>
+  ): Promise<void> {
+    return b4Transport.editCompanyAccount(editedAccount).then((): void => {
+      const newList = this._accounts$.value.map(
+        (account: TCompanyAccount): TCompanyAccount =>
+          account.id === editedAccount.id
+            ? { ...account, ...editedAccount }
+            : account
+      );
+      this._accounts$.next(newList);
+    });
   }
 
   public filterCompanyAccounts(): void {
