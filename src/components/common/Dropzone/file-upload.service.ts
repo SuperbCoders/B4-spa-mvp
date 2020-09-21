@@ -7,10 +7,14 @@ import {
 import {
   b4Transport,
   TCompanyFileResponse,
+  TCompanyInn,
+  TCompanyLandingInfo,
   TFileUploadResponse
 } from '../../../transport';
 
 class FileUploadService {
+  private files: TCompanyFileResponse[] = [];
+  private currentCompany: TCompanyInn | null = null;
   // @ts-ignore
   private _allFilesUploaded$: BehaviorSubject<boolean> = new BehaviorSubject(
     false
@@ -30,7 +34,15 @@ class FileUploadService {
         b4Transport
           .getFilesList()
           .then((files: TCompanyFileResponse[]): void => {
-            files.length && userCompanyDataSended.setDocumentsSended();
+            this.files = files;
+            userCompanyDataSended.setDocumentsSended(files.length > 0);
+
+            currentCompanyStorage.currentCompany$.subscribe(
+              (currentCompany: TCompanyLandingInfo | null): void => {
+                this.currentCompany = currentCompany?.inn || null;
+                this.filterCompanyFiles();
+              }
+            );
           });
     });
   }
@@ -46,7 +58,7 @@ class FileUploadService {
 
     Promise.all(uploads).then((serverDatas: TFileUploadResponse[]): void => {
       const dataPromises = serverDatas.map(
-        (serverData: TFileUploadResponse): Promise<unknown> => {
+        (serverData: TFileUploadResponse): Promise<TCompanyFileResponse> => {
           const { currentCompany } = currentCompanyStorage;
 
           if (!currentCompany) {
@@ -62,11 +74,24 @@ class FileUploadService {
         }
       );
 
-      Promise.all(dataPromises).then((): void => {
-        this._allFilesUploaded$.next(true);
-        userCompanyDataSended.setDocumentsSended();
-      });
+      Promise.all(dataPromises).then(
+        (uploaded: TCompanyFileResponse[]): void => {
+          this.files.push(...uploaded);
+          this._allFilesUploaded$.next(true);
+          userCompanyDataSended.setDocumentsSended(this.files.length > 0);
+        }
+      );
     });
+  }
+
+  private filterCompanyFiles(): void {
+    const filtered = this.files.filter(
+      (file: TCompanyFileResponse): boolean =>
+        file.company === this.currentCompany
+    );
+
+    this._allFilesUploaded$.next(filtered.length > 0);
+    userCompanyDataSended.setDocumentsSended(filtered.length > 0);
   }
 }
 

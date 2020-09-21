@@ -9,10 +9,6 @@ class UserCompanyDataSended {
   private _companyAccountsSended$: BehaviorSubject<
     boolean
   > = new BehaviorSubject(false);
-  // @ts-ignore
-  private _allDataSended$: BehaviorSubject<boolean> = new BehaviorSubject(
-    false
-  );
 
   public companyAccountsSended$: Observable<
     boolean
@@ -22,31 +18,12 @@ class UserCompanyDataSended {
     boolean
   > = this._documentsSended$.asObservable();
 
-  constructor() {
-    this.checkDocumentsSended();
-    this.checkCompanyAccountsSended();
-    this.subscribeOnSendChange();
+  public setDocumentsSended(isSended: boolean): void {
+    this._documentsSended$.next(isSended);
   }
 
-  public setDocumentsSended(): void {
-    this._documentsSended$.next(true);
-  }
-
-  public setCompanyAccountsSended(): void {
-    this._companyAccountsSended$.next(true);
-  }
-
-  private checkDocumentsSended(): void {}
-
-  private checkCompanyAccountsSended(): void {}
-
-  private subscribeOnSendChange(): void {
-    this._documentsSended$.subscribe((res: boolean): void =>
-      this._allDataSended$.next(res && this._companyAccountsSended$.value)
-    );
-    this._companyAccountsSended$.subscribe((res: boolean): void =>
-      this._allDataSended$.next(res && this._documentsSended$.value)
-    );
+  public setCompanyAccountsSended(isSended: boolean): void {
+    this._companyAccountsSended$.next(isSended);
   }
 }
 

@@ -13,6 +13,7 @@ import {
 } from '../../../../stores';
 
 class CompanyAccountsService {
+  private accounts: TCompanyAccount[] = [];
   private currentCompany: TCompanyInn | null = null;
   // @ts-ignore
   private _accounts$: BehaviorSubject<TCompanyAccount[]> = new BehaviorSubject(
@@ -26,23 +27,24 @@ class CompanyAccountsService {
   constructor() {
     firebaseStore.isLoggedIn$.subscribe((isLoggedIn: boolean): void => {
       if (isLoggedIn) {
-        this.getCompanyAccounts();
-
-        currentCompanyStorage.currentCompany$.subscribe(
-          (company: TCompanyLandingInfo | null): void => {
-            this.currentCompany = company?.inn || null;
-          }
-        );
+        this.getCompanyAccounts().then((): void => {
+          currentCompanyStorage.currentCompany$.subscribe(
+            (company: TCompanyLandingInfo | null): void => {
+              this.currentCompany = company?.inn || null;
+              this.filterCompanyAccounts();
+            }
+          );
+        });
       }
     });
   }
 
-  public getCompanyAccounts(): void {
-    b4Transport
+  public getCompanyAccounts(): Promise<void> {
+    return b4Transport
       .getCompanyAccounts()
       .then((accounts: TCompanyAccount[]): void => {
-        accounts.length && userCompanyDataSended.setCompanyAccountsSended();
-        this._accounts$.next(accounts);
+        this.accounts = accounts;
+        this._accounts$.next(this.accounts);
       });
   }
 
@@ -57,10 +59,11 @@ class CompanyAccountsService {
     b4Transport
       .setCompanyAccount({ ...newAccount, company: this.currentCompany })
       .then((data: TCompanyAccount): void => {
-        const newList = this._accounts$.value.slice();
-        newList.push(data);
-        this._accounts$.next(newList);
-        userCompanyDataSended.setCompanyAccountsSended();
+        this.accounts.push(data);
+        this._accounts$.next(this.accounts);
+        userCompanyDataSended.setCompanyAccountsSended(
+          this.accounts.length > 0
+        );
       });
   }
 
@@ -72,6 +75,16 @@ class CompanyAccountsService {
     b4Transport
       .editCompanyAccount(editedAccount)
       .then((): void => this._accounts$.next(newList));
+  }
+
+  public filterCompanyAccounts(): void {
+    const filtered = this.accounts.filter(
+      (account: TCompanyAccount): boolean =>
+        account.company === this.currentCompany
+    );
+
+    this.currentCompany && this._accounts$.next(filtered);
+    userCompanyDataSended.setCompanyAccountsSended(filtered.length > 0);
   }
 }
 
