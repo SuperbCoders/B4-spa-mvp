@@ -116,16 +116,16 @@ class FileUploadService {
   }
 
   public deleteFile = (file: TProcessUploadFile): void => {
-    console.log('here');
-    b4Transport.deleteFile(file.id as number).then((): void => {
-      this.uploadedFiles = this.uploadedFiles.filter(
-        (fileInfo: TFileUploadResponse): boolean => fileInfo.id !== file.id
-      );
-      const newState = { ...this._processUploadingFiles$.value };
-      delete newState[file.storeId];
+    this.uploadedFiles = this.uploadedFiles.filter(
+      (fileInfo: TFileUploadResponse): boolean => fileInfo.id !== file.id
+    );
+    const newState = { ...this._processUploadingFiles$.value };
+    delete newState[file.storeId];
+    this._processUploadingFiles$.next(newState);
+  }
 
-      this._processUploadingFiles$.next(newState);
-    });
+  public reset(): void {
+    this._processUploadingFiles$.next({});
   }
 
   private filterCompanyFiles(): void {
