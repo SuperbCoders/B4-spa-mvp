@@ -20,6 +20,13 @@ type TGuaranteeModalProps = {
   show: boolean;
 };
 
+function calculateDays(from: Date, to: Date): number {
+  const diff = to.getTime() - from.getTime();
+
+  // tslint:disable-next-line:no-magic-numbers
+  return Math.floor(diff / (1000 * 3600 * 24));
+}
+
 export function GuaranteeModal({
   show,
   toggle
@@ -45,6 +52,12 @@ export function GuaranteeModal({
   function handleSubmit(): void {
     guaranteeService.sendGuarantee(data).then((): void => toggle());
   }
+
+  const daysCounter =
+    (data.startDate &&
+      data.endDate &&
+      calculateDays(new Date(data.startDate), new Date(data.endDate))) ||
+    '';
 
   return (
     <Modal
