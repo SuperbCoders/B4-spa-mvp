@@ -215,20 +215,19 @@
 }
 
 .mvp-tooltip {
-  .tooltip-inner {
-    background: #000000;
-    border-radius: 4px;
-    color: #fff;
+  margin-top: -13px !important;
+
+  .rs-tooltip-inner {
+    padding: 7px 17px;
     font-size: 12px;
+    line-height: 14px;
+    background: black;
     font-family: 'TT Norms', Arial, sans-serif;
-    padding: 7px 12px;
-    font-weight: normal;
   }
-  .arrow {
-    border-color: #000;
-    &::before {
-      border-top-color: #000 !important;
-    }
+  
+  .rs-tooltip-arrow {
+    right: 18px !important;
+    border-top-color: black !important;
   }
 }
 
