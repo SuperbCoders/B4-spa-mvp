@@ -42,6 +42,8 @@ export function GuaranteeModal({
     endDate: null
   });
 
+  const [isSended, setIsSended] = React.useState(false);
+
   function setFieldUpdater(
     field: keyof TGuaranteeRequest
   ): (value: string | Date) => void {
@@ -73,8 +75,10 @@ export function GuaranteeModal({
         endDate: data.endDate?.toISOString(),
         purchaseDate: data.purchaseDate?.toISOString()
       };
-      // @ts-ignore не раздупляет ts проверку выше
-      guaranteeService.sendGuarantee(tender).then((): void => toggle());
+      guaranteeService
+        // @ts-ignore не раздупляет ts проверку выше
+        .sendGuarantee(tender)
+        .then((): void => setIsSended(true));
     }
   }
 
@@ -93,116 +97,135 @@ export function GuaranteeModal({
       size="lg"
       backdrop={true}
     >
-      <Modal.Header>Заявка на гарантию</Modal.Header>
+      <Modal.Header>{!isSended && 'Заявка на гарантию'}</Modal.Header>
       <Modal.Body>
-        <Form className="form bank-guarantee-form">
-          <FormGroup className="form-group bank-guarantee-form-type">
-            <ControlLabel className="form-label">
-              Вид банковской гарантии
-            </ControlLabel>
-            <SelectPicker
-              className="form-select"
-              cleanable={false}
-              searchable={false}
-              onSelect={setFieldUpdater('bgType')}
-              data={guaranteeTypesItems}
-            />
-          </FormGroup>
-          <p className="bank-guarantee-form-disclaimer">
-            Данная гарантия на обеспечение гарантийных обязательств свыше срока
-            действия контракта. Если Вам требуется гарантия на обеспечение
-            гарантийных обязательств в пределах срока действия контракта,
-            необходимо выбрать тип “Банковская гарантия на исполнение контракта”
-            и затем указать наличие гарантийных обязательств.
-          </p>
+        {!isSended && (
+          <Form className="form bank-guarantee-form">
+            <FormGroup className="form-group" style={{ width: '420px' }}>
+              <ControlLabel className="form-label">
+                Вид банковской гарантии
+              </ControlLabel>
+              <SelectPicker
+                className="form-select"
+                cleanable={false}
+                searchable={false}
+                onSelect={setFieldUpdater('bgType')}
+                data={guaranteeTypesItems}
+              />
+            </FormGroup>
+            <p className="bank-guarantee-form-disclaimer">
+              Данная гарантия на обеспечение гарантийных обязательств свыше
+              срока действия контракта. Если Вам требуется гарантия на
+              обеспечение гарантийных обязательств в пределах срока действия
+              контракта, необходимо выбрать тип “Банковская гарантия на
+              исполнение контракта” и затем указать наличие гарантийных
+              обязательств.
+            </p>
 
-          <div className="form-columns">
-            <div className="form-column">
-              <FormGroup>
-                <ControlLabel className="form-label">
-                  Дата начала гарантии
-                </ControlLabel>
-                <DatePicker
-                  type="text"
-                  placeholder="дд/мм/гггг"
-                  format="DD-MM-YYYY"
-                  oneTap
-                  value={data.startDate || void 0}
-                  onSelect={setDateUpdater('startDate')}
-                />
-              </FormGroup>
-            </div>
-            <div className="form-column">
-              <FormGroup>
-                <ControlLabel className="form-label">
-                  Дата окончания гарантии
-                </ControlLabel>
-                <DatePicker
-                  placeholder="дд/мм/гггг"
-                  format="DD-MM-YYYY"
-                  oneTap
-                  onSelect={setDateUpdater('endDate')}
-                  value={data.endDate || void 0}
-                />
-              </FormGroup>
-            </div>
-            <div className="form-column bank-guarantee-form">
-              <ControlLabel className="form-label">Итого дней:</ControlLabel>
-              <div className="bank-guarantee-form-total-days">
-                {daysCounter}
+            <div className="form-columns">
+              <div className="form-column">
+                <FormGroup>
+                  <ControlLabel className="form-label">
+                    Дата начала гарантии
+                  </ControlLabel>
+                  <DatePicker
+                    type="text"
+                    placeholder="дд/мм/гггг"
+                    format="DD-MM-YYYY"
+                    oneTap
+                    value={data.startDate || void 0}
+                    onSelect={setDateUpdater('startDate')}
+                  />
+                </FormGroup>
+              </div>
+              <div className="form-column">
+                <FormGroup>
+                  <ControlLabel className="form-label">
+                    Дата окончания гарантии
+                  </ControlLabel>
+                  <DatePicker
+                    placeholder="дд/мм/гггг"
+                    format="DD-MM-YYYY"
+                    oneTap
+                    onSelect={setDateUpdater('endDate')}
+                    value={data.endDate || void 0}
+                  />
+                </FormGroup>
+              </div>
+              <div className="form-column bank-guarantee-form">
+                <ControlLabel className="form-label">Итого дней:</ControlLabel>
+                <div className="bank-guarantee-form-total-days">
+                  {daysCounter}
+                </div>
               </div>
             </div>
-          </div>
 
-          <div className="form-columns">
-            <div className="form-column">
-              <FormGroup>
-                <ControlLabel className="form-label">
-                  Реестровый № торгов
-                </ControlLabel>
-                <Input
-                  type="text"
-                  placeholder="2343523532"
-                  onChange={setFieldUpdater('purchaseNumber')}
-                />
-              </FormGroup>
+            <div className="form-columns">
+              <div className="form-column">
+                <FormGroup>
+                  <ControlLabel className="form-label">
+                    Реестровый № торгов
+                  </ControlLabel>
+                  <Input
+                    type="text"
+                    placeholder="2343523532"
+                    onChange={setFieldUpdater('purchaseNumber')}
+                  />
+                </FormGroup>
+              </div>
+              <div className="form-column">
+                <FormGroup>
+                  <ControlLabel className="form-label">Закон</ControlLabel>
+                  <SelectPicker
+                    className="form-select"
+                    cleanable={false}
+                    searchable={false}
+                    data={lawSelectItems}
+                    onSelect={setFieldUpdater('law')}
+                  />
+                </FormGroup>
+              </div>
+              <div className="form-column">
+                <FormGroup>
+                  <ControlLabel className="form-label">
+                    Дата тендера(аукциона)
+                  </ControlLabel>
+                  <DatePicker
+                    placeholder="дд/мм/гггг"
+                    format="DD-MM-YYYY"
+                    oneTap
+                    onSelect={setDateUpdater('purchaseDate')}
+                  />
+                </FormGroup>
+              </div>
             </div>
-            <div className="form-column">
-              <FormGroup>
-                <ControlLabel className="form-label">Закон</ControlLabel>
-                <SelectPicker
-                  className="form-select"
-                  cleanable={false}
-                  searchable={false}
-                  data={lawSelectItems}
-                  onSelect={setFieldUpdater('law')}
-                />
-              </FormGroup>
-            </div>
-            <div className="form-column">
-              <FormGroup>
-                <ControlLabel className="form-label">
-                  Дата тендера(аукциона)
-                </ControlLabel>
-                <DatePicker
-                  placeholder="дд/мм/гггг"
-                  format="DD-MM-YYYY"
-                  oneTap
-                  onSelect={setDateUpdater('purchaseDate')}
-                />
-              </FormGroup>
-            </div>
-          </div>
-          <FormGroup>
+            <FormGroup>
+              <Button
+                className="bank-guarantee-form-submit"
+                skin="inverse"
+                onClick={handleSubmit}
+              >
+                Отправить заявку
+              </Button>
+            </FormGroup>
+          </Form>
+        )}
+        {isSended && (
+          <div className="info-modal-results">
+            <p>
+              Cпасибо! 
+              <br />
+              Мы обрабатываем вашу заявку
+            </p>
             <Button
-              className="bank-guarantee-form-submit"
-              skin="inverse"
-              onClick={handleSubmit}
+              skin="light"
+              className="info-modal-results-button"
+              onClick={toggle}
             >
-              Отправить заявку
+              Вернуться на главную
             </Button>
-          </FormGroup>
-        </Form>
+          </div>
+        )}
       </Modal.Body>
     </Modal>
   );
