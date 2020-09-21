@@ -76,6 +76,12 @@ class B4Transport {
     });
   }
 
+  public deleteFile(id: number): Promise<void> {
+    return this.delete(
+      `${target}${B4Transport.ENDPOINT}/filestorage/api_files/${id}`
+    );
+  }
+
   public getRecommends(): Promise<TCompanyRecommendsResponse[]> {
     return this.get(`${target}${B4Transport.ENDPOINT}/company_recommends`);
   }
@@ -114,6 +120,10 @@ class B4Transport {
     return axios
       .post(url, userData, { ...defaultConfig, ...config })
       .then(({ data }: AxiosResponse<M>): M => data);
+  }
+
+  private delete<T>(url: string): Promise<T> {
+    return axios.delete(url);
   }
 
   // private put<T, M>(

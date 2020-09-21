@@ -2,13 +2,13 @@ import * as React from 'react';
 import classnames from 'classnames';
 import { useDropzone } from 'react-dropzone';
 
-import { SvgIcon } from '../SvgIcon';
-import { Button } from '../Button';
+import { SvgIcon } from '../../../SvgIcon';
+import { Button } from '../../../Button';
 
-import { ReactComponent as DocumentsAdd } from '../../../assets/images/svg/documents-add.svg';
+import { ReactComponent as DocumentsAdd } from '../../../../../assets/images/svg/documents-add.svg';
 
 import './style.scss';
-import { fileUploadService } from './file-upload.service';
+import { fileUploadService } from '../file-upload.service';
 
 type TDropZoneProps = {};
 
