@@ -120,8 +120,8 @@ export const MVP02 = WithAuth(
               готово.
             </ProcessNotification>
           )}
+          <TendersList />
         </div>
-        <TendersList />
         <Whisper
           placement="topEnd"
           trigger="hover"
