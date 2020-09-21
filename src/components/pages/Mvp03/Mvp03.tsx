@@ -1,7 +1,5 @@
 import * as React from 'react';
 
-import { Tooltip, Whisper } from 'rsuite';
-
 import { PageLayout } from '../../../components/common/PageLayout';
 import { Button } from '../../../components/common/Button';
 import { IconButton } from '../../../components/common/IconButton';
@@ -11,7 +9,6 @@ import { Card, CardContent, CardFooter } from '../../../components/common/Card';
 
 import { ReactComponent as Featured } from '../../../assets/images/svg/featured.svg';
 import { ReactComponent as FeaturedOutline } from '../../../assets/images/svg/featured-outline.svg';
-import { ReactComponent as Plus } from '../../../assets/images/svg/plus.svg';
 
 import './style.scss';
 import { WithAuth } from '../../../WithAuth';
@@ -217,22 +214,6 @@ export const MVP03 = WithAuth(
         </div>
 
         <GuaranteeModal show={modalOpen} toggle={modalToggle} />
-
-        <Whisper
-          placement="topEnd"
-          trigger="hover"
-          speaker={
-            <Tooltip className="mvp-tooltip">Заявка на гарантию</Tooltip>
-          }
-        >
-          <IconButton
-            onClick={modalToggle}
-            className="guarantee-add-button"
-            skin="primary"
-            circle
-            icon={<Plus width="24" height="24" />}
-          />
-        </Whisper>
       </PageLayout>
     );
   }

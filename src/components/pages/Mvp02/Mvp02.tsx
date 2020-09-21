@@ -4,8 +4,13 @@ import { PageLayout } from '../../../components/common/PageLayout';
 import { Button } from '../../../components/common/Button';
 import { SvgIcon } from '../../../components/common/SvgIcon';
 import { ProcessNotification } from '../../../components/common/ProcessNotification';
+import { Tooltip, Whisper } from 'rsuite';
+import { IconButton } from '../../../components/common/IconButton';
+import { ReactComponent as Plus } from '../../../assets/images/svg/plus.svg';
+
 import {
   CompanyAccounts,
+  GuaranteeModal,
   UploadModal
 } from '../../../components/common/Modals';
 import {
@@ -22,6 +27,7 @@ import { ReactComponent as DocumentsAdd } from '../../../assets/images/svg/docum
 import './style.scss';
 import { WithAuth } from '../../../WithAuth';
 import { userCompanyDataSended } from '../../../stores';
+import { TendersList } from './components';
 
 export const MVP02 = WithAuth(
   (): JSX.Element => {
@@ -110,7 +116,23 @@ export const MVP02 = WithAuth(
             </ProcessNotification>
           )}
         </div>
-
+        <TendersList />
+        <Whisper
+          placement="topEnd"
+          trigger="hover"
+          speaker={
+            <Tooltip className="mvp-tooltip">Заявка на гарантию</Tooltip>
+          }
+        >
+          <IconButton
+            onClick={modalToggle}
+            className="guarantee-add-button"
+            skin="primary"
+            circle
+            icon={<Plus width="24" height="24" />}
+          />
+        </Whisper>
+        <GuaranteeModal show={modalOpen} toggle={modalToggle} />
         <UploadModal show={modalOpen} toggle={modalToggle} />
         <CompanyAccounts show={modalResultOpen} toggle={modalResultToggle} />
       </PageLayout>

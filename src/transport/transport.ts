@@ -7,7 +7,8 @@ import {
   TCompanyAccountRequest,
   TFileUploadResponse,
   TCompanyFileResponse,
-  TUserCompaniesResponse
+  TUserCompaniesResponse,
+  TCompanyRecommendsResponse
 } from './models';
 
 const target = 'http://35.228.15.198';
@@ -72,6 +73,10 @@ class B4Transport {
       file,
       company
     });
+  }
+
+  public getRecommends(): Promise<TCompanyRecommendsResponse[]> {
+    return this.get(`${target}${B4Transport.ENDPOINT}/company_recommends`);
   }
 
   private get<T>(url: string, config: AxiosRequestConfig = {}): Promise<T> {
