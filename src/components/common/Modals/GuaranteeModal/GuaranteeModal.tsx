@@ -112,7 +112,7 @@ export function GuaranteeModal({
                   type="text"
                   placeholder="дд/мм/гггг"
                   format="DD-MM-YYYY"
-                  onSelect={setFieldUpdater('startDate')}
+                  onOk={setFieldUpdater('startDate')}
                 />
               </FormGroup>
             </div>
@@ -124,13 +124,15 @@ export function GuaranteeModal({
                 <DatePicker
                   placeholder="дд/мм/гггг"
                   format="DD-MM-YYYY"
-                  onSelect={setFieldUpdater('endDate')}
+                  onOk={setFieldUpdater('endDate')}
                 />
               </FormGroup>
             </div>
             <div className="form-column bank-guarantee-form">
               <ControlLabel className="form-label">Итого дней:</ControlLabel>
-              <div className="bank-guarantee-form-total-days">17</div>
+              <div className="bank-guarantee-form-total-days">
+                {daysCounter}
+              </div>
             </div>
           </div>
 
@@ -177,7 +179,7 @@ export function GuaranteeModal({
                 <DatePicker
                   placeholder="дд/мм/гггг"
                   format="DD-MM-YYYY"
-                  onSelect={setFieldUpdater('purchaseDate')}
+                  onOk={setFieldUpdater('purchaseDate')}
                 />
               </FormGroup>
             </div>
