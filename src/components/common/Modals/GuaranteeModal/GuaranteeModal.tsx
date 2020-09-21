@@ -126,8 +126,9 @@ export function GuaranteeModal({
                   type="text"
                   placeholder="дд/мм/гггг"
                   format="DD-MM-YYYY"
+                  oneTap
                   value={data.startDate || void 0}
-                  onOk={setDateUpdater('startDate')}
+                  onSelect={setDateUpdater('startDate')}
                 />
               </FormGroup>
             </div>
@@ -139,7 +140,8 @@ export function GuaranteeModal({
                 <DatePicker
                   placeholder="дд/мм/гггг"
                   format="DD-MM-YYYY"
-                  onOk={setDateUpdater('endDate')}
+                  oneTap
+                  onSelect={setDateUpdater('endDate')}
                   value={data.endDate || void 0}
                 />
               </FormGroup>
@@ -185,7 +187,8 @@ export function GuaranteeModal({
                 <DatePicker
                   placeholder="дд/мм/гггг"
                   format="DD-MM-YYYY"
-                  onOk={setDateUpdater('purchaseDate')}
+                  oneTap
+                  onSelect={setDateUpdater('purchaseDate')}
                 />
               </FormGroup>
             </div>
