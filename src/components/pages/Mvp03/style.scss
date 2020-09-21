@@ -272,7 +272,8 @@
   }
 
   &-type {
-    width: 420px;
+    display: flex;
+    justify-content: space-between;
   }
 
   &-total-days {

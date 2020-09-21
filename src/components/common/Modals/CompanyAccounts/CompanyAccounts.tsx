@@ -68,11 +68,10 @@ export function CompanyAccounts({
                 onChange={handleAccountNumberType}
               />
             </div>
-
-            <Button skin="inverse" onClick={handleSumbit}>
-              Добавить
-            </Button>
           </FormGroup>
+          <Button skin="inverse" onClick={handleSumbit}>
+            Добавить
+          </Button>
         </Form>
         <div className="accounts-list-wrapper">
           <AccountsList />
