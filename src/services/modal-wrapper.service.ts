@@ -3,7 +3,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export type TModalWrapperState = {
   component: JSX.Element | null;
   isOpened: boolean;
-  animateWrapper: boolean;
+  animateWrapper?: boolean;
   backgroundColor?: string;
 };
 
@@ -32,7 +32,7 @@ class ModalWrapperService {
     });
   }
 
-  public closeModal(): void {
+  public closeModal = (): void => {
     this._modalState$.next({
       ...this.state,
       isOpened: false

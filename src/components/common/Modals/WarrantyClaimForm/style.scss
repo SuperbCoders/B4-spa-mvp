@@ -1,0 +1,68 @@
+.warranty-form-wrapper {
+  padding: 0 50px;
+  width: 800px;
+}
+
+.warranty-form-title {
+  text-align: center;
+  border-bottom: 0;
+  font-weight: 500;
+  font-size: 26px;
+  color: #000;
+  position: relative;
+  font-family: 'Museo Sans Cyrl', Arial, sans-serif;
+}
+
+.warranty-form {
+  color: #242232;
+  font-family: 'TT Norms', Arial, sans-serif;
+  margin-top: 60px;
+
+  &-disclaimer {
+    margin-bottom: 30px;
+    font-size: 18px;
+    color: #000;
+  }
+
+  &-type {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &-total-days {
+    font-size: 26px;
+    line-height: 40px;
+    color: #000;
+  }
+
+  &-submit {
+    width: 400px;
+  }
+
+  &-columns {
+    display: flex;
+    margin-left: -15px;
+    margin-right: -15px;
+
+    &:not(:last-child) {
+      margin-bottom: 30px;
+    }
+  }
+
+  &-column {
+    flex-basis: 100%;
+
+    padding: 0 15px;
+  }
+
+  &-group {
+    margin-bottom: 0;
+    &:not(:last-child) {
+      margin-bottom: 30px;
+    }
+  }
+
+  &-label {
+    font-size: 16px;
+  }
+}

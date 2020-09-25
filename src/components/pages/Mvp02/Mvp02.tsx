@@ -10,7 +10,6 @@ import { ReactComponent as Plus } from '../../../assets/images/svg/plus.svg';
 
 import {
   CompanyAccounts,
-  GuaranteeModal,
   UploadModal
 } from '../../../components/common/Modals';
 import {
@@ -28,14 +27,15 @@ import './style.scss';
 import { WithAuth } from '../../../WithAuth';
 import { userCompanyDataSended } from '../../../stores';
 import { TendersList } from './components';
+import { ModalsOpenerService } from './modals-opener.service';
 
 export const MVP02 = WithAuth(
   (): JSX.Element => {
     const [uploadModalOpen, processUploadModalOpen] = React.useState(false);
     const [modalResultOpen, processModalResultOpen] = React.useState(false);
-    const [guaranteeModalOpen, processGuaranteeModalOpen] = React.useState(
-      false
-    );
+    // const [guaranteeModalOpen, processGuaranteeModalOpen] = React.useState(
+    //   false
+    // );
 
     const [documentsSended, setDocumentsSended] = React.useState(false);
     const [companyAccountsSended, setCompanyAccountsSended] = React.useState(
@@ -46,8 +46,8 @@ export const MVP02 = WithAuth(
       processUploadModalOpen(!uploadModalOpen);
     const modalResultToggle = (): void =>
       processModalResultOpen(!modalResultOpen);
-    const guaranteeModalToggle = (): void =>
-      processGuaranteeModalOpen(!guaranteeModalOpen);
+    // const guaranteeModalToggle = (): void =>
+    //   processGuaranteeModalOpen(!guaranteeModalOpen);
 
     React.useEffect((): VoidFunction => {
       const sub1 = userCompanyDataSended.documentsSended$.subscribe(
@@ -130,17 +130,13 @@ export const MVP02 = WithAuth(
           }
         >
           <IconButton
-            onClick={guaranteeModalToggle}
+            onClick={ModalsOpenerService.openWarrantyModal}
             className="guarantee-add-button"
             skin="primary"
             circle
             icon={<Plus width="24" height="24" />}
           />
         </Whisper>
-        <GuaranteeModal
-          show={guaranteeModalOpen}
-          toggle={guaranteeModalToggle}
-        />
         <UploadModal show={uploadModalOpen} toggle={uploadModalToggle} />
         <CompanyAccounts show={modalResultOpen} toggle={modalResultToggle} />
       </PageLayout>

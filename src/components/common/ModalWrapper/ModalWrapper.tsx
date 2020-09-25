@@ -4,8 +4,10 @@ import { modalWrapperService, TModalWrapperState } from '../../../services';
 import classnames from 'classnames';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { ReactComponent as Cross } from './cross.svg';
 
 import './style.scss';
+import { SvgIcon } from '../SvgIcon';
 
 const ANIMATION_FADE_TIME_MS = 300;
 
@@ -29,8 +31,6 @@ export class ModalWrapper extends React.Component<{}, TModalWrapperState> {
     this.destroy$.complete();
   }
 
-  private handleCloseModal = (): void => modalWrapperService.closeModal();
-
   public render(): React.ReactNode {
     const wrapperClassName = classnames({
       reactModalContentAnimatedFadeIn:
@@ -52,10 +52,20 @@ export class ModalWrapper extends React.Component<{}, TModalWrapperState> {
         isOpen={this.state.isOpened}
         shouldCloseOnOverlayClick
         shouldCloseOnEsc
-        onRequestClose={this.handleCloseModal}
+        onRequestClose={modalWrapperService.closeModal}
         shouldFocusAfterRender={false}
       >
-        {this.state.component}
+        <div className="modalWrapperContent">
+          {this.state.component}
+          <div
+            className="modalWrapperCloseIconContainer"
+            onClick={modalWrapperService.closeModal}
+          >
+            <SvgIcon>
+              <Cross width="24" height="24" />
+            </SvgIcon>
+          </div>
+        </div>
       </Modal>
     );
   }

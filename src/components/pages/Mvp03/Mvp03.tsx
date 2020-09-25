@@ -3,7 +3,7 @@ import * as React from 'react';
 import { PageLayout } from '../../../components/common/PageLayout';
 import { Button } from '../../../components/common/Button';
 import { IconButton } from '../../../components/common/IconButton';
-import { GuaranteeModal } from '../../../components/common/Modals';
+// import { GuaranteeModal } from '../../../components/common/Modals';
 
 import { Card, CardContent, CardFooter } from '../../../components/common/Card';
 
@@ -15,9 +15,6 @@ import { WithAuth } from '../../../WithAuth';
 
 export const MVP03 = WithAuth(
   (): JSX.Element => {
-    const [modalOpen, processModalOpen] = React.useState(false);
-    const modalToggle = (): void => processModalOpen(!modalOpen);
-
     return (
       <PageLayout>
         <div className="mvp-content">
@@ -212,8 +209,6 @@ export const MVP03 = WithAuth(
             </div>
           </section>
         </div>
-
-        <GuaranteeModal show={modalOpen} toggle={modalToggle} />
       </PageLayout>
     );
   }
