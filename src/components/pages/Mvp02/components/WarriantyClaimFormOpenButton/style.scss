@@ -1,0 +1,25 @@
+.guarantee-add-button {
+  position: fixed !important;
+
+  left: calc(100vw - 97px);
+  bottom: 25px;
+
+  box-shadow: 0px 24px 32px rgba(21, 35, 56, 0.16);
+}
+
+.mvp-tooltip {
+  margin-top: -13px !important;
+
+  .rs-tooltip-inner {
+    padding: 7px 17px;
+    font-size: 12px;
+    line-height: 14px;
+    background: black;
+    font-family: 'TT Norms', Arial, sans-serif;
+  }
+
+  .rs-tooltip-arrow {
+    right: 18px !important;
+    border-top-color: black !important;
+  }
+}

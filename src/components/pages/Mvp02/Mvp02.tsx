@@ -4,9 +4,6 @@ import { PageLayout } from '../../../components/common/PageLayout';
 import { Button } from '../../../components/common/Button';
 import { SvgIcon } from '../../../components/common/SvgIcon';
 import { ProcessNotification } from '../../../components/common/ProcessNotification';
-import { Tooltip, Whisper } from 'rsuite';
-import { IconButton } from '../../../components/common/IconButton';
-import { ReactComponent as Plus } from '../../../assets/images/svg/plus.svg';
 
 import {
   Card,
@@ -22,7 +19,7 @@ import { ReactComponent as DocumentsAdd } from '../../../assets/images/svg/docum
 import './style.scss';
 import { WithAuth } from '../../../WithAuth';
 import { userCompanyDataSended } from '../../../stores';
-import { TendersList } from './components';
+import { TendersList, WarriantyClaimFormOpenButton } from './components';
 import { ModalsOpenerService } from './modals-opener.service';
 
 export const MVP02 = WithAuth(
@@ -124,21 +121,7 @@ export const MVP02 = WithAuth(
           )}
           <TendersList />
         </div>
-        <Whisper
-          placement="topEnd"
-          trigger="hover"
-          speaker={
-            <Tooltip className="mvp-tooltip">Заявка на гарантию</Tooltip>
-          }
-        >
-          <IconButton
-            onClick={ModalsOpenerService.openWarrantyModal}
-            className="guarantee-add-button"
-            skin="primary"
-            circle
-            icon={<Plus width="24" height="24" />}
-          />
-        </Whisper>
+        <WarriantyClaimFormOpenButton />
       </PageLayout>
     );
   }
