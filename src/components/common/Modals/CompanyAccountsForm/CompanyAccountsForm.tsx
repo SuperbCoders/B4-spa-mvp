@@ -1,18 +1,14 @@
 import * as React from 'react';
 
-import { Modal, Form, FormGroup, ControlLabel, FormControl } from 'rsuite';
+import { Form, FormGroup, ControlLabel, FormControl } from 'rsuite';
 import { TCompanyAccountRequest } from '../../../../transport';
 
 import { Button } from '../../Button';
-import { AccountsList } from './AccountsList';
+import { AccountsList, BankSelect } from './components';
 import { AccountNumberAccepter } from './field-accepters';
-import { BankSelect } from './BankSelect';
-import { accountsServiceEditor } from './accounts-editor.service';
+import { accountsServiceEditor } from './services';
 
-type TGuaranteeModalProps = {
-  toggle: VoidFunction;
-  show: boolean;
-};
+import './style.scss';
 
 const initialState = {
   bankName: '',
@@ -20,10 +16,7 @@ const initialState = {
   bik: ''
 };
 
-export function CompanyAccounts({
-  show,
-  toggle
-}: TGuaranteeModalProps): JSX.Element {
+export function CompanyAccountsForm(): JSX.Element {
   const [state, setState] = React.useState<
     Omit<TCompanyAccountRequest, 'company'>
   >(initialState);
@@ -41,18 +34,11 @@ export function CompanyAccounts({
   }, []);
 
   return (
-    <Modal
-      dialogClassName="modal guarantee-modal"
-      overflow={false}
-      show={show}
-      onHide={toggle}
-      size="lg"
-      backdrop={true}
-    >
-      <Modal.Header>Счета в компании</Modal.Header>
-      <Modal.Body>
-        <Form className="form bank-guarantee-form">
-          <FormGroup className="form-group bank-guarantee-form-type">
+    <div className="company-accounts-form-wrapper">
+      <div className="company-accounts-form-title">Счета в компании</div>
+      <div className="company-accounts-form-content">
+        <Form className="company-accounts-form">
+          <FormGroup className="company-accounts-form-fields">
             <div className="form-field-row">
               <ControlLabel className="form-label">Банк</ControlLabel>
               <BankSelect
@@ -80,7 +66,7 @@ export function CompanyAccounts({
             onSelectEdit={accountsServiceEditor.handleSelectEditAccount}
           />
         </div>
-      </Modal.Body>
-    </Modal>
+      </div>
+    </div>
   );
 }

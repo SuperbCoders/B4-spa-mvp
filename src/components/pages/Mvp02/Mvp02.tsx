@@ -8,7 +8,6 @@ import { Tooltip, Whisper } from 'rsuite';
 import { IconButton } from '../../../components/common/IconButton';
 import { ReactComponent as Plus } from '../../../assets/images/svg/plus.svg';
 
-import { CompanyAccounts } from '../../../components/common/Modals';
 import {
   Card,
   CardTitle,
@@ -29,7 +28,7 @@ import { ModalsOpenerService } from './modals-opener.service';
 export const MVP02 = WithAuth(
   (): JSX.Element => {
     // const [uploadModalOpen, processUploadModalOpen] = React.useState(false);
-    const [modalResultOpen, processModalResultOpen] = React.useState(false);
+    // const [modalResultOpen, processModalResultOpen] = React.useState(false);
     // const [guaranteeModalOpen, processGuaranteeModalOpen] = React.useState(
     //   false
     // );
@@ -41,8 +40,8 @@ export const MVP02 = WithAuth(
 
     // const uploadModalToggle = (): void =>
     //   processUploadModalOpen(!uploadModalOpen);
-    const modalResultToggle = (): void =>
-      processModalResultOpen(!modalResultOpen);
+    // const modalResultToggle = (): void =>
+    //   processModalResultOpen(!modalResultOpen);
     // const guaranteeModalToggle = (): void =>
     //   processGuaranteeModalOpen(!guaranteeModalOpen);
 
@@ -81,7 +80,10 @@ export const MVP02 = WithAuth(
                 </CardContent>
 
                 <CardControls position="right">
-                  <Button theme="light" onClick={modalResultToggle}>
+                  <Button
+                    theme="light"
+                    onClick={ModalsOpenerService.openCompanyAccountsForm}
+                  >
                     Перейти
                   </Button>
                 </CardControls>
@@ -137,7 +139,6 @@ export const MVP02 = WithAuth(
             icon={<Plus width="24" height="24" />}
           />
         </Whisper>
-        <CompanyAccounts show={modalResultOpen} toggle={modalResultToggle} />
       </PageLayout>
     );
   }

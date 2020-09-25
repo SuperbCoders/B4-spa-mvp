@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ReactComponent as Pencil } from './shape.svg';
-import { SvgIcon } from '../../SvgIcon';
-import { TCompanyAccount } from '../../../../transport';
+import { SvgIcon } from '../../../../SvgIcon';
+import { TCompanyAccount } from '../../../../../../transport';
 
 type TAccountsListItem = {
   onSelectEdit: (account: TCompanyAccount) => void;

@@ -18,7 +18,7 @@ export function AccountNumberAccepter({
       mask="9999999999999999"
       className="rs-input big-input"
       maskChar={null}
-      style={{ width: '420px' }}
+      style={{ width: '343px' }}
       onChange={handleChange}
       {...props}
     />

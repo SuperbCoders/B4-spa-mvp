@@ -1,5 +1,6 @@
 import { modalWrapperService } from '../../../services';
 import {
+  CompanyAccountsForm,
   UploadCompanyDocumentsForm,
   WarrantyClaimForm
 } from '../../common/Modals';
@@ -14,5 +15,9 @@ export abstract class ModalsOpenerService {
     modalWrapperService.openModal({
       component: <UploadCompanyDocumentsForm />
     });
+  }
+
+  public static openCompanyAccountsForm(): void {
+    modalWrapperService.openModal({ component: <CompanyAccountsForm /> });
   }
 }

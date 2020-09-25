@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { TCompanyAccount } from '../../../../transport';
-import { companyAccountsService } from './company-accounts.service';
+import { TCompanyAccount } from '../../../../../../transport';
+import { companyAccountsService } from '../../services';
 import './style.scss';
 import { AccountsListItem } from './AccountsListItem';
 

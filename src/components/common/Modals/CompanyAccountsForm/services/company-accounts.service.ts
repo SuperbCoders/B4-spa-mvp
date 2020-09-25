@@ -4,13 +4,13 @@ import {
   TCompanyAccountRequest,
   TCompanyInn,
   TCompanyLandingInfo
-} from '../../../../transport';
+} from '../../../../../transport';
 import { BehaviorSubject, Observable } from 'rxjs';
 import {
   currentCompanyStorage,
   firebaseStore,
   userCompanyDataSended
-} from '../../../../stores';
+} from '../../../../../stores';
 
 class CompanyAccountsService {
   private accounts: TCompanyAccount[] = [];

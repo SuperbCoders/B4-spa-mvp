@@ -1,5 +1,5 @@
 import { BehaviorSubject, Observable } from 'rxjs';
-import { TCompanyAccountRequest } from '../../../../transport';
+import { TCompanyAccountRequest } from '../../../../../transport';
 import { companyAccountsService } from './company-accounts.service';
 
 const initialState = {
