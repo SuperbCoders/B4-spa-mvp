@@ -39,7 +39,10 @@ export function Landing({ match }: RouteChildrenProps): JSX.Element {
   }, []);
 
   const onLoginButtonClick = (): void => {
-    modalWrapperService.openModal({ component: <LoginForm /> });
+    modalWrapperService.openModal({
+      component: <LoginForm />,
+      backgroundColor: 'rgba(86, 125, 244, 0.95)'
+    });
   };
 
   return info ? (
