@@ -9,6 +9,7 @@
   position: fixed;
   display: flex;
   justify-content: center;
+  align-items: center;
   overflow-x: auto;
   background-color: #fcfcfa;
 }
@@ -18,7 +19,6 @@
   outline: none;
   display: table;
   opacity: 0;
-  top: 10vh;
 }
 
 .reactModalOverlayCustomFadeIn {
@@ -49,6 +49,7 @@
   position: absolute;
   right: 35px;
   top: 35px;
+  cursor: pointer;
 }
 
 @keyframes overlayBackgroundFadeIn {
