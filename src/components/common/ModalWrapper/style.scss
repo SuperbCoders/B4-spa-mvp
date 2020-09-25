@@ -1,0 +1,82 @@
+:global {
+  .ReactModal__Body--open {
+    overflow: hidden;
+  }
+  .ReactModal__Overlay {
+    top: 0;
+    z-index: 9999999;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    overflow-x: auto;
+    background-color: transparent;
+  }
+
+  .ReactModal__Content {
+    position: relative;
+    outline: none;
+    display: table;
+    opacity: 0;
+    top: 10vh;
+  }
+}
+
+:local {
+  .reactModalOverlayCustomFadeIn {
+    animation: overlayBackgroundFadeIn 300ms ease-in 0s forwards;
+  }
+  .reactModalOverlayCustomFadeOut {
+    animation: overlayBackgroundFadeOut 300ms ease-in 0s forwards;
+  }
+  .reactModalContentAnimatedFadeIn {
+    animation: contentOpacityFadeIn 300ms ease-in 0s forwards;
+  }
+  .reactModalContentAnimatedFadeOut {
+    animation: contentOpacityFadeOut 300ms ease-in 0s forwards;
+  }
+  .reactModalContentIsVisible {
+    opacity: 1;
+  }
+
+  @keyframes overlayBackgroundFadeIn {
+    0% {
+      background-color: transparent;
+    }
+
+    100% {
+      background-color: rgba(0, 0, 0, 0.7);
+    }
+  }
+
+  @keyframes overlayBackgroundFadeOut {
+    0% {
+      background-color: rgba(0, 0, 0, 0.7);
+    }
+
+    100% {
+      background-color: transparent;
+    }
+  }
+
+  @keyframes contentOpacityFadeIn {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes contentOpacityFadeOut {
+    0% {
+      opacity: 1;
+    }
+
+    100% {
+      opacity: 0;
+    }
+  }
+}

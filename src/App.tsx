@@ -13,6 +13,7 @@ import { ModalsStore } from './stores';
 import { routerHistory } from './router-history';
 
 import ruRU from 'rsuite/lib/IntlProvider/locales/ru_RU';
+import { ModalWrapper } from './components/common/ModalWrapper';
 
 function AppComponent(): JSX.Element {
   return (
@@ -34,6 +35,7 @@ function AppComponent(): JSX.Element {
             show={ModalsStore.instance.isLoginModalOpened}
             toggle={ModalsStore.instance.toggleLoginModal}
           />
+          <ModalWrapper/>
         </Router>
       </ErrorBoundary>
     </IntlProvider>
