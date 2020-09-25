@@ -15,7 +15,9 @@ import { LandingDataService } from './landing-data.service';
 import './style.scss';
 import { TCompanyInn, TCompanyLandingInfo } from '../../../transport';
 import { RouteChildrenProps } from 'react-router-dom';
-import { landingCurrentCompanyStorage, ModalsStore } from '../../../stores';
+import { landingCurrentCompanyStorage } from '../../../stores';
+import { modalWrapperService } from '../../../services';
+import { LoginForm } from '../../common/Forms';
 
 export const COMPANY_INN_ROUTE_KEY: string = 'company';
 
@@ -37,7 +39,7 @@ export function Landing({ match }: RouteChildrenProps): JSX.Element {
   }, []);
 
   const onLoginButtonClick = (): void => {
-    ModalsStore.instance.openLoginModal();
+    modalWrapperService.openModal({ component: <LoginForm /> });
   };
 
   return info ? (

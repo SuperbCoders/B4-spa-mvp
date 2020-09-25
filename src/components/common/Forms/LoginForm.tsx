@@ -8,6 +8,9 @@ import {
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { CodeConfirmForm, PhoneTypingForm } from './components';
+import { Logo } from '../Logo';
+
+import './style.scss';
 
 type TLoginFormProps = {
   done?: VoidFunction;
@@ -60,24 +63,29 @@ export class LoginForm extends React.Component<
     const { currentStep, errorText, isRequestProcessing } = this.state;
 
     return (
-      <>
-        {currentStep === STEPS.PHONE_NUMBER_STEP && (
-          <PhoneTypingForm
-            errorText={errorText}
-            isRequestProcessing={isRequestProcessing}
-            onSubmit={this.handleFormSubmit}
-            controlName={FormControlNames.PHONE}
-          />
-        )}
-        {currentStep === STEPS.SMS_CODE_STEP && (
-          <CodeConfirmForm
-            errorText={errorText}
-            isRequestProcessing={isRequestProcessing}
-            onSubmit={this.handleFormSubmit}
-            controlName={FormControlNames.CODE}
-          />
-        )}
-      </>
+      <div className="login-form-wrapper">
+        <div className="login-form-title-wrapper">
+          <Logo mode="narrow" className="login-form-logo" />
+        </div>
+        <div className="login-form">
+          {currentStep === STEPS.PHONE_NUMBER_STEP && (
+            <PhoneTypingForm
+              errorText={errorText}
+              isRequestProcessing={isRequestProcessing}
+              onSubmit={this.handleFormSubmit}
+              controlName={FormControlNames.PHONE}
+            />
+          )}
+          {currentStep === STEPS.SMS_CODE_STEP && (
+            <CodeConfirmForm
+              errorText={errorText}
+              isRequestProcessing={isRequestProcessing}
+              onSubmit={this.handleFormSubmit}
+              controlName={FormControlNames.CODE}
+            />
+          )}
+        </div>
+      </div>
     );
   }
 }

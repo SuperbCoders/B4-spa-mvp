@@ -50,6 +50,7 @@ export class ModalWrapper extends React.Component<{}, TModalWrapperState> {
         className={wrapperClassName}
         overlayClassName={overlayClassName}
         isOpen={this.state.isOpened}
+        style={{ overlay: { backgroundColor: this.state.backgroundColor } }}
         shouldCloseOnOverlayClick
         shouldCloseOnEsc
         onRequestClose={modalWrapperService.closeModal}

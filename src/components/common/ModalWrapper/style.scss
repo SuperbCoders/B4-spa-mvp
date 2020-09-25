@@ -10,7 +10,7 @@
   display: flex;
   justify-content: center;
   overflow-x: auto;
-  background-color: transparent;
+  background-color: #fcfcfa;
 }
 
 .ReactModal__Content {
@@ -53,21 +53,21 @@
 
 @keyframes overlayBackgroundFadeIn {
   0% {
-    background-color: transparent;
+    opacity: 0;
   }
 
   100% {
-    background-color: #fcfcfa;
+    opacity: 1;
   }
 }
 
 @keyframes overlayBackgroundFadeOut {
   0% {
-    background-color: #fcfcfa;
+    opacity: 1;
   }
 
   100% {
-    background-color: transparent;
+    opacity: 0;
   }
 }
 

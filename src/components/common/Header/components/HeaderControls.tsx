@@ -4,7 +4,9 @@ import { IconButton } from '../../IconButton';
 
 // import { ReactComponent as Featured } from '../../../../assets/images/svg/featured.svg';
 import { ReactComponent as Logout } from '../../../../assets/images/svg/logout.svg';
-import { firebaseStore, ModalsStore } from '../../../../stores';
+import { firebaseStore } from '../../../../stores';
+import { modalWrapperService } from '../../../../services';
+import { LoginForm } from '../../Forms';
 
 export function HeaderControls(): JSX.Element {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
@@ -16,7 +18,10 @@ export function HeaderControls(): JSX.Element {
   }, []);
 
   const onLoginButtonClick = (): void => {
-    ModalsStore.instance.openLoginModal();
+    modalWrapperService.openModal({
+      component: <LoginForm />,
+      backgroundColor: 'rgba(86, 125, 244, 0.95)'
+    });
   };
 
   const onLogoutButtonClick = (): void => firebaseStore.signOut();
