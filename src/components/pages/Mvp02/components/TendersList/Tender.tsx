@@ -8,6 +8,8 @@ import {
 // import { IconButton } from '../../../../../components/common/IconButton';
 import { Button } from '../../../../../components/common/Button';
 
+import './style.scss';
+
 // import { ReactComponent as FeaturedOutline } from '../../../../../assets/images/svg/featured-outline.svg';
 
 export function Tender(props: TCompanyRecommendsResponse): JSX.Element {
