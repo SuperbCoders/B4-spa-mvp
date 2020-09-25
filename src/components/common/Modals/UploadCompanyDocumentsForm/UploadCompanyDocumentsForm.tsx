@@ -1,17 +1,14 @@
 import * as React from 'react';
 
-import { Modal } from 'rsuite';
+import { modalWrapperService } from '../../../../services';
 import { userCompanyDataSended } from '../../../../stores';
 import { Button } from '../../Button';
 import { Dropzone } from './Dropzone';
 import { FileList } from './FilesList';
 
-type TUploadMpdalProps = {
-  toggle: VoidFunction;
-  show: boolean;
-};
+import './style.scss';
 
-export function UploadModal({ show, toggle }: TUploadMpdalProps): JSX.Element {
+export function UploadCompanyDocumentsForm(): JSX.Element {
   const [isUploaded, setIsUploaded] = React.useState(false);
 
   React.useEffect((): VoidFunction => {
@@ -21,25 +18,20 @@ export function UploadModal({ show, toggle }: TUploadMpdalProps): JSX.Element {
   }, []);
 
   return (
-    <Modal
-      dialogClassName="modal upload-modal"
-      overflow={false}
-      size="lg"
-      show={show}
-      onHide={toggle}
-      backdrop={true}
-    >
-      <Modal.Header>{!isUploaded && `Приложить сканы документов`}</Modal.Header>
-      <Modal.Body>
+    <div className="upload-documents-form-wrapper">
+      <div className="upload-documents-form-title">
+        {!isUploaded && `Приложить сканы документов`}
+      </div>
+      <div>
         {!isUploaded && (
-          <div>
-            <div className="upload-modal-row">
-              <div className="upload-modal-dropzone-col">
+          <div className="upload-documents-form-content">
+            <div className="upload-documents-form-row">
+              <div className="upload-documents-form-dropzone-col">
                 <div className="mvp-dropzone">
                   <Dropzone />
                 </div>
               </div>
-              <div className="upload-modal-disclaimer-col">
+              <div className="upload-documents-form-disclaimer-col">
                 <div className="documents-disclaimer">
                   <h3 className="documents-disclaimer-title">
                     Список документов, которые необходимо приложить
@@ -77,13 +69,13 @@ export function UploadModal({ show, toggle }: TUploadMpdalProps): JSX.Element {
             <Button
               skin="light"
               className="info-modal-results-button"
-              onClick={toggle}
+              onClick={modalWrapperService.closeModal}
             >
               Вернуться на главную
             </Button>
           </div>
         )}
-      </Modal.Body>
-    </Modal>
+      </div>
+    </div>
   );
 }

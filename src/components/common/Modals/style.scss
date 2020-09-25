@@ -2,34 +2,6 @@
   //
 }
 
-.upload-modal {
-  &-row {
-    display: flex;
-    flex-wrap: nowrap;
-    margin-left: -12px;
-    margin-right: -12px;
-
-    > * {
-      background: #fff;
-      border: 1px solid #ececf4;
-      border-radius: 20px;
-      padding: 30px;
-    }
-  }
-
-  &-dropzone-col {
-    width: 50%;
-    margin-left: 12px;
-    margin-right: 12px;
-  }
-
-  &-disclaimer-col {
-    width: 50%;
-    margin-left: 12px;
-    margin-right: 12px;
-  }
-}
-
 .info-modal {
   &-results {
     color: #000;
