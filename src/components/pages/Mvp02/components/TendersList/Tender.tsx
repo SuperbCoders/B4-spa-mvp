@@ -26,7 +26,7 @@ export function Tender(props: TCompanyRecommendsResponse): JSX.Element {
                 className="tender-risk-rate"
               >
                 Вероятность победы:
-                <span className="tender-risk-rate-percent">{`${props.competitorGrowthPercent}%`}</span>
+                <span className="tender-risk-rate-percent">{`${props.probabilityOfVictory}%`}</span>
                 <span className="tender-risk-rate-cta">
                   <span role="img" aria-label="Огонь">
                     🔥
@@ -34,8 +34,8 @@ export function Tender(props: TCompanyRecommendsResponse): JSX.Element {
                   &nbsp;Давай!
                 </span>
               </Button>
-              <div className="tender-title">{props.competitorFullName}</div>
-              <div className="tender-company">{props.competitorShortName}</div>
+              <div className="tender-title">{props.topic}</div>
+              <div className="tender-company">{props.customer}</div>
             </div>
             <div className="tender-price">{`${props.total} ₽`}</div>
           </CardContent>

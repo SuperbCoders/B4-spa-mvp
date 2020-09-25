@@ -2,21 +2,21 @@ export type TCompanyRecommendsResponse = {
   id: number;
   company: string;
   /**
-   * Полное название конкурента
+   * Краткое описание тендера
    */
-  competitorFullName: string;
+  topic: string;
   /**
-   * Сокращенное название конкурента
+   * Компания, опубликовавшая тендер
    */
-  competitorShortName: string;
-  /**
-   * Рост выручки конкурента в процентах
-   */
-  competitorGrowthPercent: string;
+  customer: string;
   /**
    * Номер счета
    */
   accountNumber: string;
+  /**
+   * Вероятность победы
+   */
+  probabilityOfVictory: string;
   /**
    * Сумма
    */
