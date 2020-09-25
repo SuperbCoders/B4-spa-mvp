@@ -74,8 +74,8 @@ class B4Transport {
     });
   }
 
-  public getRecommends(): Promise<TCompanyRecommendsResponse[]> {
-    return this.get(`${B4Transport.ENDPOINT}/company_recommends`);
+  public getRecommends(inn: TCompanyInn): Promise<TCompanyRecommendsResponse[]> {
+    return this.get(`${B4Transport.ENDPOINT}/company_recommends?company=${inn}`);
   }
 
   public sendGuarantee(guarantee: TGuaranteeRequest): Promise<void> {

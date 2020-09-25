@@ -1,6 +1,8 @@
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { currentCompanyStorage, firebaseStore } from 'stores';
 import {
   b4Transport,
+  TCompanyLandingInfo,
   TCompanyRecommendsResponse
 } from '../../../../../transport';
 
@@ -14,12 +16,31 @@ class TendersService {
     TCompanyRecommendsResponse[]
   > = this._tenders$.asObservable();
 
-  public getCompanyTenders(): void {
-    b4Transport
-      .getRecommends()
-      .then((recommends: TCompanyRecommendsResponse[]): void => {
-        this._tenders$.next(recommends);
-      });
+  constructor() {
+    this.getCompanyTenders();
+  }
+
+  private getCompanyTenders(): void {
+    firebaseStore.isLoggedIn$.subscribe((isLoggedIn: boolean): void => {
+      let sub: Subscription | undefined;
+
+      if (isLoggedIn) {
+        sub = currentCompanyStorage.currentCompany$.subscribe((currentCompany: TCompanyLandingInfo | null): void => {
+          const inn = currentCompany?.inn || null;
+          const wasProcessed = currentCompany?.wasProcessed || false;
+
+          if (inn && wasProcessed) {
+            b4Transport
+            .getRecommends(inn)
+            .then((recommends: TCompanyRecommendsResponse[]): void => {
+              this._tenders$.next(recommends);
+            });
+          }
+        });
+      } else {
+        sub && sub.unsubscribe();
+      }
+    });
   }
 }
 

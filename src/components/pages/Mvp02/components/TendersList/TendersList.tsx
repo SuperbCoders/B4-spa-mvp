@@ -11,7 +11,6 @@ export const TendersList = React.memo(
 
     React.useEffect((): VoidFunction => {
       const sub = tendersService.tenders$.subscribe(setTenders);
-      tendersService.getCompanyTenders();
 
       return (): void => sub.unsubscribe();
     }, []);
