@@ -8,7 +8,7 @@
   padding-top: 10px;
   padding-right: 20px;
   padding-left: 20px;
-  background-color: #fff;
+  background-color: #fcfcfa;
   z-index: 101;
 
   @media screen and (min-width: 768px) {
@@ -41,7 +41,7 @@
   .rs-dropdown-menu {
     min-width: 100%;
   }
-  
+
   @media screen and (min-width: 768px) {
     margin-top: 0;
     width: auto;
@@ -99,23 +99,23 @@
     margin-right: 40px;
 
     &::after {
-      content: "";
+      content: '';
       position: absolute;
       display: inline-block;
       width: 2px;
       height: 31px;
-      background-color: #ECECF4;
+      background-color: #ececf4;
       border-radius: 2px;
       right: -20px;
     }
   }
 
   &.favorites {
-    color: #FFA700;
+    color: #ffa700;
   }
 
   &.logout {
-    color: #567DF4;
+    color: #567df4;
   }
 
   &.login {
