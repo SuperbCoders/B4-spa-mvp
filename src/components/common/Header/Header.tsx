@@ -6,10 +6,12 @@ import './style.scss';
 
 export function Header(): JSX.Element {
   return (
-    <header className="header">
-      <Logo className="header-logo" />
-      <CompaniesSelect />
-      <HeaderControls />
+    <header>
+      <div className="header">
+        <Logo className="header-logo" />
+        <CompaniesSelect />
+        <HeaderControls />
+      </div>
     </header>
   );
 }
