@@ -61,8 +61,8 @@ export function UploadCompanyDocumentsForm(): JSX.Element {
           buttonText="Вернуться на главную"
           text={
             <>
-              <p>Cпасибо!</p>
-              <p>Мы обрабатываем документы</p>
+              <p className="upload-success-text">Cпасибо!</p>
+              <p className="upload-success-text">Мы обрабатываем документы</p>
             </>
           }
         />

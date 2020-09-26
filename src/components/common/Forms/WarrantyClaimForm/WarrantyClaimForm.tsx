@@ -203,8 +203,10 @@ export function WarrantyClaimForm(): JSX.Element {
           buttonText="Вернуться на главную"
           text={
             <>
-              <p>Cпасибо!</p>
-              <p>Мы обрабатываем вашу заявку</p>
+              <p className="warranty-success-text">Cпасибо!</p>
+              <p className="warranty-success-text">
+                Мы обрабатываем вашу заявку
+              </p>
             </>
           }
         />
