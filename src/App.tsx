@@ -4,7 +4,7 @@ import { Router, Switch, Route, Redirect } from 'react-router-dom';
 import { IntlProvider } from 'rsuite';
 
 import { ErrorBoundary } from './ErrorBoundary';
-import { Landing, MVP01, MVP02 } from './components/pages';
+import { Landing, GreetingPage, MainPage } from './components/pages';
 import { COMPANY_INN_ROUTE_KEY } from './components/pages/Landing';
 
 import { routerHistory } from './router-history';
@@ -23,9 +23,9 @@ export function AppComponent(): JSX.Element {
               path={`/company/:${COMPANY_INN_ROUTE_KEY}`}
               component={Landing}
             />
-            <Route path="/dashboard/01" component={MVP01} />
-            <Route path="/dashboard/02" component={MVP02} />
-            <Redirect from="/" to="/dashboard/02" />
+            <Route path="/greeting" component={GreetingPage} />
+            <Route path="/main" component={MainPage} />
+            <Redirect from="/" to="/main" />
           </Switch>
           <ModalWrapper />
         </Router>

@@ -54,9 +54,7 @@ export class LoginFormService {
               modalWrapperService.closeModal();
 
               routerHistory.push(
-                landingCurrentCompanyStorage.companyInn
-                  ? '/dashboard/01'
-                  : '/dashboard/02'
+                landingCurrentCompanyStorage.companyInn ? '/greeting' : '/main'
               );
             });
         })

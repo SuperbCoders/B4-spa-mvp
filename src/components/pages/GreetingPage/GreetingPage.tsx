@@ -1,18 +1,18 @@
 import * as React from 'react';
 
-import { PageLayout } from '../../../components/common/PageLayout';
-import { AttentionAlert } from '../../../components/common/AttentionAlert';
-import { Button } from '../../../components/common/Button';
+import { PageLayout } from '../../common/PageLayout';
+import { AttentionAlert } from '../../common/AttentionAlert';
+import { Button } from '../../common/Button';
 
 import './style.scss';
 import { WithAuth } from '../../../WithAuth';
 import { routerHistory } from '../../../router-history';
 
 function goToNextPage(): void {
-  routerHistory.push('/dashboard/02');
+  routerHistory.push('/main');
 }
 
-export const MVP01 = WithAuth(
+export const GreetingPage = WithAuth(
   (): JSX.Element => {
     return (
       <PageLayout>

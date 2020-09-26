@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { PageLayout } from '../../../components/common/PageLayout';
+import { PageLayout } from '../../common/PageLayout';
 import { WithAuth } from '../../../WithAuth';
 import {
   ProcessNotificationCard,
@@ -12,7 +12,7 @@ import {
 
 import './style.scss';
 
-export const MVP02 = WithAuth(
+export const MainPage = WithAuth(
   (): JSX.Element => {
     return (
       <PageLayout>
