@@ -6,9 +6,9 @@ import './style.scss';
 
 export function Header(): JSX.Element {
   return (
-    <header>
-      <div className="header">
-        <Logo className="header-logo" />
+    <header className="page-header">
+      <div className="page-header__content">
+        <Logo className="page-header__logo" />
         <CompaniesSelect />
         <HeaderControls />
       </div>

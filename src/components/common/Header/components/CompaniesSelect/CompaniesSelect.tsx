@@ -43,7 +43,7 @@ export function CompaniesSelect(): JSX.Element | null {
   };
 
   return companies.length ? (
-    <div className="header-company" ref={ref}>
+    <div className="page-header__company" ref={ref}>
       <Dropdown
         placement="bottomEnd"
         className="header-dropdown"
