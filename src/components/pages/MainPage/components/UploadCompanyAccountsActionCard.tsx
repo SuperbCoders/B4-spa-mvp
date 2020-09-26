@@ -18,7 +18,7 @@ import { DEBOUNCE_TIME } from './consts';
 export const UploadCompanyAccountsActionCard = React.memo(
   (): JSX.Element => {
     const [companyAccountsSended, setCompanyAccountsSended] = React.useState(
-      false
+      true
     );
 
     React.useEffect((): VoidFunction => {
