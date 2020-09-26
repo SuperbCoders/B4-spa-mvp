@@ -3,12 +3,12 @@ import { BehaviorSubject, Observable } from 'rxjs';
 class UserCompanyDataSended {
   // @ts-ignore
   private _documentsSended$: BehaviorSubject<boolean> = new BehaviorSubject(
-    false
+    true
   );
   // @ts-ignore
   private _companyAccountsSended$: BehaviorSubject<
     boolean
-  > = new BehaviorSubject(false);
+  > = new BehaviorSubject(true);
 
   public companyAccountsSended$: Observable<
     boolean
