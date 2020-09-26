@@ -33,10 +33,9 @@ class ModalWrapperService {
   }
 
   public closeModal = (): void => {
-    this._modalState$.next({
-      ...this.state,
-      isOpened: false
-    });
+    this.state = { ...this.state, isOpened: false, backgroundColor: void 0 };
+
+    this._modalState$.next(this.state);
   }
 }
 
