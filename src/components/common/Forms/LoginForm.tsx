@@ -25,7 +25,7 @@ export class LoginForm extends React.Component<
   TLoginFormServiceState
 > {
   private destroy$: Subject<void> = new Subject();
-  private service: LoginFormService = new LoginFormService(this.props.done);
+  private service: LoginFormService = new LoginFormService();
   readonly state: TLoginFormServiceState = {
     isRequestProcessing: false,
     currentStep: STEPS.PHONE_NUMBER_STEP,

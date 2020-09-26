@@ -2,6 +2,7 @@ import { firebaseStore, landingCurrentCompanyStorage } from '../../../stores';
 import { auth } from 'firebase';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { routerHistory } from '../../../router-history';
+import { modalWrapperService } from '../../../services';
 
 export enum STEPS {
   PHONE_NUMBER_STEP = 'phone',
@@ -29,8 +30,6 @@ export class LoginFormService {
     TLoginFormServiceState
   > = this._state$.asObservable();
 
-  constructor(private loginProcesssEndHandler: VoidFunction | void) {}
-
   public sendFormValue(value: string): void {
     this.setState(true, this._state$.value.currentStep);
     this._state$.value.currentStep === STEPS.PHONE_NUMBER_STEP &&
@@ -52,7 +51,7 @@ export class LoginFormService {
               (): Promise<void> => landingCurrentCompanyStorage.addCompany()
             )
             .then((): void => {
-              this.loginProcesssEndHandler && this.loginProcesssEndHandler();
+              modalWrapperService.closeModal();
 
               routerHistory.push(
                 landingCurrentCompanyStorage.companyInn
