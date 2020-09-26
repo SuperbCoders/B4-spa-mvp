@@ -15,7 +15,7 @@ function goToNextPage(): void {
 export const GreetingPage = WithAuth(
   (): JSX.Element => {
     return (
-      <PageLayout>
+      <PageLayout background="main">
         <div className="mvp-01-content">
           <AttentionAlert
             title={'👋  Добро пожаловать!'}

@@ -15,7 +15,7 @@ import './style.scss';
 export const MainPage = WithAuth(
   (): JSX.Element => {
     return (
-      <PageLayout>
+      <PageLayout background="main">
         <div className="mvp-content">
           <div className="mvp-action-cards">
             <UploadCompanyAccountsActionCard />
