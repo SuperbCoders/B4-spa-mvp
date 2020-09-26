@@ -10,11 +10,9 @@ export function CodeConfirmForm({
   controlName
 }: TFormProps): JSX.Element {
   return (
-    <Form className="form login-form" onSubmit={onSubmit}>
-      <FormGroup className="form-group">
-        <ControlLabel className="form-label">
-          Код, отправленный вам по SMS
-        </ControlLabel>
+    <Form className="login-form" onSubmit={onSubmit}>
+      <FormGroup>
+        <ControlLabel>Код, отправленный вам по SMS</ControlLabel>
         <FormControl
           errorMessage={errorText}
           type="text"

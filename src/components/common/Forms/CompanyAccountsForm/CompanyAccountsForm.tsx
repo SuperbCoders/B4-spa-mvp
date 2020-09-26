@@ -36,17 +36,17 @@ export function CompanyAccountsForm(): JSX.Element {
 
   return (
     <FormWrapper title="Счета в компании">
-      <Form className="company-accounts-form">
+      <Form>
         <FormGroup className="company-accounts-form-fields">
           <div className="form-field-row">
-            <ControlLabel className="form-label">Банк</ControlLabel>
+            <ControlLabel>Банк</ControlLabel>
             <BankSelect
               onSelect={accountsServiceEditor.handleSelectBank}
               value={{ bankName: state.bankName, bik: state.bik }}
             />
           </div>
           <div className="form-field-row">
-            <ControlLabel className="form-label">Номер счета</ControlLabel>
+            <ControlLabel>Номер счета</ControlLabel>
             <FormControl
               type="text"
               required

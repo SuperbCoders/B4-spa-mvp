@@ -30,9 +30,9 @@ export function PhoneTypingForm({
   controlName
 }: TFormProps): JSX.Element {
   return (
-    <Form className="form login-form" onSubmit={onSubmit}>
-      <FormGroup className="form-group">
-        <ControlLabel className="form-label">Номер телефона</ControlLabel>
+    <Form className="login-form" onSubmit={onSubmit}>
+      <FormGroup>
+        <ControlLabel>Номер телефона</ControlLabel>
         <FormControl
           errorMessage={errorText}
           type="text"
