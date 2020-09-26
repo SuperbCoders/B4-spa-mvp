@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Form, FormGroup, FormControl, ControlLabel } from 'rsuite';
-import { Button } from '../../Button';
+import { Button } from '../../../Button';
 import { TFormProps } from './prop-types';
 
 export function CodeConfirmForm({

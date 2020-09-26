@@ -1,8 +1,11 @@
-import { firebaseStore, landingCurrentCompanyStorage } from '../../../stores';
+import {
+  firebaseStore,
+  landingCurrentCompanyStorage
+} from '../../../../stores';
 import { auth } from 'firebase';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { routerHistory } from '../../../router-history';
-import { modalWrapperService } from '../../../services';
+import { routerHistory } from '../../../../router-history';
+import { modalWrapperService } from '../../../../services';
 
 export enum STEPS {
   PHONE_NUMBER_STEP = 'phone',

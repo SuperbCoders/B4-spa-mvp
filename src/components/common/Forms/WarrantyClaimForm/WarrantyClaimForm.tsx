@@ -16,6 +16,7 @@ import { guaranteeService } from './guarantee.service';
 import { calculateDays, guaranteeTypesItems, lawSelectItems } from './utils';
 
 import './style.scss';
+import { FormWrapper, SuccessNotifier } from '../components';
 
 type TGuaranteeModalState = Omit<
   TGuaranteeRequest,
@@ -83,10 +84,7 @@ export function WarrantyClaimForm(): JSX.Element {
     0;
 
   return (
-    <div className="warranty-form-wrapper">
-      <div className="warranty-form-title">
-        {!isSended && 'Заявка на гарантию'}
-      </div>
+    <FormWrapper title={!isSended ? 'Заявка на гарантию' : ''}>
       {!isSended && (
         <Form className="warranty-form">
           <FormGroup style={{ width: '420px', marginBottom: '30px' }}>
@@ -200,21 +198,17 @@ export function WarrantyClaimForm(): JSX.Element {
         </Form>
       )}
       {isSended && (
-        <div className="info-modal-results">
-          <p>
-            Cпасибо! 
-            <br />
-            Мы обрабатываем вашу заявку
-          </p>
-          <Button
-            skin="light"
-            className="info-modal-results-button"
-            onClick={modalWrapperService.closeModal}
-          >
-            Вернуться на главную
-          </Button>
-        </div>
+        <SuccessNotifier
+          onClick={modalWrapperService.closeModal}
+          buttonText="Вернуться на главную"
+          text={
+            <>
+              <p>Cпасибо!</p>
+              <p>Мы обрабатываем вашу заявку</p>
+            </>
+          }
+        />
       )}
-    </div>
+    </FormWrapper>
   );
 }

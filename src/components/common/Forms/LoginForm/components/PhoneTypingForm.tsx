@@ -6,7 +6,7 @@ import {
   ControlLabel,
   FormControlProps
 } from 'rsuite';
-import { Button } from '../../Button';
+import { Button } from '../../../Button';
 import { TFormProps } from './prop-types';
 import MaskedInput from 'react-input-mask';
 

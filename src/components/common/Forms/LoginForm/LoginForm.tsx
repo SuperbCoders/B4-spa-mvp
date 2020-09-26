@@ -8,7 +8,7 @@ import {
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { CodeConfirmForm, PhoneTypingForm } from './components';
-import { Logo } from '../Logo';
+import { Logo } from '../../Logo';
 
 import './style.scss';
 

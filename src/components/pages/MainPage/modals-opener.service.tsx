@@ -3,7 +3,7 @@ import {
   CompanyAccountsForm,
   UploadCompanyDocumentsForm,
   WarrantyClaimForm
-} from '../../common/Modals';
+} from '../../common/Forms';
 import * as React from 'react';
 
 export abstract class ModalsOpenerService {
