@@ -18,6 +18,8 @@ import ruRU from 'rsuite/lib/IntlProvider/locales/ru_RU';
 import { ModalWrapper } from './components/common/ModalWrapper';
 import { firebaseStore } from './stores';
 
+import './app.style.scss';
+
 export function AppComponent(): JSX.Element {
   const [isLoginCheck, setIsLoginCheck] = React.useState(false);
 
