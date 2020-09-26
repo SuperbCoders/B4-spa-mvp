@@ -7,10 +7,7 @@ import './style.scss';
 export function Header(): JSX.Element {
   return (
     <header className="header">
-      <a href="/">
-        <Logo className="header-logo" />
-      </a>
-
+      <Logo className="header-logo" />
       <CompaniesSelect />
       <HeaderControls />
     </header>
