@@ -1,10 +1,25 @@
 .guarantee-add-button {
   position: fixed !important;
-
   left: calc(100vw - 97px);
   bottom: 25px;
-
   box-shadow: 0px 24px 32px rgba(21, 35, 56, 0.16);
+  display: inline-flex;
+  height: 50px !important;
+  min-width: 50px !important;
+  border: 0;
+  padding: 14px !important;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.15s ease-in;
+  border-radius: 15px;
+  overflow: visible;
+  background-color: #3742fa;
+  color: #fff;
+
+  &:hover {
+    background-color: #1e2af9;
+    color: #fff;
+  }
 }
 
 .mvp-tooltip {
