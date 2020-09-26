@@ -12,15 +12,17 @@ import { ModalsOpenerService } from '../modals-opener.service';
 
 import { ReactComponent as DocumentsAdd } from '../../../../assets/images/svg/documents-add.svg';
 import { Button } from '../../../common/Button';
+import { DEBOUNCE_TIME } from './consts';
+import { debounceTime } from 'rxjs/operators';
 
 export const UploadDocumentsActionCard = React.memo(
   (): JSX.Element => {
     const [documentsSended, setDocumentsSended] = React.useState(true);
 
     React.useEffect((): VoidFunction => {
-      const sub = userCompanyDataSended.documentsSended$.subscribe(
-        setDocumentsSended
-      );
+      const sub = userCompanyDataSended.documentsSended$
+        .pipe(debounceTime(DEBOUNCE_TIME))
+        .subscribe(setDocumentsSended);
 
       return (): void => sub.unsubscribe();
     }, []);
