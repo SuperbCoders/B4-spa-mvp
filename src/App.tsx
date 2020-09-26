@@ -4,15 +4,31 @@ import { Router, Switch, Route, Redirect } from 'react-router-dom';
 import { IntlProvider } from 'rsuite';
 
 import { ErrorBoundary } from './ErrorBoundary';
-import { Landing, GreetingPage, MainPage } from './components/pages';
+import {
+  Landing,
+  GreetingPage,
+  MainPage,
+  LoadingPage
+} from './components/pages';
 import { COMPANY_INN_ROUTE_KEY } from './components/pages/Landing';
 
 import { routerHistory } from './router-history';
 
 import ruRU from 'rsuite/lib/IntlProvider/locales/ru_RU';
 import { ModalWrapper } from './components/common/ModalWrapper';
+import { firebaseStore } from './stores';
 
 export function AppComponent(): JSX.Element {
+  const [isLoginCheck, setIsLoginCheck] = React.useState(false);
+
+  React.useEffect((): VoidFunction => {
+    const sub = firebaseStore.isLoginCheck$.subscribe(setIsLoginCheck);
+
+    return (): void => sub.unsubscribe();
+  }, []);
+
+  if (!isLoginCheck) return <LoadingPage />;
+
   return (
     <IntlProvider locale={ruRU}>
       <ErrorBoundary>

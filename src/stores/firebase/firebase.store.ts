@@ -7,7 +7,13 @@ class FireBaseStore {
   private firebaseInstance: firebase.app.App;
   // @ts-ignore
   private _isLoggedIn$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  // @ts-ignore
+  private _isLoginCheck$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+
   public isLoggedIn$: Observable<boolean> = this._isLoggedIn$.asObservable();
+  public isLoginCheck$: Observable<
+    boolean
+  > = this._isLoginCheck$.asObservable();
 
   constructor() {
     this.firebaseInstance = firebase.initializeApp(firebaseConfig);
@@ -65,9 +71,10 @@ class FireBaseStore {
   private onAuthStateChanged(): void {
     this.firebaseInstance
       .auth()
-      .onAuthStateChanged(
-        (user: firebase.User | null): Promise<void> => this.setCurrentUser(user)
-      );
+      .onAuthStateChanged((user: firebase.User | null): void => {
+        this.setCurrentUser(user);
+        this._isLoginCheck$.next(true);
+      });
   }
 }
 
