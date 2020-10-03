@@ -18,6 +18,7 @@ import { RouteChildrenProps } from 'react-router-dom';
 import { landingCurrentCompanyStorage } from '../../../stores';
 import { modalWrapperService } from '../../../services';
 import { LoginForm } from '../../common/Forms';
+import { formatNumber } from '../../../utils';
 
 export const COMPANY_INN_ROUTE_KEY: string = 'company';
 
@@ -85,7 +86,7 @@ export function Landing({ match }: RouteChildrenProps): JSX.Element {
                     Получил гарантий на
                   </span>
                   <span className="landing-features-item-text">
-                    {`${Number(info.revenueGrowth)}₽`}
+                    {`${formatNumber(info.revenueGrowth)} ₽`}
                   </span>
                 </div>
               </div>
@@ -95,7 +96,7 @@ export function Landing({ match }: RouteChildrenProps): JSX.Element {
                   <div className="landing-features-item">
                     <span className="landing-features-item-label">2018</span>
                     <span className="landing-features-item-text">
-                      {`${Number(info.revenue2018)} ₽`}
+                      {`${formatNumber(info.revenue2018)} ₽`}
                     </span>
                   </div>
                 )}
@@ -103,7 +104,7 @@ export function Landing({ match }: RouteChildrenProps): JSX.Element {
                   <div className="landing-features-item">
                     <span className="landing-features-item-label">2019</span>
                     <span className="landing-features-item-text">
-                      {`${Number(info.revenue2019)} ₽`}
+                      {`${formatNumber(info.revenue2019)} ₽`}
                     </span>
                   </div>
                 )}
@@ -130,7 +131,7 @@ export function Landing({ match }: RouteChildrenProps): JSX.Element {
                     Упущенная выгода
                   </span>
                   <span className="landing-features-item-text">
-                    {`${Number(info.revenueLost)} ₽`}
+                    {`${formatNumber(info.revenueLost)} ₽`}
                   </span>
                 </div>
                 <div className="landing-features-item">
@@ -174,7 +175,9 @@ export function Landing({ match }: RouteChildrenProps): JSX.Element {
                   <span className="landing-features-item-label">
                     Экономия на получении гарантий
                   </span>
-                  <span className="landing-features-item-text">{`${info.competitor.bgSavingEconomy} ₽`}</span>
+                  <span className="landing-features-item-text">{`${formatNumber(
+                    info.competitor.bgSavingEconomy
+                  )} ₽`}</span>
                 </div>
               </div>
             </section>
@@ -250,7 +253,7 @@ export function Landing({ match }: RouteChildrenProps): JSX.Element {
 
             <p className="landing-highlight-text">
               Все БЫСТРО И ПРОСТО: для каждого рекомендованного тендера уже
-              предодобрена гарантия{' '}
+              предодобрена гарантия
             </p>
           </article>
 
