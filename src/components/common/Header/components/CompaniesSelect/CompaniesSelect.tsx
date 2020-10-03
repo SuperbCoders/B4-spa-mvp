@@ -24,7 +24,6 @@ export function CompaniesSelect(): JSX.Element | null {
     setCurrentCompany
   ] = React.useState<TCompanyLandingInfo | null>(null);
   const [companies, setCompanies] = React.useState<TCompanyLandingInfo[]>([]);
-  const ref = React.useRef<HTMLDivElement | null>(null);
 
   React.useEffect((): VoidFunction => {
     const sub1 = currentCompanyStorage.currentCompany$.subscribe(
@@ -43,7 +42,7 @@ export function CompaniesSelect(): JSX.Element | null {
   };
 
   return companies.length ? (
-    <div className="page-header__company" ref={ref}>
+    <div className="page-header__company">
       <Dropdown
         placement="bottomEnd"
         className="header-dropdown"
