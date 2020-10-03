@@ -15,15 +15,17 @@ export function PageLayout({
   background = 'default'
 }: TPageLayoutProps): JSX.Element {
   return (
-    <section
-      className="page-layout"
+    <div
+      className="page-layout-wrapper"
       style={{
         backgroundColor: background === 'default' ? 'white' : '#fcfcfa'
       }}
     >
-      <Header />
-      <main className="page-layout-content">{children}</main>
-      <Footer />
-    </section>
+      <section className="page-layout">
+        <Header />
+        <main className="page-layout-content">{children}</main>
+        <Footer />
+      </section>
+    </div>
   );
 }
