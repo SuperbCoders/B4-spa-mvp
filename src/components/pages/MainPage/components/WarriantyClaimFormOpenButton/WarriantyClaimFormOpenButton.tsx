@@ -11,17 +11,15 @@ export const WarriantyClaimFormOpenButton = React.memo(
   (): JSX.Element => {
     const [isVisible, setIsVisible] = React.useState(false);
 
-    React.useEffect(
-      (): VoidFunction => {
-        const sub = currentCompanyStorage.currentCompany$.subscribe(
-          (currentCompany: TCompanyLandingInfo | null): void => {
-            setIsVisible(Boolean(currentCompany?.wasProcessed));
-          }
-        );
+    React.useEffect((): VoidFunction => {
+      const sub = currentCompanyStorage.currentCompany$.subscribe(
+        (currentCompany: TCompanyLandingInfo | null): void => {
+          setIsVisible(Boolean(currentCompany?.wasProcessed));
+        }
+      );
 
-        return (): void => sub.unsubscribe();
-      }
-    );
+      return (): void => sub.unsubscribe();
+    }, []);
 
     if (!isVisible) return <></>;
 
