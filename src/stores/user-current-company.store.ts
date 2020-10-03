@@ -44,10 +44,6 @@ class UserCurrentCompanyStorage {
     });
   }
 
-  public get currentCompany(): TCompanyLandingInfo | null {
-    return this._currentCompany$.value;
-  }
-
   public setCurrentCompany(currentCompany: TCompanyInn): void {
     const fullInfo: TCompanyLandingInfo = this._allCompanies$.value.find(
       ({ inn }: TCompanyLandingInfo): boolean => inn === currentCompany
