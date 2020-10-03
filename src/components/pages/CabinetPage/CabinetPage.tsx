@@ -12,7 +12,7 @@ import {
 
 import './style.scss';
 
-export const MainPage = WithAuth(
+export const CabinetPage = WithAuth(
   (): JSX.Element => {
     return (
       <PageLayout background="main">

@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Router, Switch, Route, Redirect } from 'react-router-dom';
+import { Router, Switch, Route } from 'react-router-dom';
 import { IntlProvider } from 'rsuite';
 import TagManager from 'react-gtm-module';
 
@@ -8,7 +8,7 @@ import { ErrorBoundary } from './ErrorBoundary';
 import {
   Landing,
   GreetingPage,
-  MainPage,
+  CabinetPage,
   LoadingPage
 } from './components/pages';
 import { COMPANY_INN_ROUTE_KEY } from './components/pages/Landing';
@@ -44,9 +44,8 @@ export function AppComponent(): JSX.Element {
               path={`/company/:${COMPANY_INN_ROUTE_KEY}`}
               component={Landing}
             />
-            <Route path="/greeting" component={GreetingPage} />
-            <Route path="/main" component={MainPage} />
-            <Redirect from="/" to="/main" />
+            <Route path="/greeting" exact component={GreetingPage} />
+            <Route path="/cabinet" exact component={CabinetPage} />
           </Switch>
           <ModalWrapper />
         </Router>

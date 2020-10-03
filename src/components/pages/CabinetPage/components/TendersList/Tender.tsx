@@ -1,12 +1,8 @@
 import * as React from 'react';
 import { TCompanyRecommendsResponse } from '../../../../../transport';
-import {
-  Card,
-  CardContent,
-  CardFooter
-} from '../../../../../components/common/Card';
+import { Card, CardContent, CardFooter } from '../../../../common/Card';
 // import { IconButton } from '../../../../../components/common/IconButton';
-import { Button } from '../../../../../components/common/Button';
+import { Button } from '../../../../common/Button';
 
 import './style.scss';
 
