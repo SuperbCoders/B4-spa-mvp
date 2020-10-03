@@ -75,13 +75,15 @@ export class LoginFormService {
     firebaseStore
       .signInWithPhoneNumber(phone, recaptchaVerifier)
       .then((response: auth.ConfirmationResult): void => {
-        document.body.removeChild(verifierContainer);
         this.confirmator = response;
         this.setState(false, STEPS.SMS_CODE_STEP);
       })
       .catch((error: Error): void =>
         this.setState(false, STEPS.PHONE_NUMBER_STEP, error.message)
-      );
+      )
+      .finally((): void => {
+        document.body.removeChild(verifierContainer);
+      });
   }
 
   private getContainer(): HTMLDivElement {

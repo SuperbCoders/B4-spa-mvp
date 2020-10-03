@@ -25,3 +25,9 @@
     width: 100%;
   }
 }
+
+.form-recaptcha-container {
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
+}
