@@ -4,9 +4,16 @@ import { Logo } from '../Logo';
 
 import './style.scss';
 
-export function Header(): JSX.Element {
+type THeanderProps = {
+  transparent: boolean;
+};
+
+export function Header({ transparent }: THeanderProps): JSX.Element {
   return (
-    <header className="page-header">
+    <header
+      className="page-header"
+      style={{ backgroundColor: transparent ? 'transparent' : 'inherit' }}
+    >
       <div className="page-header__content">
         <Logo className="page-header__logo" />
         <CompaniesSelect />

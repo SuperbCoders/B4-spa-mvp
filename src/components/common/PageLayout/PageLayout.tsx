@@ -22,7 +22,7 @@ export function PageLayout({
       }}
     >
       <section className="page-layout">
-        <Header />
+        <Header transparent={background === 'default'} />
         <main className="page-layout-content">{children}</main>
         <Footer />
       </section>
