@@ -9,7 +9,7 @@ import { WithAuth } from '../../../WithAuth';
 import { routerHistory } from '../../../router-history';
 
 function goToNextPage(): void {
-  routerHistory.push('/main');
+  routerHistory.push('/cabinet');
 }
 
 export const GreetingPage = WithAuth(
