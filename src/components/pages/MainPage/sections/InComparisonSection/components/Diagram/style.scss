@@ -1,0 +1,30 @@
+.comparison-section-diagram {
+  margin: 0 auto;
+  transform: rotate(145deg);
+  background: #ececf4;
+  border-radius: 50%;
+  display: block;
+
+  &-wrapper {
+    position: relative;
+  }
+
+  &-title {
+    position: absolute;
+    top: 30%;
+    width: 100%;
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 34px;
+    letter-spacing: -0.4000000059604645px;
+    color: white;
+    text-align: center;
+  }
+
+  &__chart {
+    fill: #ececf4;
+    stroke: #567df4;
+    transition: stroke-dasharray 0.3s ease;
+  }
+}

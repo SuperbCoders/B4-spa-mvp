@@ -9,7 +9,8 @@ import {
   Landing,
   GreetingPage,
   CabinetPage,
-  LoadingPage
+  LoadingPage,
+  MainPage
 } from './components/pages';
 import { COMPANY_INN_ROUTE_KEY } from './components/pages/Landing';
 
@@ -39,6 +40,7 @@ export function AppComponent(): JSX.Element {
       <ErrorBoundary>
         <Router history={routerHistory}>
           <Switch>
+            <Route path="/" exact component={MainPage} />
             <Route
               exact
               path={`/company/:${COMPANY_INN_ROUTE_KEY}`}
