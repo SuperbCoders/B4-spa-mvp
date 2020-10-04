@@ -54,7 +54,7 @@ export function InComparisonSection(): JSX.Element {
               </div>
             </div>
             <div className="comparison-section__chart-item">
-              <Diagram title="1 победа" fillPercent={30} />
+              <Diagram title="1 победа" fillPercent={10} />
               <div className="comparison-section__chart-item-description">
                 12 торгов
               </div>
