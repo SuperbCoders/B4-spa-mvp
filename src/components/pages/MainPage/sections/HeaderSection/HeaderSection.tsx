@@ -33,7 +33,9 @@ export function HeaderSection(): JSX.Element {
           с&nbsp;госзаказом. Мы&nbsp;помогаем получить лучшие условия
           по&nbsp;банковским гарантиям.
         </span>
-        <Button>Скоро</Button>
+        <Button appearance="ghost" skin="light">
+          Скоро
+        </Button>
       </div>
       <div className="continue-button" onClick={handleScrollToSection}>
         <Arrow />

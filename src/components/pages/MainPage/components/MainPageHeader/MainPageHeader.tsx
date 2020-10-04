@@ -21,7 +21,7 @@ export function MainPageHeader(): JSX.Element {
             </ul>
           </nav>
           <div>
-            <Button>Скоро</Button>
+            <Button appearance="primary">Скоро</Button>
           </div>
         </div>
       </div>

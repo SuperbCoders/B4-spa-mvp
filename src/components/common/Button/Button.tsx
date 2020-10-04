@@ -13,7 +13,6 @@ type TButtonProps = {
   arrow?: boolean;
   skin?: string;
   className?: string;
-  appearance?: 'primary' | 'link' | 'ghost';
 } & Partial<ButtonProps>;
 
 export function Button({

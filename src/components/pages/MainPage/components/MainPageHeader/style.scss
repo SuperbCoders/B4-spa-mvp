@@ -37,6 +37,16 @@
       list-style-type: none;
       justify-content: space-between;
       align-items: center;
+
+      & > li {
+        cursor: pointer;
+        color: #000000;
+        transition: color ease-in-out 100ms;
+
+        &:hover {
+          color: #5a5a5a;
+        }
+      }
     }
   }
 }
