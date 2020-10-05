@@ -1,17 +1,7 @@
 import * as React from 'react';
-import { combineLatest } from 'rxjs';
-import {
-  currentCompanyStorage,
-  userCompanyDataSended
-} from '../../../../stores';
 import { ProcessNotification } from '../../../common/ProcessNotification';
 import { useRxStream } from '../../../../utils/hooks';
-
-const dependendStreams$ = combineLatest([
-  userCompanyDataSended.companyAccountsSended$,
-  userCompanyDataSended.documentsSended$,
-  currentCompanyStorage.currentCompany$
-]);
+import { processNotificationCardVisibilityStreams$ } from './consts';
 
 export const ProcessNotificationCard = React.memo(
   (): JSX.Element => {
@@ -19,7 +9,11 @@ export const ProcessNotificationCard = React.memo(
       companyAccountsSended,
       documentsSended,
       currentCompany
-    ] = useRxStream(dependendStreams$, [true, true, null]);
+    ] = useRxStream(processNotificationCardVisibilityStreams$, [
+      true,
+      true,
+      null
+    ]);
     const wasProcessed = currentCompany ? currentCompany.wasProcessed : true;
     const isVisible = companyAccountsSended && documentsSended && !wasProcessed;
 

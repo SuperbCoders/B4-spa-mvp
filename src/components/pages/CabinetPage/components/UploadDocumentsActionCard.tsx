@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { userCompanyDataSended } from '../../../../stores';
 import {
   Card,
   CardIcon,
@@ -13,15 +12,17 @@ import { ModalsOpenerService } from '../modals-opener.service';
 import { ReactComponent as DocumentsAdd } from '../../../../assets/images/svg/documents-add.svg';
 import { Button } from '../../../common/Button';
 import { useRxStream } from '../../../../utils/hooks';
+import { uploadDocumentsActionCardVisibilityStreams } from './consts';
 
 export const UploadDocumentsActionCard = React.memo(
   (): JSX.Element => {
-    const documentsSended = useRxStream(
-      userCompanyDataSended.documentsSended$,
-      true
-    );
+    const [
+      currentCompany,
+      documentsSended
+    ] = useRxStream(uploadDocumentsActionCardVisibilityStreams, [null, true]);
+    const wasProcessed = Boolean(currentCompany?.wasProcessed);
 
-    if (documentsSended) return <></>;
+    if (wasProcessed || documentsSended) return <></>;
 
     return (
       <Card className="mvp-action-card" horizontal>
