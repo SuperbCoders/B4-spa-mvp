@@ -16,7 +16,7 @@ export function Header({ transparent }: THeanderProps): JSX.Element {
     >
       <div className="page-header__content">
         <Logo className="page-header__logo" />
-        <CompaniesSelect />
+        {!transparent && <CompaniesSelect />}
         <HeaderControls />
       </div>
     </header>
