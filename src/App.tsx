@@ -19,7 +19,7 @@ import ruRU from 'rsuite/lib/IntlProvider/locales/ru_RU';
 import { ModalWrapper } from './components/common/ModalWrapper';
 import { firebaseStore } from './stores';
 
-import './app.style.scss';
+import './app-rs-override.style.scss';
 import { useRxStream } from './utils/hooks';
 import { TagManagerService } from './services';
 

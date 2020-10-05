@@ -93,7 +93,7 @@ export function WarrantyClaimForm(): JSX.Element {
               Вид банковской гарантии
             </ControlLabel>
             <SelectPicker
-              className="form-select"
+              className="warranty-form-select"
               cleanable={false}
               searchable={false}
               onSelect={setFieldUpdater('bgType')}
@@ -118,6 +118,7 @@ export function WarrantyClaimForm(): JSX.Element {
                   type="text"
                   placeholder="дд/мм/гггг"
                   format="DD-MM-YYYY"
+                  className="warranty-form-date-picker"
                   oneTap
                   value={data.startDate || void 0}
                   onSelect={setDateUpdater('startDate')}
@@ -132,6 +133,7 @@ export function WarrantyClaimForm(): JSX.Element {
                 <DatePicker
                   placeholder="дд/мм/гггг"
                   format="DD-MM-YYYY"
+                  className="warranty-form-date-picker"
                   oneTap
                   onSelect={setDateUpdater('endDate')}
                   value={data.endDate || void 0}
@@ -181,6 +183,7 @@ export function WarrantyClaimForm(): JSX.Element {
                 <DatePicker
                   placeholder="дд/мм/гггг"
                   format="DD-MM-YYYY"
+                  className="warranty-form-date-picker"
                   oneTap
                   onSelect={setDateUpdater('purchaseDate')}
                 />

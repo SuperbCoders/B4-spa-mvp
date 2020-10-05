@@ -17,7 +17,6 @@ export function CodeConfirmForm({
           errorMessage={errorText}
           type="text"
           name={controlName}
-          className="big-input"
           required
         />
       </FormGroup>

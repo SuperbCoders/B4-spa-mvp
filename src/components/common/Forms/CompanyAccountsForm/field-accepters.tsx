@@ -16,7 +16,7 @@ export function AccountNumberAccepter({
   return (
     <MaskedInput
       mask="9999999999999999"
-      className="rs-input big-input"
+      className="rs-input"
       maskChar={null}
       style={{ width: '343px' }}
       onChange={handleChange}

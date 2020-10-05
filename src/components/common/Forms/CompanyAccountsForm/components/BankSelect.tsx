@@ -31,7 +31,7 @@ export function BankSelect({ onSelect, value }: TBankSelectProps): JSX.Element {
       onChange={handleSelect}
       // tslint:disable-next-line:jsx-no-lambda
       customInput={(props: unknown): JSX.Element => (
-        <input {...props} className="rs-input big-input" />
+        <input {...props} className="rs-input" />
       )}
     />
   );

@@ -16,7 +16,7 @@ function PhoneMaskInput(
   return (
     <MaskedInput
       mask="+7 999 99 99 999"
-      className="rs-input big-input"
+      className="rs-input"
       maskChar={null}
       {...props}
     />
