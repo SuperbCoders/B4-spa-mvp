@@ -1,5 +1,5 @@
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import { currentCompanyStorage, firebaseStore } from 'stores';
+import { currentCompanyStorage, firebaseStore } from '../../../../../stores';
 import {
   b4Transport,
   TCompanyLandingInfo,
@@ -25,18 +25,20 @@ class TendersService {
       let sub: Subscription | undefined;
 
       if (isLoggedIn) {
-        sub = currentCompanyStorage.currentCompany$.subscribe((currentCompany: TCompanyLandingInfo | null): void => {
-          const inn = currentCompany?.inn || null;
-          const wasProcessed = currentCompany?.wasProcessed || false;
+        sub = currentCompanyStorage.currentCompany$.subscribe(
+          (currentCompany: TCompanyLandingInfo | null): void => {
+            const inn = currentCompany?.inn || null;
+            const wasProcessed = currentCompany?.wasProcessed || false;
 
-          if (inn && wasProcessed) {
-            b4Transport
-            .getRecommends(inn)
-            .then((recommends: TCompanyRecommendsResponse[]): void => {
-              this._tenders$.next(recommends);
-            });
+            if (inn && wasProcessed) {
+              b4Transport
+                .getRecommends(inn)
+                .then((recommends: TCompanyRecommendsResponse[]): void => {
+                  this._tenders$.next(recommends);
+                });
+            }
           }
-        });
+        );
       } else {
         sub && sub.unsubscribe();
       }
