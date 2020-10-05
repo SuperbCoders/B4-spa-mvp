@@ -32,6 +32,7 @@ export function WarrantyClaimForm(): JSX.Element {
     purchaseNumber: '',
     bgType: '',
     law: '',
+    email: '',
     purchaseDate: null,
     startDate: null,
     endDate: null
@@ -186,6 +187,16 @@ export function WarrantyClaimForm(): JSX.Element {
               </FormGroup>
             </div>
           </div>
+          <FormGroup style={{ width: '420px', marginBottom: '30px' }}>
+            <ControlLabel className="warranty-form-label">
+              Электронная почта
+            </ControlLabel>
+            <Input
+              type="text"
+              placeholder="example@example.com"
+              onChange={setFieldUpdater('email')}
+            />
+          </FormGroup>
           <FormGroup>
             <Button
               className="warranty-form-submit"
