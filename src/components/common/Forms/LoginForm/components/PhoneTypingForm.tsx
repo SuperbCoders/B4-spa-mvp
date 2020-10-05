@@ -35,6 +35,7 @@ export function PhoneTypingForm({
         <ControlLabel>Номер телефона</ControlLabel>
         <FormControl
           errorMessage={errorText}
+          autoFocus
           type="text"
           required
           name={controlName}

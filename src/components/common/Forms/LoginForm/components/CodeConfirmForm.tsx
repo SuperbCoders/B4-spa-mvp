@@ -17,6 +17,7 @@ export function CodeConfirmForm({
           errorMessage={errorText}
           type="text"
           name={controlName}
+          autoFocus
           required
         />
       </FormGroup>
