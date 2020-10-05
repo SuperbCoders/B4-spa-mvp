@@ -18,11 +18,19 @@ export const lawSelectItems = [
 
 export const guaranteeTypesItems = [
   {
-    value: 'first',
-    label: 'This is the first option'
+    value: 'Обеспечение исполнения обязательств по контракту',
+    label: 'Обеспечение исполнения обязательств по контракту'
   },
   {
-    value: 'second',
-    label: 'This is the second option'
+    value: 'Обеспечение заявки на участие в торгах',
+    label: 'Обеспечение заявки на участие в торгах'
+  },
+  {
+    value: 'Обеспечение на возврат аванса',
+    label: 'Обеспечение на возврат аванса'
+  },
+  {
+    value: 'Обеспечение гарантийных обязательств',
+    label: 'Обеспечение гарантийных обязательств'
   }
 ];
