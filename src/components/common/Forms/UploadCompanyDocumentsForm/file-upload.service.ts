@@ -49,8 +49,6 @@ class FileUploadService {
           .getFilesList()
           .then((files: TCompanyFileResponse[]): void => {
             this.files = files;
-            userCompanyDataSended.setDocumentsSended(files.length > 0);
-
             currentCompanyStorage.currentCompany$.subscribe(
               (currentCompany: TCompanyLandingInfo | null): void => {
                 this.currentCompany = currentCompany?.inn || null;
