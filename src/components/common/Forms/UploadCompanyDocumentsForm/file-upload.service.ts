@@ -12,6 +12,7 @@ import {
   TCompanyLandingInfo,
   TFileUploadResponse
 } from '../../../../transport';
+import { TagManagerService } from '../../../../services';
 
 export type TProcessUploadFile = {
   id?: number;
@@ -110,6 +111,7 @@ class FileUploadService {
     );
 
     Promise.all(promises).then((response: TCompanyFileResponse[]): void => {
+      TagManagerService.pushEvent('docSend');
       this.files = response;
       userCompanyDataSended.setDocumentsSended(this.files.length > 0);
     });

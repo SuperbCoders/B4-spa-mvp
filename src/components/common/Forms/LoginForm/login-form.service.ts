@@ -5,7 +5,7 @@ import {
 import { auth } from 'firebase';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { routerHistory } from '../../../../router-history';
-import { modalWrapperService } from '../../../../services';
+import { modalWrapperService, TagManagerService } from '../../../../services';
 
 export enum STEPS {
   PHONE_NUMBER_STEP = 'phone',
@@ -55,6 +55,8 @@ export class LoginFormService {
             )
             .then((): void => {
               modalWrapperService.closeModal();
+
+              TagManagerService.pushEvent('authoSuccess');
 
               routerHistory.push(
                 landingCurrentCompanyStorage.companyInn

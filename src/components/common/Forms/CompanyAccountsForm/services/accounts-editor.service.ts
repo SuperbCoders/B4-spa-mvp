@@ -1,6 +1,7 @@
 import { BehaviorSubject, Observable } from 'rxjs';
 import { TCompanyAccountRequest } from '../../../../../transport';
 import { companyAccountsService } from './company-accounts.service';
+import { TagManagerService } from '../../../../../services';
 
 const initialState = {
   bankName: '',
@@ -50,6 +51,7 @@ class AccountsServiceEditor {
     companyAccountsService
       .setNewCompanyAccount(this._account$.value)
       .then((): void => {
+        TagManagerService.pushEvent('сompProfileSend');
         this._account$.next(initialState);
       });
   }

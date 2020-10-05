@@ -2,7 +2,6 @@ import * as React from 'react';
 
 import { Router, Switch, Route } from 'react-router-dom';
 import { IntlProvider } from 'rsuite';
-import TagManager from 'react-gtm-module';
 
 import { ErrorBoundary } from './ErrorBoundary';
 import {
@@ -21,14 +20,14 @@ import { ModalWrapper } from './components/common/ModalWrapper';
 import { firebaseStore } from './stores';
 
 import './app.style.scss';
-import { tagManagerArgs } from './tag-manager-args';
 import { useRxStream } from './utils/hooks';
+import { TagManagerService } from './services';
 
 export function AppComponent(): JSX.Element {
   const isLoginCheck = useRxStream(firebaseStore.isLoginCheck$, false);
 
   React.useEffect((): void => {
-    TagManager.initialize(tagManagerArgs);
+    TagManagerService.initialize();
   }, []);
 
   if (!isLoginCheck) return <LoadingPage />;
