@@ -12,7 +12,7 @@ export function FileListItem({
 }: TFileListItemProps): JSX.Element {
   const handleDeleteFile = React.useCallback((): void => {
     info.id && onDeleteFile(info);
-  }, [info]);
+  }, [info, onDeleteFile]);
 
   return (
     <div className="company-file-item">

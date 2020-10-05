@@ -13,7 +13,7 @@ export const AccountsListItem = React.memo(
     const { bankName, accountNumber, bik } = account;
     const handleSelectEdit = React.useCallback(
       (): void => onSelectEdit(account),
-      [account]
+      [account, onSelectEdit]
     );
 
     return (

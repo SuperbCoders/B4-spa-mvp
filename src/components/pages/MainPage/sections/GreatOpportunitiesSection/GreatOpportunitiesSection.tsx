@@ -9,7 +9,11 @@ import { itemsContent } from './items-content';
 export function GreatOpportunitiesSection(): JSX.Element {
   return (
     <div className="opportunities-section-wrapper">
-      <img src={image} alt="image" className="opportunities-section__image" />
+      <img
+        src={image}
+        alt="ipad-view"
+        className="opportunities-section__image"
+      />
       <SectionLayout
         title={`Большие возможности \n для вашей \n эффективной работы`}
       >
