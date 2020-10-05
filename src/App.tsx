@@ -22,15 +22,13 @@ import { firebaseStore } from './stores';
 
 import './app.style.scss';
 import { tagManagerArgs } from './tag-manager-args';
+import { useRxStream } from './utils/hooks';
 
 export function AppComponent(): JSX.Element {
-  const [isLoginCheck, setIsLoginCheck] = React.useState(false);
+  const isLoginCheck = useRxStream(firebaseStore.isLoginCheck$, false);
 
-  React.useEffect((): VoidFunction => {
-    const sub = firebaseStore.isLoginCheck$.subscribe(setIsLoginCheck);
+  React.useEffect((): void => {
     TagManager.initialize(tagManagerArgs);
-
-    return (): void => sub.unsubscribe();
   }, []);
 
   if (!isLoginCheck) return <LoadingPage />;

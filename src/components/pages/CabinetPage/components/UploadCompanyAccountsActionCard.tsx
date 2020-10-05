@@ -12,22 +12,14 @@ import { ModalsOpenerService } from '../modals-opener.service';
 
 import { ReactComponent as DocumentsSearch } from '../../../../assets/images/svg/documents-search.svg';
 import { Button } from '../../../common/Button';
-import { debounceTime } from 'rxjs/operators';
-import { DEBOUNCE_TIME } from './consts';
+import { useRxStream } from '../../../../utils/hooks';
 
 export const UploadCompanyAccountsActionCard = React.memo(
   (): JSX.Element => {
-    const [companyAccountsSended, setCompanyAccountsSended] = React.useState(
+    const companyAccountsSended = useRxStream(
+      userCompanyDataSended.companyAccountsSended$,
       true
     );
-
-    React.useEffect((): VoidFunction => {
-      const sub = userCompanyDataSended.companyAccountsSended$
-        .pipe(debounceTime(DEBOUNCE_TIME))
-        .subscribe(setCompanyAccountsSended);
-
-      return (): void => sub.unsubscribe();
-    }, []);
 
     if (companyAccountsSended) return <></>;
 

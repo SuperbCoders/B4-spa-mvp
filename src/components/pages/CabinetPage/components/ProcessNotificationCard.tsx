@@ -1,41 +1,27 @@
 import * as React from 'react';
 import { combineLatest } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
 import {
   currentCompanyStorage,
   userCompanyDataSended
 } from '../../../../stores';
 import { ProcessNotification } from '../../../common/ProcessNotification';
-import { DEBOUNCE_TIME } from './consts';
+import { useRxStream } from '../../../../utils/hooks';
+
+const dependendStreams$ = combineLatest([
+  userCompanyDataSended.companyAccountsSended$,
+  userCompanyDataSended.documentsSended$,
+  currentCompanyStorage.currentCompany$
+]);
 
 export const ProcessNotificationCard = React.memo(
   (): JSX.Element => {
-    const [isVisible, setIsVisible] = React.useState(false);
-
-    React.useEffect((): VoidFunction => {
-      const sub = combineLatest([
-        userCompanyDataSended.companyAccountsSended$,
-        userCompanyDataSended.documentsSended$,
-        currentCompanyStorage.currentCompany$
-      ])
-        .pipe(debounceTime(DEBOUNCE_TIME))
-        .subscribe((result): void => {
-          const [
-            companyAccountsSended,
-            documentsSended,
-            currentCompany
-          ] = result;
-          const wasProcessed = currentCompany
-            ? currentCompany.wasProcessed
-            : true;
-
-          setIsVisible(
-            Boolean(companyAccountsSended && documentsSended && !wasProcessed)
-          );
-        });
-
-      return (): void => sub.unsubscribe();
-    }, []);
+    const [
+      companyAccountsSended,
+      documentsSended,
+      currentCompany
+    ] = useRxStream(dependendStreams$, [true, true, null]);
+    const wasProcessed = currentCompany ? currentCompany.wasProcessed : true;
+    const isVisible = companyAccountsSended && documentsSended && !wasProcessed;
 
     if (!isVisible) return <></>;
 

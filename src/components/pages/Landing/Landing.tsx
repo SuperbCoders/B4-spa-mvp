@@ -10,32 +10,28 @@ import { ReactComponent as Bolt } from './assets/bolt.svg';
 import { ReactComponent as Search } from './assets/search.svg';
 import { ReactComponent as Smile } from './assets/smile.svg';
 
-import { LandingDataService } from './landing-data.service';
+import { landingDataService } from './landing-data.service';
 
 import './style.scss';
-import { TCompanyInn, TCompanyLandingInfo } from '../../../transport';
+import { TCompanyInn } from '../../../transport';
 import { RouteChildrenProps } from 'react-router-dom';
 import { landingCurrentCompanyStorage } from '../../../stores';
 import { modalWrapperService } from '../../../services';
 import { LoginForm } from '../../common/Forms';
 import { formatNumber } from '../../../utils';
+import { useRxStream } from '../../../utils/hooks';
 
 export const COMPANY_INN_ROUTE_KEY: string = 'company';
 
 export function Landing({ match }: RouteChildrenProps): JSX.Element {
-  const [info, setInfo] = React.useState<TCompanyLandingInfo | null>(null);
+  const info = useRxStream(landingDataService.data$, null);
   const companyInn: TCompanyInn = (match as {
     params: { [key: string]: TCompanyInn };
   })?.params[COMPANY_INN_ROUTE_KEY];
 
-  React.useEffect((): VoidFunction => {
-    const dataService = new LandingDataService();
-    const sub = dataService.data$.subscribe(setInfo);
-
-    dataService.getLandingDataByInn(companyInn);
+  React.useEffect((): void => {
+    landingDataService.getLandingDataByInn(companyInn);
     landingCurrentCompanyStorage.companyInn = companyInn;
-
-    return (): void => sub.unsubscribe();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

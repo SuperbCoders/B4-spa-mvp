@@ -1,19 +1,11 @@
 import * as React from 'react';
-import { TCompanyRecommendsResponse } from '../../../../../transport';
 import { Tender } from './Tender';
 import { tendersService } from './tenders.service';
+import { useRxStream } from '../../../../../utils/hooks';
 
 export const TendersList = React.memo(
   (): JSX.Element => {
-    const [tenders, setTenders] = React.useState<TCompanyRecommendsResponse[]>(
-      []
-    );
-
-    React.useEffect((): VoidFunction => {
-      const sub = tendersService.tenders$.subscribe(setTenders);
-
-      return (): void => sub.unsubscribe();
-    }, []);
+    const tenders = useRxStream(tendersService.tenders$, []);
 
     return (
       <>

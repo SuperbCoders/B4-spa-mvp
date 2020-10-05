@@ -5,23 +5,15 @@ import { ReactComponent as Plus } from '../../../../../assets/images/svg/plus.sv
 
 import './style.scss';
 import { currentCompanyStorage } from '../../../../../stores';
-import { TCompanyLandingInfo } from '../../../../../transport';
+import { useRxStream } from '../../../../../utils/hooks';
 
 export const WarriantyClaimFormOpenButton = React.memo(
   (): JSX.Element => {
-    const [isVisible, setIsVisible] = React.useState(false);
-
-    React.useEffect((): VoidFunction => {
-      const sub = currentCompanyStorage.currentCompany$.subscribe(
-        (currentCompany: TCompanyLandingInfo | null): void => {
-          setIsVisible(Boolean(currentCompany?.wasProcessed));
-        }
-      );
-
-      return (): void => sub.unsubscribe();
-    }, []);
-
-    if (!isVisible) return <></>;
+    const currentCompany = useRxStream(
+      currentCompanyStorage.currentCompany$,
+      null
+    );
+    if (!Boolean(currentCompany?.wasProcessed)) return <></>;
 
     return (
       <Whisper

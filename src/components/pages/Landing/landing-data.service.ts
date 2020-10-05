@@ -5,7 +5,7 @@ import {
   TCompanyInn
 } from '../../../transport';
 
-export class LandingDataService {
+class LandingDataService {
   private _data$: Subject<TCompanyLandingInfo> = new Subject();
 
   public data$: Observable<TCompanyLandingInfo> = this._data$.asObservable();
@@ -18,3 +18,5 @@ export class LandingDataService {
       );
   }
 }
+
+export const landingDataService = new LandingDataService();
