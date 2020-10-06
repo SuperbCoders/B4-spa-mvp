@@ -42,6 +42,8 @@ class TendersService {
                   this._tenders$.next([...commonRecommends, ...recommends]);
                 }
               );
+            } else {
+              this._tenders$.next([]);
             }
           }
         );
