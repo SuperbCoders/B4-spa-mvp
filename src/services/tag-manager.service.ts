@@ -9,7 +9,7 @@ export class TagManagerService {
     TagManager.initialize(this.tagManagerArgs);
   }
 
-  public static pushEvent(eventName: string): void {
-    TagManager.dataLayer({ dataLayer: { dataLayer: eventName } });
+  public static pushEvent(event: string): void {
+    TagManager.dataLayer({ dataLayer: { event } });
   }
 }
