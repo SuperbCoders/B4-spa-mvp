@@ -32,7 +32,7 @@ export function ProcessNotification(
       </CardContent>
 
       <CardControls className="process-notification-controls" position="right">
-        <Button appearance="link">Понятно</Button>
+        <Button appearance="subtle">Понятно</Button>
       </CardControls>
     </Card>
   );

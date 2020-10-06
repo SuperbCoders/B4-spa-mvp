@@ -11,3 +11,11 @@
 .rs-picker-default .rs-picker-toggle.rs-btn .rs-picker-toggle-clean {
   top: 30%;
 }
+
+.rs-btn-subtle {
+  color: #567df4;
+
+  &:hover {
+    color: #0f46ee;
+  }
+}
