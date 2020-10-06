@@ -35,7 +35,8 @@ export const UploadDocumentsActionCard = React.memo(
         <CardContent>
           <CardTitle>Приложить сканы документов</CardTitle>
           Вам потребуются сканы устава, паспорта генерального директора,
-          отчетность за пошлый год – и другие стандартные документы о компании.
+          отчетность за&nbsp;пошлый год&nbsp;&mdash; и&nbsp;другие стандартные
+          документы о&nbsp;компании.
         </CardContent>
 
         <CardControls position="right">
