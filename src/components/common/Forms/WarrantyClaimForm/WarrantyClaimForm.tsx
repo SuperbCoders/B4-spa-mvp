@@ -6,7 +6,8 @@ import {
   ControlLabel,
   Input,
   SelectPicker,
-  DatePicker
+  DatePicker,
+  DateRangePicker
 } from 'rsuite';
 import { modalWrapperService } from '../../../../services';
 import { TGuaranteeRequest } from '../../../../transport';
@@ -50,16 +51,13 @@ export function WarrantyClaimForm(): JSX.Element {
       });
   }
 
-  function setDateUpdater(
-    field: keyof TGuaranteeRequest
-  ): (value: Date) => void {
-    return (value: Date): void => {
-      ((field === 'startDate' &&
-        ((data.endDate && value < data.endDate) || !data.endDate)) ||
-        (field === 'endDate' &&
-          ((data.startDate && value > data.startDate) || !data.startDate)) ||
-        field === 'purchaseDate') &&
-        setData({ ...data, [field]: value });
+  function setDateUpdater(): (value: (Date | undefined)[]) => void {
+    return ([startDate, endDate]: (Date | undefined)[]): void => {
+      setData({
+        ...data,
+        startDate: startDate || null,
+        endDate: endDate || null
+      });
     };
   }
 
@@ -110,33 +108,15 @@ export function WarrantyClaimForm(): JSX.Element {
 
           <div className="warranty-form-columns">
             <div className="warranty-form-column">
-              <FormGroup>
+              <FormGroup style={{ width: '420px', marginBottom: '30px' }}>
                 <ControlLabel className="warranty-form-label">
-                  Дата начала гарантии
+                  Дата начала гарантии / Дата окончания гарантии
                 </ControlLabel>
-                <DatePicker
-                  type="text"
-                  placeholder="дд/мм/гггг"
+                <DateRangePicker
+                  block
+                  placeholder="дд-мм-гггг / дд-мм-гггг"
                   format="DD-MM-YYYY"
-                  className="warranty-form-date-picker"
-                  oneTap
-                  value={data.startDate || void 0}
-                  onSelect={setDateUpdater('startDate')}
-                />
-              </FormGroup>
-            </div>
-            <div className="warranty-form-column">
-              <FormGroup>
-                <ControlLabel className="warranty-form-label">
-                  Дата окончания гарантии
-                </ControlLabel>
-                <DatePicker
-                  placeholder="дд/мм/гггг"
-                  format="DD-MM-YYYY"
-                  className="warranty-form-date-picker"
-                  oneTap
-                  onSelect={setDateUpdater('endDate')}
-                  value={data.endDate || void 0}
+                  onChange={setDateUpdater()}
                 />
               </FormGroup>
             </div>
@@ -185,7 +165,7 @@ export function WarrantyClaimForm(): JSX.Element {
                   format="DD-MM-YYYY"
                   className="warranty-form-date-picker"
                   oneTap
-                  onSelect={setDateUpdater('purchaseDate')}
+                  onSelect={setFieldUpdater('purchaseDate')}
                 />
               </FormGroup>
             </div>
