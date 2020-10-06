@@ -5,6 +5,7 @@ import { Card, CardContent, CardFooter } from '../../../../common/Card';
 import { Button } from '../../../../common/Button';
 
 import './style.scss';
+import { formatNumber } from '../../../../../utils';
 
 // import { ReactComponent as FeaturedOutline } from '../../../../../assets/images/svg/featured-outline.svg';
 
@@ -35,7 +36,9 @@ export function Tender(props: TCompanyRecommendsResponse): JSX.Element {
               <div className="tender-title">{props.topic}</div>
               <div className="tender-company">{props.customer}</div>
             </div>
-            <div className="tender-price">{`${props.total} ₽`}</div>
+            <div className="tender-price">{`${formatNumber(
+              props.total
+            )} ₽`}</div>
           </CardContent>
           <CardFooter className="tender-footer">
             <div className="tender-meta">
@@ -55,7 +58,9 @@ export function Tender(props: TCompanyRecommendsResponse): JSX.Element {
               {props.warrantyApproved
                 ? 'Гарантия одобрена'
                 : 'Гарантия не одобрена'}
-              <span className="tender-guarantee-status-price">{`${props.warrantySum} ₽`}</span>
+              <span className="tender-guarantee-status-price">{`${formatNumber(
+                props.warrantySum
+              )} ₽`}</span>
             </div>
             <Button
               skin="light"
