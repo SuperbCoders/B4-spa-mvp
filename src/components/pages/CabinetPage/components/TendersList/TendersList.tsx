@@ -11,7 +11,7 @@ export const TendersList = React.memo(
       <>
         {tenders.map(
           (tender): JSX.Element => (
-            <Tender {...tender} key={tender.id} />
+            <Tender key={tender.accountNumber} {...tender} />
           )
         )}
       </>
