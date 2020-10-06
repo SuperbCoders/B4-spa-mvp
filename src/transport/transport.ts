@@ -28,10 +28,7 @@ class B4Transport {
   public setCompanyAccount(
     newAccount: TCompanyAccountRequest
   ): Promise<TCompanyAccount> {
-    return this.post(
-      `${B4Transport.ENDPOINT}/company_props`,
-      newAccount
-    );
+    return this.post(`${B4Transport.ENDPOINT}/company_props`, newAccount);
   }
 
   public editCompanyAccount(
@@ -54,10 +51,7 @@ class B4Transport {
   }
 
   public uploadFile(file: FormData): Promise<TFileUploadResponse> {
-    return this.post(
-      `${B4Transport.ENDPOINT}/filestorage/api_files/`,
-      file
-    );
+    return this.post(`${B4Transport.ENDPOINT}/filestorage/api_files/`, file);
   }
 
   public getFilesList(): Promise<TCompanyFileResponse[]> {
@@ -74,8 +68,16 @@ class B4Transport {
     });
   }
 
-  public getRecommends(inn: TCompanyInn): Promise<TCompanyRecommendsResponse[]> {
-    return this.get(`${B4Transport.ENDPOINT}/company_recommends?company=${inn}`);
+  public getCommonRecommends(): Promise<TCompanyRecommendsResponse[]> {
+    return this.get(`${B4Transport.ENDPOINT}/company_recommends`);
+  }
+
+  public getRecommends(
+    inn: TCompanyInn
+  ): Promise<TCompanyRecommendsResponse[]> {
+    return this.get(
+      `${B4Transport.ENDPOINT}/company_recommends?company=${inn}`
+    );
   }
 
   public sendGuarantee(guarantee: TGuaranteeRequest): Promise<void> {

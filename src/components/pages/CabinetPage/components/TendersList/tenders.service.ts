@@ -31,15 +31,22 @@ class TendersService {
             const wasProcessed = currentCompany?.wasProcessed || false;
 
             if (inn && wasProcessed) {
-              b4Transport
-                .getRecommends(inn)
-                .then((recommends: TCompanyRecommendsResponse[]): void => {
-                  this._tenders$.next(recommends);
-                });
+              Promise.all([
+                b4Transport.getCommonRecommends(),
+                b4Transport.getRecommends(inn)
+              ]).then(
+                ([
+                  commonRecommends,
+                  recommends
+                ]: TCompanyRecommendsResponse[][]): void => {
+                  this._tenders$.next([...commonRecommends, ...recommends]);
+                }
+              );
             }
           }
         );
       } else {
+        this._tenders$.next([]);
         sub && sub.unsubscribe();
       }
     });
