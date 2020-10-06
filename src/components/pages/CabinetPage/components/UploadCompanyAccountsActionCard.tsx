@@ -36,9 +36,8 @@ export const UploadCompanyAccountsActionCard = React.memo(
         </CardIcon>
 
         <CardContent>
-          <CardTitle>Проверить и заполнить анкету компании</CardTitle>
-          Добавьте контактные данные, банковские счета, сведения о ключевых
-          персонах. Часть данных заполнена из открытых источников.
+          <CardTitle>Проверить и&nbsp;заполнить анкету компании</CardTitle>
+          Добавьте данные о&nbsp;расчетном счете.
         </CardContent>
 
         <CardControls position="right">
@@ -46,7 +45,7 @@ export const UploadCompanyAccountsActionCard = React.memo(
             theme="light"
             onClick={ModalsOpenerService.openCompanyAccountsForm}
           >
-            Перейти
+            Добавить
           </Button>
         </CardControls>
       </Card>
