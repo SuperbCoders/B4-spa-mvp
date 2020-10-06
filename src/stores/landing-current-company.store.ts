@@ -8,7 +8,6 @@ class LandingCurrentCompanyStorage {
   }
 
   public set companyInn(inn: TCompanyInn | null) {
-    console.log(inn);
     this._companyInn = inn;
   }
 

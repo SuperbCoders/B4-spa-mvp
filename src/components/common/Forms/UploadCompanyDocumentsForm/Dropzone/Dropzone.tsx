@@ -14,7 +14,6 @@ type TDropZoneProps = {};
 
 export function Dropzone(props: TDropZoneProps): JSX.Element {
   const onDrop = React.useCallback((acceptedFiles: File[]): void => {
-    console.log('::: drop', acceptedFiles);
     fileUploadService.uploadFiles(acceptedFiles);
   }, []);
 

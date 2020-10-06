@@ -5,7 +5,6 @@ import { Auth } from './components/pages';
 export function WithAuth(Component: React.ElementType): () => JSX.Element {
   return function WrappedComponent(): JSX.Element {
     const [isLoggedIn, setLoggedIn] = React.useState(false);
-    console.log(':: fb', firebaseStore);
 
     React.useEffect((): VoidFunction => {
       const sub = firebaseStore.isLoggedIn$.subscribe(setLoggedIn);
