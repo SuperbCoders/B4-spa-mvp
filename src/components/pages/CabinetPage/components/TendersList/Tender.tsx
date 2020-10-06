@@ -11,9 +11,9 @@ import './style.scss';
 export function Tender(props: TCompanyRecommendsResponse): JSX.Element {
   return (
     <section className="tenders-group">
-      <aside className="tenders-group-date">
+      {/* <aside className="tenders-group-date">
         <span>24 мая</span>
-      </aside>
+      </aside> */}
       <div className="tenders-group-cards">
         <Card className="tender">
           <CardContent className="tender-body">
