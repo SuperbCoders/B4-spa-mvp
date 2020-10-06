@@ -21,7 +21,8 @@ export const ProcessNotificationCard = React.memo(
 
     return (
       <ProcessNotification label="Фоновый процесс">
-        Обратабываем ваши документы и анкету. Уведомим, как все будет готово.
+        Обратабываем ваши документы и&nbsp;анкету. Уведомим, как все будет
+        готово.
       </ProcessNotification>
     );
   }
