@@ -15,7 +15,7 @@ function PhoneMaskInput(
 ): JSX.Element {
   return (
     <MaskedInput
-      mask="+7 999 99 99 999"
+      mask="+7 999 999 99 99"
       className="rs-input"
       maskChar={null}
       {...props}
