@@ -1,7 +1,6 @@
 import firebase from 'firebase';
 import { firebaseConfig } from './firebase.config';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { AuthStore } from '../auth.store';
 
 class FireBaseStore {
   private firebaseInstance: firebase.app.App;
@@ -9,6 +8,8 @@ class FireBaseStore {
   private _isLoggedIn$: BehaviorSubject<boolean | void> = new BehaviorSubject(
     void 0
   );
+
+  public currentUser: firebase.User | null = null;
 
   public isLoggedIn$: Observable<
     boolean | void
@@ -28,27 +29,24 @@ class FireBaseStore {
     cb?: () => Promise<void>
   ): Promise<void> {
     if (user) {
-      return user.getIdToken().then(
-        (token: string): Promise<void> => {
-          AuthStore.saveUserJWTToken(token);
-          if (cb) {
-            return cb().then(
-              (): Promise<void> => {
-                this._isLoggedIn$.next(true);
+      this.currentUser = user;
 
-                return Promise.resolve();
-              }
-            );
-          } else {
+      if (cb) {
+        return cb().then(
+          (): Promise<void> => {
             this._isLoggedIn$.next(true);
 
             return Promise.resolve();
           }
-        }
-      );
+        );
+      } else {
+        this._isLoggedIn$.next(true);
+
+        return Promise.resolve();
+      }
     } else {
-      AuthStore.deleteUserJSWToken();
       this._isLoggedIn$.next(false);
+      this.currentUser = null;
 
       return Promise.resolve();
     }

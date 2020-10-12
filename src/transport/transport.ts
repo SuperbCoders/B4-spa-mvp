@@ -1,5 +1,5 @@
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
-import { AuthStore } from '../stores/auth.store';
+import { AxiosRequestConfig, AxiosResponse } from 'axios';
+import { axiosTransport } from './axios.transport';
 import {
   TCompanyInn,
   TCompanyLandingInfo,
@@ -11,6 +11,8 @@ import {
   TCompanyRecommendsResponse,
   TGuaranteeRequest
 } from './models';
+
+import './axios.interceptors';
 
 class B4Transport {
   private static ENDPOINT: string = '/api/v1';
@@ -85,10 +87,8 @@ class B4Transport {
   }
 
   private get<T>(url: string, config: AxiosRequestConfig = {}): Promise<T> {
-    const defaultConfig = this.getDefaultConfig();
-
-    return axios
-      .get(url, { ...defaultConfig, ...config })
+    return axiosTransport
+      .get(url, config)
       .then(({ data }: AxiosResponse<T>): T => data);
   }
 
@@ -97,10 +97,8 @@ class B4Transport {
     userData: T,
     config: AxiosRequestConfig = {}
   ): Promise<M> {
-    const defaultConfig = this.getDefaultConfig();
-
-    return axios
-      .patch(url, userData, { ...defaultConfig, ...config })
+    return axiosTransport
+      .patch(url, userData, config)
       .then(({ data }: AxiosResponse<M>): M => data);
   }
 
@@ -109,22 +107,9 @@ class B4Transport {
     userData: T,
     config: AxiosRequestConfig = {}
   ): Promise<M> {
-    const defaultConfig = this.getDefaultConfig();
-
-    return axios
-      .post(url, userData, { ...defaultConfig, ...config })
+    return axiosTransport
+      .post(url, userData, config)
       .then(({ data }: AxiosResponse<M>): M => data);
-  }
-
-  private getDefaultConfig(): AxiosRequestConfig {
-    const defaultConfig: AxiosRequestConfig = {};
-    const token = AuthStore.getUserJWTToken();
-
-    if (token) {
-      defaultConfig.headers = { Authorization: `JWT ${token}` };
-    }
-
-    return defaultConfig;
   }
 }
 
