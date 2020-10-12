@@ -24,39 +24,16 @@ class FireBaseStore {
     return Boolean(this._isLoggedIn$.value);
   }
 
-  public setCurrentUser(
-    user: firebase.User | null,
-    cb?: () => Promise<void>
-  ): Promise<void> {
-    if (user) {
-      this.currentUser = user;
-
-      if (cb) {
-        return cb().then(
-          (): Promise<void> => {
-            this._isLoggedIn$.next(true);
-
-            return Promise.resolve();
-          }
-        );
-      } else {
-        this._isLoggedIn$.next(true);
-
-        return Promise.resolve();
-      }
-    } else {
-      this._isLoggedIn$.next(false);
-      this.currentUser = null;
-
-      return Promise.resolve();
-    }
+  public setCurrentUser(user: firebase.User | null): void {
+    this.currentUser = user;
+    this._isLoggedIn$.next(Boolean(user));
   }
 
   public signOut(): void {
     this.firebaseInstance
       .auth()
       .signOut()
-      .then((): Promise<void> => this.setCurrentUser(null));
+      .then((): void => this.setCurrentUser(null));
   }
 
   public signInWithPhoneNumber(

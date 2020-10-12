@@ -27,17 +27,9 @@ class UserCurrentCompanyStorage {
   constructor() {
     firebaseStore.isLoggedIn$.subscribe((isLoggedIn: boolean | void): void => {
       if (isLoggedIn) {
-        b4Transport
-          .getCurrentUserCompanies()
-          .then(({ companies }: TUserCompaniesResponse): void => {
-            this._allCompanies$.next(companies);
-            const currentCompany =
-              companies.find(
-                (company: TCompanyLandingInfo): boolean =>
-                  company.inn === landingCurrentCompanyStorage.companyInn
-              ) || companies[0];
-            this._currentCompany$.next(currentCompany);
-          });
+        landingCurrentCompanyStorage
+          .addCompany()
+          .then((): void => this.getCompanies());
       } else {
         this._allCompanies$.next([]);
       }
@@ -49,6 +41,21 @@ class UserCurrentCompanyStorage {
       ({ inn }: TCompanyLandingInfo): boolean => inn === currentCompany
     ) as TCompanyLandingInfo;
     this._currentCompany$.next(fullInfo);
+  }
+
+  private getCompanies(): void {
+    b4Transport
+      .getCurrentUserCompanies()
+      .then(({ companies }: TUserCompaniesResponse): void => {
+        this._allCompanies$.next(companies);
+
+        const currentCompany =
+          companies.find(
+            (company: TCompanyLandingInfo): boolean =>
+              company.inn === landingCurrentCompanyStorage.companyInn
+          ) || companies[0];
+        this._currentCompany$.next(currentCompany);
+      });
   }
 }
 

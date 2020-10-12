@@ -47,23 +47,12 @@ export class LoginFormService {
         .confirm(code)
         .then((response: auth.UserCredential): void => {
           this.setState(false, STEPS.SMS_CODE_STEP);
-
-          firebaseStore
-            .setCurrentUser(
-              response.user,
-              (): Promise<void> => landingCurrentCompanyStorage.addCompany()
-            )
-            .then((): void => {
-              modalWrapperService.closeModal();
-
-              TagManagerService.pushEvent('authoSuccess');
-
-              routerHistory.push(
-                landingCurrentCompanyStorage.companyInn
-                  ? '/greeting'
-                  : '/cabinet'
-              );
-            });
+          firebaseStore.setCurrentUser(response.user);
+          modalWrapperService.closeModal();
+          TagManagerService.pushEvent('authoSuccess');
+          routerHistory.push(
+            landingCurrentCompanyStorage.companyInn ? '/greeting' : '/cabinet'
+          );
         })
         .catch((error: Error): void =>
           this.setState(false, STEPS.SMS_CODE_STEP, error.message)

@@ -46,7 +46,7 @@ class B4Transport {
     return this.get(`${B4Transport.ENDPOINT}/user/me`);
   }
 
-  public addCompany(inn: string): Promise<{ inn: TCompanyInn }> {
+  public addCompany(inn: string): Promise<void> {
     return this.patch(`${B4Transport.ENDPOINT}/user/add_company`, {
       inn
     });
