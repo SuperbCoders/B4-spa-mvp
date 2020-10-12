@@ -25,7 +25,7 @@ class UserCurrentCompanyStorage {
   > = this._allCompanies$.asObservable();
 
   constructor() {
-    firebaseStore.isLoggedIn$.subscribe((isLoggedIn: boolean): void => {
+    firebaseStore.isLoggedIn$.subscribe((isLoggedIn: boolean | void): void => {
       if (isLoggedIn) {
         b4Transport
           .getCurrentUserCompanies()

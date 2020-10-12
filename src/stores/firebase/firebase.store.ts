@@ -6,11 +6,11 @@ import { AuthStore } from '../auth.store';
 class FireBaseStore {
   private firebaseInstance: firebase.app.App;
   // @ts-ignore
-  private _isLoggedIn$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  private _isLoggedIn$: BehaviorSubject<boolean | void> = new BehaviorSubject(void 0);
   // @ts-ignore
   private _isLoginCheck$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
-  public isLoggedIn$: Observable<boolean> = this._isLoggedIn$.asObservable();
+  public isLoggedIn$: Observable<boolean | void> = this._isLoggedIn$.asObservable();
   public isLoginCheck$: Observable<
     boolean
   > = this._isLoginCheck$.asObservable();

@@ -25,7 +25,7 @@ class CompanyAccountsService {
   > = this._accounts$.asObservable();
 
   constructor() {
-    firebaseStore.isLoggedIn$.subscribe((isLoggedIn: boolean): void => {
+    firebaseStore.isLoggedIn$.subscribe((isLoggedIn: boolean | void): void => {
       if (isLoggedIn) {
         this.getCompanyAccounts().then((): void => {
           currentCompanyStorage.currentCompany$.subscribe(

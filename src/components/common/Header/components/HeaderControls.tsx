@@ -7,15 +7,10 @@ import { ReactComponent as Logout } from '../../../../assets/images/svg/logout.s
 import { firebaseStore } from '../../../../stores';
 import { modalWrapperService } from '../../../../services';
 import { LoginForm } from '../../Forms';
+import { useRxStream } from '../../../../utils/hooks';
 
 export function HeaderControls(): JSX.Element {
-  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
-
-  React.useEffect((): VoidFunction => {
-    const sub = firebaseStore.isLoggedIn$.subscribe(setIsLoggedIn);
-
-    return (): void => sub.unsubscribe();
-  }, []);
+  const isLoggedIn = useRxStream(firebaseStore.isLoggedIn$, false);
 
   const onLoginButtonClick = (): void => {
     modalWrapperService.openModal({

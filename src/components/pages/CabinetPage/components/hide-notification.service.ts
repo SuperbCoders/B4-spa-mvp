@@ -10,7 +10,7 @@ class HideNotificationService {
   public isHidden$: Observable<boolean> = this._isHidden$.asObservable();
 
   constructor() {
-    firebaseStore.isLoggedIn$.subscribe((isLoggedIn: boolean): void => {
+    firebaseStore.isLoggedIn$.subscribe((isLoggedIn: boolean | void): void => {
       let sub: Subscription | undefined;
 
       if (isLoggedIn) {

@@ -43,7 +43,7 @@ class FileUploadService {
   }
 
   public getFilesList(): void {
-    firebaseStore.isLoggedIn$.subscribe((isLoggedIn: boolean): void => {
+    firebaseStore.isLoggedIn$.subscribe((isLoggedIn: boolean | void): void => {
       isLoggedIn &&
         b4Transport
           .getFilesList()

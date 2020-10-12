@@ -21,7 +21,7 @@ class TendersService {
   }
 
   private getCompanyTenders(): void {
-    firebaseStore.isLoggedIn$.subscribe((isLoggedIn: boolean): void => {
+    firebaseStore.isLoggedIn$.subscribe((isLoggedIn: boolean | void): void => {
       let sub: Subscription | undefined;
 
       if (isLoggedIn) {
