@@ -2,19 +2,19 @@ import * as React from 'react';
 
 import {
   Form,
-  FormGroup,
   ControlLabel,
   Input,
   SelectPicker,
   DatePicker,
-  DateRangePicker
+  DateRangePicker,
+  FormGroup
 } from 'rsuite';
 import { modalWrapperService } from '../../../../services';
 import { TGuaranteeRequest } from '../../../../transport';
 
 import { Button } from '../../Button';
 import { guaranteeService } from './guarantee.service';
-import { calculateDays, guaranteeTypesItems, lawSelectItems } from './utils';
+import { calculateDays, guaranteeTypesItems } from './utils';
 
 import './style.scss';
 import { FormWrapper, SuccessNotifier } from '../components';
@@ -32,6 +32,7 @@ export function WarrantyClaimForm(): JSX.Element {
   const [data, setData] = React.useState<TGuaranteeModalState>({
     purchaseNumber: '',
     bgType: '',
+    bgSum: '',
     law: '',
     email: '',
     purchaseDate: null,
@@ -86,18 +87,25 @@ export function WarrantyClaimForm(): JSX.Element {
     <FormWrapper title={!isSended ? 'Заявка на гарантию' : ''}>
       {!isSended && (
         <Form className="warranty-form">
-          <FormGroup style={{ width: '420px', marginBottom: '30px' }}>
-            <ControlLabel className="warranty-form-label">
-              Вид банковской гарантии
-            </ControlLabel>
-            <SelectPicker
-              className="warranty-form-select"
-              cleanable={false}
-              searchable={false}
-              onSelect={setFieldUpdater('bgType')}
-              data={guaranteeTypesItems}
-            />
-          </FormGroup>
+          <div className="warranty-form-columns">
+            <div className="warranty-form-column">
+              <FormGroup
+                className="warranty-form-group"
+                style={{ width: '420px' }}
+              >
+                <ControlLabel className="warranty-form-label">
+                  Вид банковской гарантии
+                </ControlLabel>
+                <SelectPicker
+                  className="warranty-form-select"
+                  cleanable={false}
+                  searchable={false}
+                  onSelect={setFieldUpdater('bgType')}
+                  data={guaranteeTypesItems}
+                />
+              </FormGroup>
+            </div>
+          </div>
           <p className="warranty-form-disclaimer">
             Данная гарантия на обеспечение гарантийных обязательств свыше срока
             действия контракта. Если Вам требуется гарантия на обеспечение
@@ -108,7 +116,10 @@ export function WarrantyClaimForm(): JSX.Element {
 
           <div className="warranty-form-columns">
             <div className="warranty-form-column">
-              <FormGroup style={{ width: '420px', marginBottom: '30px' }}>
+              <FormGroup
+                className="warranty-form-group"
+                style={{ width: '420px' }}
+              >
                 <ControlLabel className="warranty-form-label">
                   Дата начала гарантии / Дата окончания гарантии
                 </ControlLabel>
@@ -127,10 +138,26 @@ export function WarrantyClaimForm(): JSX.Element {
               <div className="warranty-form-total-days">{daysCounter}</div>
             </div>
           </div>
-
           <div className="warranty-form-columns">
             <div className="warranty-form-column">
-              <FormGroup>
+              <FormGroup
+                className="warranty-form-group"
+                style={{ width: '420px' }}
+              >
+                <ControlLabel className="warranty-form-label">
+                  Сумма
+                </ControlLabel>
+                <Input
+                  type="text"
+                  placeholder="10000"
+                  onChange={setFieldUpdater('bgSum')}
+                />
+              </FormGroup>
+            </div>
+          </div>
+          <div className="warranty-form-columns">
+            <div className="warranty-form-column">
+              <FormGroup className="warranty-form-group">
                 <ControlLabel className="warranty-form-label">
                   Реестровый № торгов
                 </ControlLabel>
@@ -141,8 +168,8 @@ export function WarrantyClaimForm(): JSX.Element {
                 />
               </FormGroup>
             </div>
-            <div className="warranty-form-column">
-              <FormGroup>
+            {/* <div className="warranty-form-column">
+              <FormGroup className="warranty-form-group">
                 <ControlLabel className="warranty-form-label">
                   Закон
                 </ControlLabel>
@@ -154,9 +181,9 @@ export function WarrantyClaimForm(): JSX.Element {
                   onSelect={setFieldUpdater('law')}
                 />
               </FormGroup>
-            </div>
+            </div> */}
             <div className="warranty-form-column">
-              <FormGroup>
+              <FormGroup className="warranty-form-group">
                 <ControlLabel className="warranty-form-label">
                   Дата тендера(аукциона)
                 </ControlLabel>
@@ -170,17 +197,24 @@ export function WarrantyClaimForm(): JSX.Element {
               </FormGroup>
             </div>
           </div>
-          <FormGroup style={{ width: '420px', marginBottom: '30px' }}>
-            <ControlLabel className="warranty-form-label">
-              Электронная почта
-            </ControlLabel>
-            <Input
-              type="text"
-              placeholder="example@example.com"
-              onChange={setFieldUpdater('email')}
-            />
-          </FormGroup>
-          <FormGroup>
+          <div className="warranty-form-columns">
+            <div className="warranty-form-column">
+              <FormGroup
+                className="warranty-form-group"
+                style={{ width: '420px' }}
+              >
+                <ControlLabel className="warranty-form-label">
+                  Электронная почта
+                </ControlLabel>
+                <Input
+                  type="text"
+                  placeholder="example@example.com"
+                  onChange={setFieldUpdater('email')}
+                />
+              </FormGroup>
+            </div>
+          </div>
+          <div className="warranty-form-group">
             <Button
               className="warranty-form-submit"
               skin="inverse"
@@ -188,7 +222,7 @@ export function WarrantyClaimForm(): JSX.Element {
             >
               Отправить заявку
             </Button>
-          </FormGroup>
+          </div>
         </Form>
       )}
       {isSended && (
