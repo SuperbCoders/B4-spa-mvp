@@ -9,8 +9,6 @@ import { ReactComponent as Cross } from './cross.svg';
 import './style.scss';
 import { SvgIcon } from '../SvgIcon';
 
-const ANIMATION_FADE_TIME_MS = 300;
-
 export class ModalWrapper extends React.Component<{}, TModalWrapperState> {
   private destroy$: Subject<void> = new Subject();
   public readonly state: TModalWrapperState = {
@@ -46,7 +44,7 @@ export class ModalWrapper extends React.Component<{}, TModalWrapperState> {
     });
     return (
       <Modal
-        closeTimeoutMS={ANIMATION_FADE_TIME_MS}
+        closeTimeoutMS={modalWrapperService.ANIMATION_TIME_MS}
         className={wrapperClassName}
         overlayClassName={overlayClassName}
         isOpen={this.state.isOpened}

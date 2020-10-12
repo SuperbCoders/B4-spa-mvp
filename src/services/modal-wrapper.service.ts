@@ -8,6 +8,8 @@ export type TModalWrapperState = {
 };
 
 class ModalWrapperService {
+  public ANIMATION_TIME_MS: number = 300;
+
   private state: TModalWrapperState = {
     animateWrapper: true,
     backgroundColor: void 0,
@@ -36,6 +38,11 @@ class ModalWrapperService {
     this.state = { ...this.state, isOpened: false, backgroundColor: void 0 };
 
     this._modalState$.next(this.state);
+
+    window.setTimeout((): void => {
+      this.state = { ...this.state, component: null };
+      this._modalState$.next(this.state);
+    }, this.ANIMATION_TIME_MS);
   }
 }
 
