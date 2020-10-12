@@ -6,6 +6,7 @@ import { ReactComponent as CaretDown } from '../../../../../assets/images/svg/ca
 
 import { currentCompanyStorage } from '../../../../../stores';
 import { TCompanyLandingInfo } from '../../../../../transport';
+import { useRxStream } from '../../../../../utils/hooks';
 
 function renderTitle(children: React.ReactNode): React.ReactNode {
   return (
@@ -19,23 +20,11 @@ function renderTitle(children: React.ReactNode): React.ReactNode {
 }
 
 export function CompaniesSelect(): JSX.Element | null {
-  const [
-    currentCompany,
-    setCurrentCompany
-  ] = React.useState<TCompanyLandingInfo | null>(null);
-  const [companies, setCompanies] = React.useState<TCompanyLandingInfo[]>([]);
-
-  React.useEffect((): VoidFunction => {
-    const sub1 = currentCompanyStorage.currentCompany$.subscribe(
-      setCurrentCompany
-    );
-    const sub2 = currentCompanyStorage.allCompanies$.subscribe(setCompanies);
-
-    return (): void => {
-      sub1.unsubscribe();
-      sub2.unsubscribe();
-    };
-  }, []);
+  const currentCompany = useRxStream(
+    currentCompanyStorage.currentCompany$,
+    null
+  );
+  const companies = useRxStream(currentCompanyStorage.allCompanies$, []);
 
   const handleSelect = (companyInn: TCompanyLandingInfo['inn']): void => {
     currentCompanyStorage.setCurrentCompany(companyInn);

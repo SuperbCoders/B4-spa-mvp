@@ -1,27 +1,20 @@
 import * as React from 'react';
 import { fileUploadService } from '../Dropzone';
-import {
-  TProcessUploadFile,
-  TProcessUploadFiles
-} from '../file-upload.service';
+import { TProcessUploadFile } from '../file-upload.service';
 import { Button } from '../../../Button';
 import { FileListItem } from './FileListItem';
 import './style.scss';
+import { useRxStream } from '../../../../../utils/hooks';
 
 export const FileList = React.memo(
   (): JSX.Element => {
-    const [processingFiles, setProcessingFiles] = React.useState<
-      TProcessUploadFiles
-    >({});
-    React.useEffect((): VoidFunction => {
-      const sub = fileUploadService.processUploadingFiles$.subscribe(
-        setProcessingFiles
-      );
+    const processingFiles = useRxStream(
+      fileUploadService.processUploadingFiles$,
+      {}
+    );
 
-      return (): void => {
-        fileUploadService.reset();
-        sub.unsubscribe();
-      };
+    React.useEffect((): VoidFunction => {
+      return (): void => fileUploadService.reset();
     }, []);
 
     const values = Object.values(processingFiles);

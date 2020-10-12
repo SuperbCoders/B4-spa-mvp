@@ -3,6 +3,7 @@ import { TCompanyAccount } from '../../../../../../transport';
 import { companyAccountsService } from '../../services';
 import './style.scss';
 import { AccountsListItem } from './AccountsListItem';
+import { useRxStream } from '../../../../../../utils/hooks';
 
 type TAccountsListProps = {
   onSelectEdit: (account: TCompanyAccount) => void;
@@ -10,13 +11,7 @@ type TAccountsListProps = {
 
 export const AccountsList = React.memo(
   ({ onSelectEdit }: TAccountsListProps): JSX.Element => {
-    const [accounts, setAccounts] = React.useState<TCompanyAccount[]>([]);
-
-    React.useEffect((): VoidFunction => {
-      const sub = companyAccountsService.accounts$.subscribe(setAccounts);
-
-      return (): void => sub.unsubscribe();
-    }, []);
+    const accounts = useRxStream(companyAccountsService.accounts$, []);
 
     return (
       <div className="accounts-list">

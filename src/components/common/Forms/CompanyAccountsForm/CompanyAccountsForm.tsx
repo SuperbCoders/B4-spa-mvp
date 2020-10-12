@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { Form, FormGroup, ControlLabel, FormControl } from 'rsuite';
-import { TCompanyAccountRequest } from '../../../../transport';
+import { useRxStream } from '../../../../utils/hooks';
 
 import { Button } from '../../Button';
 import { FormWrapper } from '../components';
@@ -18,20 +18,11 @@ const initialState = {
 };
 
 export function CompanyAccountsForm(): JSX.Element {
-  const [state, setState] = React.useState<
-    Omit<TCompanyAccountRequest, 'company'>
-  >(initialState);
-  const [isEditing, setIsEditing] = React.useState(false);
+  const state = useRxStream(accountsServiceEditor.account$, initialState);
+  const isEditing = useRxStream(accountsServiceEditor.isEditing$, false);
 
   React.useEffect((): VoidFunction => {
-    const sub = accountsServiceEditor.account$.subscribe(setState);
-    const sub2 = accountsServiceEditor.isEditing$.subscribe(setIsEditing);
-
-    return (): void => {
-      accountsServiceEditor.reset();
-      sub.unsubscribe();
-      sub2.unsubscribe();
-    };
+    return (): void => accountsServiceEditor.reset();
   }, []);
 
   return (
