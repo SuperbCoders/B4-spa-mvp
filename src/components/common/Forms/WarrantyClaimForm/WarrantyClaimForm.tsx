@@ -19,9 +19,9 @@ import { calculateDays, guaranteeTypesItems } from './utils';
 import './style.scss';
 import { FormWrapper, SuccessNotifier } from '../components';
 
-type TGuaranteeModalState = Omit<
+type TGuaranteeModalState = Pick<
   TGuaranteeRequest,
-  'startDate' | 'endDate' | 'purchaseDate'
+  'purchaseNumber' | 'bgType' | 'bgSum' | 'email'
 > & {
   startDate: Date | null;
   endDate: Date | null;
@@ -33,7 +33,6 @@ export function WarrantyClaimForm(): JSX.Element {
     purchaseNumber: '',
     bgType: '',
     bgSum: '',
-    law: '',
     email: '',
     purchaseDate: null,
     startDate: null,
