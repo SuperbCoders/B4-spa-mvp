@@ -44,18 +44,8 @@ export function AppComponent(): JSX.Element {
               path={`/company/:${COMPANY_INN_ROUTE_KEY}`}
               component={Landing}
             />
-            <PrivateRoute
-              enabled={isLoggedIn}
-              path="/greeting"
-              exact
-              component={GreetingPage}
-            />
-            <PrivateRoute
-              enabled={isLoggedIn}
-              path="/cabinet"
-              exact
-              component={CabinetPage}
-            />
+            <PrivateRoute path="/greeting" exact component={GreetingPage} />
+            <PrivateRoute path="/cabinet" exact component={CabinetPage} />
           </Switch>
           <ModalWrapper />
         </Router>

@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { Route, RouteProps, Redirect } from 'react-router-dom';
+import { firebaseStore } from '../stores';
 
-export function PrivateRoute(props: RouteProps & { enabled: boolean }): JSX.Element {
-    if (!props.enabled) {
-        return <Redirect to="/" />;
-    }
+export function PrivateRoute(props: RouteProps): JSX.Element {
+  const isLoggedIn = firebaseStore.isLoggedIn;
 
-    return <Route {...props}>{props.children}</Route>;
+  if (!isLoggedIn) return <Redirect to="/" />;
+
+  return <Route {...props}>{props.children}</Route>;
 }

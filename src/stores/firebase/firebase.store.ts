@@ -19,19 +19,33 @@ class FireBaseStore {
     this.onAuthStateChanged();
   }
 
+  public get isLoggedIn(): boolean {
+    return Boolean(this._isLoggedIn$.value);
+  }
+
   public setCurrentUser(
     user: firebase.User | null,
     cb?: () => Promise<void>
   ): Promise<void> {
     if (user) {
-      return user.getIdToken().then((token: string): void => {
-        AuthStore.saveUserJWTToken(token);
-        if (cb) {
-          cb().then((): void => this._isLoggedIn$.next(true));
-        } else {
-          this._isLoggedIn$.next(true);
+      return user.getIdToken().then(
+        (token: string): Promise<void> => {
+          AuthStore.saveUserJWTToken(token);
+          if (cb) {
+            return cb().then(
+              (): Promise<void> => {
+                this._isLoggedIn$.next(true);
+
+                return Promise.resolve();
+              }
+            );
+          } else {
+            this._isLoggedIn$.next(true);
+
+            return Promise.resolve();
+          }
         }
-      });
+      );
     } else {
       AuthStore.deleteUserJSWToken();
       this._isLoggedIn$.next(false);
