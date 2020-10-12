@@ -6,14 +6,13 @@ import { AuthStore } from '../auth.store';
 class FireBaseStore {
   private firebaseInstance: firebase.app.App;
   // @ts-ignore
-  private _isLoggedIn$: BehaviorSubject<boolean | void> = new BehaviorSubject(void 0);
-  // @ts-ignore
-  private _isLoginCheck$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  private _isLoggedIn$: BehaviorSubject<boolean | void> = new BehaviorSubject(
+    void 0
+  );
 
-  public isLoggedIn$: Observable<boolean | void> = this._isLoggedIn$.asObservable();
-  public isLoginCheck$: Observable<
-    boolean
-  > = this._isLoginCheck$.asObservable();
+  public isLoggedIn$: Observable<
+    boolean | void
+  > = this._isLoggedIn$.asObservable();
 
   constructor() {
     this.firebaseInstance = firebase.initializeApp(firebaseConfig);
@@ -73,7 +72,6 @@ class FireBaseStore {
       .auth()
       .onAuthStateChanged((user: firebase.User | null): void => {
         this.setCurrentUser(user);
-        this._isLoginCheck$.next(true);
       });
   }
 }

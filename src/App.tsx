@@ -25,14 +25,13 @@ import { TagManagerService } from './services';
 import { PrivateRoute } from './utils';
 
 export function AppComponent(): JSX.Element {
-  const isLoginCheck = useRxStream(firebaseStore.isLoginCheck$, false);
   const isLoggedIn = useRxStream(firebaseStore.isLoggedIn$, void 0);
 
   React.useEffect((): void => {
     TagManagerService.initialize();
   }, []);
 
-  if (!isLoginCheck || isLoggedIn === void 0) return <LoadingPage />;
+  if (isLoggedIn === void 0) return <LoadingPage />;
 
   return (
     <IntlProvider locale={ruRU}>
@@ -45,8 +44,18 @@ export function AppComponent(): JSX.Element {
               path={`/company/:${COMPANY_INN_ROUTE_KEY}`}
               component={Landing}
             />
-            <PrivateRoute enabled={isLoggedIn} path="/greeting" exact component={GreetingPage} />
-            <PrivateRoute enabled={isLoggedIn} path="/cabinet" exact component={CabinetPage} />
+            <PrivateRoute
+              enabled={isLoggedIn}
+              path="/greeting"
+              exact
+              component={GreetingPage}
+            />
+            <PrivateRoute
+              enabled={isLoggedIn}
+              path="/cabinet"
+              exact
+              component={CabinetPage}
+            />
           </Switch>
           <ModalWrapper />
         </Router>
