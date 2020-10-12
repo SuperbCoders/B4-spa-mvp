@@ -1,6 +1,7 @@
 import firebase from 'firebase';
 import { firebaseConfig } from './firebase.config';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { distinctUntilChanged } from 'rxjs/operators';
 
 class FireBaseStore {
   private firebaseInstance: firebase.app.App;
@@ -13,7 +14,7 @@ class FireBaseStore {
 
   public isLoggedIn$: Observable<
     boolean | void
-  > = this._isLoggedIn$.asObservable();
+  > = this._isLoggedIn$.asObservable().pipe(distinctUntilChanged());
 
   constructor() {
     this.firebaseInstance = firebase.initializeApp(firebaseConfig);
