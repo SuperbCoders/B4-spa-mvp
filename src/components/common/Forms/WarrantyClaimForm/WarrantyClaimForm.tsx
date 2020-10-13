@@ -139,23 +139,6 @@ export function WarrantyClaimForm(): JSX.Element {
           </div>
           <div className="warranty-form-columns">
             <div className="warranty-form-column">
-              <FormGroup
-                className="warranty-form-group"
-                style={{ width: '420px' }}
-              >
-                <ControlLabel className="warranty-form-label">
-                  Сумма
-                </ControlLabel>
-                <Input
-                  type="text"
-                  placeholder="10000"
-                  onChange={setFieldUpdater('bgSum')}
-                />
-              </FormGroup>
-            </div>
-          </div>
-          <div className="warranty-form-columns">
-            <div className="warranty-form-column">
               <FormGroup className="warranty-form-group">
                 <ControlLabel className="warranty-form-label">
                   Реестровый № торгов
@@ -181,6 +164,18 @@ export function WarrantyClaimForm(): JSX.Element {
                 />
               </FormGroup>
             </div> */}
+            <div className="warranty-form-column">
+              <FormGroup className="warranty-form-group">
+                <ControlLabel className="warranty-form-label">
+                  Сумма
+                </ControlLabel>
+                <Input
+                  type="text"
+                  placeholder="10000"
+                  onChange={setFieldUpdater('bgSum')}
+                />
+              </FormGroup>
+            </div>
             <div className="warranty-form-column">
               <FormGroup className="warranty-form-group">
                 <ControlLabel className="warranty-form-label">
