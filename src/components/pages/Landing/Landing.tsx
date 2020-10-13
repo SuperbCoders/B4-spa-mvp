@@ -15,6 +15,8 @@ import { TCompanyLandingInfo } from '../../../transport';
 import { modalWrapperService } from '../../../services';
 import { LoginForm } from '../../common/Forms';
 import { formatNumber } from '../../../utils';
+import { firebaseStore } from '../../../stores';
+import { routerHistory } from '../../../router-history';
 export const COMPANY_INN_ROUTE_KEY: string = 'company';
 
 type TLandingProps = {
@@ -23,6 +25,11 @@ type TLandingProps = {
 
 export function Landing({ info }: TLandingProps): JSX.Element {
   const onLoginButtonClick = React.useCallback((): void => {
+    if (firebaseStore.isLoggedIn) {
+      routerHistory.push('/cabinet');
+      return;
+    }
+
     modalWrapperService.openModal({
       component: <LoginForm />,
       backgroundColor: 'rgba(86, 125, 244, 0.95)'
