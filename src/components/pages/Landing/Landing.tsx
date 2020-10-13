@@ -10,39 +10,26 @@ import { ReactComponent as Bolt } from './assets/bolt.svg';
 import { ReactComponent as Search } from './assets/search.svg';
 import { ReactComponent as Smile } from './assets/smile.svg';
 
-import { landingDataService } from './landing-data.service';
-
 import './style.scss';
-import { TCompanyInn } from '../../../transport';
-import { RouteChildrenProps } from 'react-router-dom';
-import { landingCurrentCompanyStorage } from '../../../stores';
+import { TCompanyLandingInfo } from '../../../transport';
 import { modalWrapperService } from '../../../services';
 import { LoginForm } from '../../common/Forms';
 import { formatNumber } from '../../../utils';
-import { useRxStream } from '../../../utils/hooks';
-
 export const COMPANY_INN_ROUTE_KEY: string = 'company';
 
-export function Landing({ match }: RouteChildrenProps): JSX.Element {
-  const info = useRxStream(landingDataService.data$, null);
-  const companyInn: TCompanyInn = (match as {
-    params: { [key: string]: TCompanyInn };
-  })?.params[COMPANY_INN_ROUTE_KEY];
+type TLandingProps = {
+  info: TCompanyLandingInfo;
+};
 
-  React.useEffect((): void => {
-    landingDataService.getLandingDataByInn(companyInn);
-    landingCurrentCompanyStorage.companyInn = companyInn;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const onLoginButtonClick = (): void => {
+export function Landing({ info }: TLandingProps): JSX.Element {
+  const onLoginButtonClick = React.useCallback((): void => {
     modalWrapperService.openModal({
       component: <LoginForm />,
       backgroundColor: 'rgba(86, 125, 244, 0.95)'
     });
-  };
+  }, []);
 
-  return info ? (
+  return (
     <PageLayout>
       <div className="landing">
         <section className="landing-comparsion">
@@ -267,7 +254,5 @@ export function Landing({ match }: RouteChildrenProps): JSX.Element {
         </section>
       </div>
     </PageLayout>
-  ) : (
-    <>'kekek'</>
   );
 }

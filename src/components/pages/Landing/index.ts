@@ -1,1 +1,4 @@
-export { Landing, COMPANY_INN_ROUTE_KEY } from './Landing';
+export {
+  LandingWrapper as Landing,
+  COMPANY_INN_ROUTE_KEY
+} from './LandingWrapper';
