@@ -1,3 +1,5 @@
+import { TCompanyInn } from '../responses';
+
 export type TGuaranteeRequest = {
   id?: number;
   user?: number;
@@ -12,7 +14,7 @@ export type TGuaranteeRequest = {
   /**
    * Почта
    */
-  email?: string;
+  email: string;
   /**
    * Реестровый номер торгов
    */
@@ -24,7 +26,7 @@ export type TGuaranteeRequest = {
   /**
    * Сумма гарнатии
    */
-  bgSum?: string;
+  bgSum: string;
   /**
    * Дата тендера
    */
@@ -41,4 +43,8 @@ export type TGuaranteeRequest = {
    * Закон
    */
   law: string;
+  /**
+   * Компания
+   */
+  company: TCompanyInn;
 };
