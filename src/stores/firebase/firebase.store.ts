@@ -1,39 +1,40 @@
 import firebase from 'firebase';
 import { firebaseConfig } from './firebase.config';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { AuthStore } from '../auth.store';
+import { distinctUntilChanged } from 'rxjs/operators';
 
 class FireBaseStore {
   private firebaseInstance: firebase.app.App;
   // @ts-ignore
-  private _isLoggedIn$: BehaviorSubject<boolean> = new BehaviorSubject(false);
-  public isLoggedIn$: Observable<boolean> = this._isLoggedIn$.asObservable();
+  private _isLoggedIn$: BehaviorSubject<boolean | void> = new BehaviorSubject(
+    void 0
+  );
+
+  public currentUser: firebase.User | null = null;
+
+  public isLoggedIn$: Observable<
+    boolean | void
+  > = this._isLoggedIn$.asObservable().pipe(distinctUntilChanged());
 
   constructor() {
     this.firebaseInstance = firebase.initializeApp(firebaseConfig);
     this.onAuthStateChanged();
   }
 
-  public setCurrentUser(user: firebase.User | null): Promise<void> {
-    if (user) {
-      return user.getIdToken().then((token: string): void => {
-        console.log('1');
-        AuthStore.saveUserJWTToken(token);
-        this._isLoggedIn$.next(true);
-      });
-    } else {
-      AuthStore.deleteUserJSWToken();
-      this._isLoggedIn$.next(false);
+  public get isLoggedIn(): boolean {
+    return Boolean(this._isLoggedIn$.value);
+  }
 
-      return Promise.resolve();
-    }
+  public setCurrentUser(user: firebase.User | null): void {
+    this.currentUser = user;
+    this._isLoggedIn$.next(Boolean(user));
   }
 
   public signOut(): void {
     this.firebaseInstance
       .auth()
       .signOut()
-      .then((): Promise<void> => this.setCurrentUser(null));
+      .then((): void => this.setCurrentUser(null));
   }
 
   public signInWithPhoneNumber(
@@ -59,9 +60,9 @@ class FireBaseStore {
   private onAuthStateChanged(): void {
     this.firebaseInstance
       .auth()
-      .onAuthStateChanged(
-        (user: firebase.User | null): Promise<void> => this.setCurrentUser(user)
-      );
+      .onAuthStateChanged((user: firebase.User | null): void => {
+        this.setCurrentUser(user);
+      });
   }
 }
 

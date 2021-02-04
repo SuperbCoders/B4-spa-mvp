@@ -19,46 +19,49 @@
 
   &.skin-inverse {
     border: 0 none;
-    background-color: #ECECF4;
-    color: #567DF4;
+    background-color: #ececf4;
+    color: #567df4;
   }
 
   &.skin-light {
     border: 0 none;
-    background-color: #F3F6FF;
-    color: #567DF4;
+    background-color: #f3f6ff;
+    color: #567df4;
   }
 
   &.skin-light.is-ghost {
-    color: #567DF4;
-    border: 2px solid #ECECF4;
+    color: #567df4;
+    border: 2px solid #ececf4;
     background-color: #fff;
+    transition: border-color ease-in-out 100ms, color ease-in-out 100ms;
 
     &:hover {
       background-color: #fff;
-      border-color: darken(#ECECF4, 10%);
-      color: darken(#567DF4, 10%);
+      border-color: darken(#ececf4, 10%);
+      color: darken(#567df4, 10%);
     }
   }
 
   &.is-primary {
-    background: #567DF4;
+    background: #567df4;
     color: #fff;
   }
 
   &.is-link {
     background-color: transparent;
     border: 0;
-    color: #567DF4;
+    color: #567df4;
 
     &:not(.disabled):not(:disabled) {
-      &:active, &:focus, &:hover {
+      &:active,
+      &:focus,
+      &:hover {
         box-shadow: none !important;
         background-color: transparent !important;
       }
 
-      &:active {        
-        color: #567DF4;
+      &:active {
+        color: #567df4;
       }
 
       &:focus {
@@ -67,7 +70,7 @@
     }
 
     &:hover {
-      color: darken(#567DF4, 15%);
+      color: darken(#567df4, 15%);
     }
   }
 

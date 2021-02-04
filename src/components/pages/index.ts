@@ -1,5 +1,6 @@
 export { Auth } from './Auth';
 export { Landing } from './Landing';
-export { MVP01 } from './Mvp01';
-export { MVP02 } from './Mvp02';
-export { MVP03 } from './Mvp03';
+export { GreetingPage } from './GreetingPage';
+export { CabinetPage } from './CabinetPage';
+export { LoadingPage } from './LoadingPage';
+export { MainPage } from './MainPage';

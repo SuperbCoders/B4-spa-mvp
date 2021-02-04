@@ -1,8 +1,8 @@
 import * as React from 'react';
 import classnames from 'classnames';
 
-import logo from './assets/logo.png';
-import logoNarrow from './assets/logo-narrow.png';
+import logo from './assets/logo.svg';
+import logoNarrow from './assets/logo-narrow.svg';
 
 import './style.scss';
 

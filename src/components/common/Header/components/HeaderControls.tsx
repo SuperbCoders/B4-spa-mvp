@@ -2,21 +2,21 @@ import * as React from 'react';
 import { Button } from '../../Button';
 import { IconButton } from '../../IconButton';
 
-import { ReactComponent as Featured } from '../../../../assets/images/svg/featured.svg';
+// import { ReactComponent as Featured } from '../../../../assets/images/svg/featured.svg';
 import { ReactComponent as Logout } from '../../../../assets/images/svg/logout.svg';
-import { firebaseStore, ModalsStore } from '../../../../stores';
+import { firebaseStore } from '../../../../stores';
+import { modalWrapperService } from '../../../../services';
+import { LoginForm } from '../../Forms';
+import { useRxStream } from '../../../../utils/hooks';
 
 export function HeaderControls(): JSX.Element {
-  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
-
-  React.useEffect((): VoidFunction => {
-    const sub = firebaseStore.isLoggedIn$.subscribe(setIsLoggedIn);
-
-    return (): void => sub.unsubscribe();
-  }, []);
+  const isLoggedIn = useRxStream(firebaseStore.isLoggedIn$, false);
 
   const onLoginButtonClick = (): void => {
-    ModalsStore.instance.openLoginModal();
+    modalWrapperService.openModal({
+      component: <LoginForm />,
+      backgroundColor: 'rgba(86, 125, 244, 0.95)'
+    });
   };
 
   const onLogoutButtonClick = (): void => firebaseStore.signOut();
@@ -24,12 +24,12 @@ export function HeaderControls(): JSX.Element {
   if (isLoggedIn) {
     return (
       <div className="header-controls">
-        <IconButton
+        {/* <IconButton
           skin="light"
           circle
           className="header-controls-button favorites"
           icon={<Featured width="20" height="20" />}
-        />
+        /> */}
         <IconButton
           skin="default"
           className="header-controls-button logout"

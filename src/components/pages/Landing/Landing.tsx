@@ -10,42 +10,33 @@ import { ReactComponent as Bolt } from './assets/bolt.svg';
 import { ReactComponent as Search } from './assets/search.svg';
 import { ReactComponent as Smile } from './assets/smile.svg';
 
-import { LandingDataService } from './landing-data.service';
-
 import './style.scss';
-import { TCompanyInn, TCompanyLandingInfo } from '../../../transport';
-import { RouteChildrenProps } from 'react-router-dom';
-import { firebaseStore, landingCurrentCompanyStorage } from '../../../stores';
-
+import { TCompanyLandingInfo } from '../../../transport';
+import { modalWrapperService } from '../../../services';
+import { LoginForm } from '../../common/Forms';
+import { formatNumber } from '../../../utils';
+import { firebaseStore } from '../../../stores';
+import { routerHistory } from '../../../router-history';
 export const COMPANY_INN_ROUTE_KEY: string = 'company';
 
-export function Landing({ match }: RouteChildrenProps): JSX.Element {
-  const [info, setInfo] = React.useState<TCompanyLandingInfo | null>(null);
-  const [isUserLoggedIn, setIsLoggedIn] = React.useState(false);
-  const companyInn: TCompanyInn = (match as {
-    params: { [key: string]: TCompanyInn };
-  })?.params[COMPANY_INN_ROUTE_KEY];
+type TLandingProps = {
+  info: TCompanyLandingInfo;
+};
 
-  React.useEffect((): VoidFunction => {
-    const dataService = new LandingDataService();
-    const sub1 = dataService.data$.subscribe(setInfo);
-    const sub2 = firebaseStore.isLoggedIn$.subscribe(setIsLoggedIn);
-    dataService.getLandingDataByInn(companyInn);
+export function Landing({ info }: TLandingProps): JSX.Element {
+  const onLoginButtonClick = React.useCallback((): void => {
+    if (firebaseStore.isLoggedIn) {
+      routerHistory.push('/cabinet');
+      return;
+    }
 
-    return (): void => {
-      sub1.unsubscribe();
-      sub2.unsubscribe();
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    modalWrapperService.openModal({
+      component: <LoginForm />,
+      backgroundColor: 'rgba(86, 125, 244, 0.95)'
+    });
   }, []);
 
-  React.useEffect((): void => {
-    landingCurrentCompanyStorage.companyInn = isUserLoggedIn
-      ? null
-      : companyInn;
-  }, [isUserLoggedIn, companyInn]);
-
-  return info ? (
+  return (
     <PageLayout>
       <div className="landing">
         <section className="landing-comparsion">
@@ -85,7 +76,7 @@ export function Landing({ match }: RouteChildrenProps): JSX.Element {
                     Получил гарантий на
                   </span>
                   <span className="landing-features-item-text">
-                    {`${Number(info.revenueGrowth)}₽`}
+                    {`${formatNumber(info.revenueGrowth)} ₽`}
                   </span>
                 </div>
               </div>
@@ -95,7 +86,7 @@ export function Landing({ match }: RouteChildrenProps): JSX.Element {
                   <div className="landing-features-item">
                     <span className="landing-features-item-label">2018</span>
                     <span className="landing-features-item-text">
-                      {`${Number(info.revenue2018)} ₽`}
+                      {`${formatNumber(info.revenue2018)} ₽`}
                     </span>
                   </div>
                 )}
@@ -103,7 +94,7 @@ export function Landing({ match }: RouteChildrenProps): JSX.Element {
                   <div className="landing-features-item">
                     <span className="landing-features-item-label">2019</span>
                     <span className="landing-features-item-text">
-                      {`${Number(info.revenue2019)} ₽`}
+                      {`${formatNumber(info.revenue2019)} ₽`}
                     </span>
                   </div>
                 )}
@@ -130,7 +121,7 @@ export function Landing({ match }: RouteChildrenProps): JSX.Element {
                     Упущенная выгода
                   </span>
                   <span className="landing-features-item-text">
-                    {`${Number(info.revenueLost)} ₽`}
+                    {`${formatNumber(info.revenueLost)} ₽`}
                   </span>
                 </div>
                 <div className="landing-features-item">
@@ -174,7 +165,9 @@ export function Landing({ match }: RouteChildrenProps): JSX.Element {
                   <span className="landing-features-item-label">
                     Экономия на получении гарантий
                   </span>
-                  <span className="landing-features-item-text">{`${info.competitor.bgSavingEconomy} ₽`}</span>
+                  <span className="landing-features-item-text">{`${formatNumber(
+                    info.competitor.bgSavingEconomy
+                  )} ₽`}</span>
                 </div>
               </div>
             </section>
@@ -207,7 +200,7 @@ export function Landing({ match }: RouteChildrenProps): JSX.Element {
           <div className="landing-cta-button">
             <p className="landing-cta-button-label">Чтобы начать</p>
 
-            <Button appearance="primary" size="lg">
+            <Button appearance="primary" size="lg" onClick={onLoginButtonClick}>
               Cоздай досье своей компании
             </Button>
           </div>
@@ -250,7 +243,7 @@ export function Landing({ match }: RouteChildrenProps): JSX.Element {
 
             <p className="landing-highlight-text">
               Все БЫСТРО И ПРОСТО: для каждого рекомендованного тендера уже
-              предодобрена гарантия{' '}
+              предодобрена гарантия
             </p>
           </article>
 
@@ -268,7 +261,5 @@ export function Landing({ match }: RouteChildrenProps): JSX.Element {
         </section>
       </div>
     </PageLayout>
-  ) : (
-    <>'kekek'</>
   );
 }

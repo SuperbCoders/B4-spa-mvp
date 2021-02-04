@@ -1,24 +1,31 @@
-.header {
-  display: flex;
-  justify-content: space-between;
-  padding-top: 10px;
-  padding-right: 20px;
-  padding-left: 20px;
+.page-header {
+  position: fixed;
+  width: 100%;
+  left: 0;
+  height: 82px;
+  z-index: 101;
+  background-color: inherit;
 
-  flex-wrap: wrap;
-
-  @media screen and (min-width: 768px) {
-    height: 82px;
+  &__content {
+    display: flex;
+    justify-content: space-between;
+    height: 100%;
     align-items: center;
-    padding-right: 0;
-    padding-left: 0;
+    flex-wrap: wrap;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 20px;
+    background-color: inherit;
   }
 
-  &-logo {
+  &__logo {
     width: 161px;
     height: 69px;
-
     margin-left: -10px;
+  }
+
+  &__company {
+    margin-left: -90px;
   }
 }
 
@@ -37,7 +44,7 @@
   .rs-dropdown-menu {
     min-width: 100%;
   }
-  
+
   @media screen and (min-width: 768px) {
     margin-top: 0;
     width: auto;
@@ -95,23 +102,23 @@
     margin-right: 40px;
 
     &::after {
-      content: "";
+      content: '';
       position: absolute;
       display: inline-block;
       width: 2px;
       height: 31px;
-      background-color: #ECECF4;
+      background-color: #ececf4;
       border-radius: 2px;
       right: -20px;
     }
   }
 
   &.favorites {
-    color: #FFA700;
+    color: #ffa700;
   }
 
   &.logout {
-    color: #567DF4;
+    color: #567df4;
   }
 
   &.login {

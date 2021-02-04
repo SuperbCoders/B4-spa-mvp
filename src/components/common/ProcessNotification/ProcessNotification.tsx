@@ -11,12 +11,17 @@ type TProcessNotificationProps = {
   className?: string;
   label: string;
   children: React.ReactNode;
+  onHideNotification: VoidFunction;
 };
 
 export function ProcessNotification(
   props: TProcessNotificationProps
 ): JSX.Element {
-  const { className: passedClassName, ...transferringProps } = props;
+  const {
+    className: passedClassName,
+    onHideNotification,
+    ...transferringProps
+  } = props;
 
   const className = classNames(props.className, {
     'process-notification': true
@@ -32,7 +37,9 @@ export function ProcessNotification(
       </CardContent>
 
       <CardControls className="process-notification-controls" position="right">
-        <Button appearance="link">Понятно</Button>
+        <Button onClick={onHideNotification} appearance="subtle">
+          Понятно
+        </Button>
       </CardControls>
     </Card>
   );

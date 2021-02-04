@@ -1,2 +1,2 @@
-export { CodeConfirmForm } from './CodeConfirmForm';
-export { PhoneTypingForm } from './PhoneTypingForm';
+export { SuccessNotifier } from './SuccessNotifier';
+export { FormWrapper } from './FormWrapper';

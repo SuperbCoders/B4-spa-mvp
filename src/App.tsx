@@ -1,38 +1,55 @@
 import * as React from 'react';
-import { observer } from 'mobx-react';
 
-import { Router, Switch, Route, Redirect } from 'react-router-dom';
+import { Router, Switch, Route } from 'react-router-dom';
+import { IntlProvider } from 'rsuite';
 
 import { ErrorBoundary } from './ErrorBoundary';
-import { Landing, MVP01, MVP02, MVP03 } from './components/pages';
+import {
+  Landing,
+  GreetingPage,
+  CabinetPage,
+  LoadingPage,
+  MainPage
+} from './components/pages';
 import { COMPANY_INN_ROUTE_KEY } from './components/pages/Landing';
 
-import { LoginModal } from './components/common/Modals';
-import { ModalsStore } from './stores';
 import { routerHistory } from './router-history';
 
-function AppComponent(): JSX.Element {
+import ruRU from 'rsuite/lib/IntlProvider/locales/ru_RU';
+import { ModalWrapper } from './components/common/ModalWrapper';
+import { firebaseStore } from './stores';
+
+import './app-rs-override.style.scss';
+import { useRxStream } from './utils/hooks';
+import { TagManagerService } from './services';
+import { PrivateRoute } from './utils';
+
+export function AppComponent(): JSX.Element {
+  const isLoggedIn = useRxStream(firebaseStore.isLoggedIn$, void 0);
+
+  React.useEffect((): void => {
+    TagManagerService.initialize();
+  }, []);
+
+  if (isLoggedIn === void 0) return <LoadingPage />;
+
   return (
-    <ErrorBoundary>
-      <Router history={routerHistory}>
-        <Switch>
-          <Route
-            exact
-            path={`/company/:${COMPANY_INN_ROUTE_KEY}`}
-            component={Landing}
-          />
-          <Route path="/dashboard/01" component={MVP01} />
-          <Route path="/dashboard/02" component={MVP02} />
-          <Route path="/dashboard/03" component={MVP03} />
-          <Redirect from="/" to="/dashboard/02" />
-        </Switch>
-        <LoginModal
-          show={ModalsStore.instance.isLoginModalOpened}
-          toggle={ModalsStore.instance.toggleLoginModal}
-        />
-      </Router>
-    </ErrorBoundary>
+    <IntlProvider locale={ruRU}>
+      <ErrorBoundary>
+        <Router history={routerHistory}>
+          <Switch>
+            <Route path="/" exact component={MainPage} />
+            <Route
+              exact
+              path={`/company/:${COMPANY_INN_ROUTE_KEY}`}
+              component={Landing}
+            />
+            <PrivateRoute path="/greeting" exact component={GreetingPage} />
+            <PrivateRoute path="/cabinet" exact component={CabinetPage} />
+          </Switch>
+          <ModalWrapper />
+        </Router>
+      </ErrorBoundary>
+    </IntlProvider>
   );
 }
-
-export const App = observer(AppComponent);

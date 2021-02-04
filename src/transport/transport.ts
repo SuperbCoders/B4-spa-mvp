@@ -1,14 +1,18 @@
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
-import { AuthStore } from '../stores/auth.store';
+import { AxiosRequestConfig, AxiosResponse } from 'axios';
+import { axiosTransport } from './axios.transport';
 import {
   TCompanyInn,
   TCompanyLandingInfo,
   TCompanyAccount,
   TCompanyAccountRequest,
-  TFileUploadResponse
+  TFileUploadResponse,
+  TCompanyFileResponse,
+  TUserCompaniesResponse,
+  TCompanyRecommendsResponse,
+  TGuaranteeRequest
 } from './models';
 
-const target = 'http://35.228.15.198';
+import './axios.interceptors';
 
 class B4Transport {
   private static ENDPOINT: string = '/api/v1';
@@ -16,63 +20,75 @@ class B4Transport {
   public getCompanyLandingInfoByINN(
     inn: TCompanyInn
   ): Promise<TCompanyLandingInfo> {
-    return this.get(`${target}${B4Transport.ENDPOINT}/companies/${inn}`);
+    return this.get(`${B4Transport.ENDPOINT}/companies/${inn}`);
   }
 
   public getCompanyAccounts(): Promise<TCompanyAccount[]> {
-    return this.get(`${target}${B4Transport.ENDPOINT}/company_props`);
+    return this.get(`${B4Transport.ENDPOINT}/company_props`);
   }
 
   public setCompanyAccount(
     newAccount: TCompanyAccountRequest
   ): Promise<TCompanyAccount> {
-    return this.post(
-      `${target}${B4Transport.ENDPOINT}/company_props`,
-      newAccount
-    );
+    return this.post(`${B4Transport.ENDPOINT}/company_props`, newAccount);
   }
 
   public editCompanyAccount(
-    editedAccount: TCompanyAccount
+    editedAccount: Partial<TCompanyAccount>
   ): Promise<TCompanyAccount> {
-    return this.put(
-      `${target}${B4Transport.ENDPOINT}/company_props`,
+    return this.patch(
+      `${B4Transport.ENDPOINT}/company_props/${editedAccount.id}`,
       editedAccount
     );
   }
 
-  public getCurrentUserCompanies(): Promise<TCompanyLandingInfo[]> {
-    return this.get(`${target}${B4Transport.ENDPOINT}/user/me`);
+  public getCurrentUserCompanies(): Promise<TUserCompaniesResponse> {
+    return this.get(`${B4Transport.ENDPOINT}/user/me`);
   }
 
-  public addCompany(inn: string): Promise<{ inn: TCompanyInn }> {
-    return this.patch(`${target}${B4Transport.ENDPOINT}/user/add_company`, {
+  public addCompany(inn: string): Promise<void> {
+    return this.patch(`${B4Transport.ENDPOINT}/user/add_company`, {
       inn
     });
   }
 
   public uploadFile(file: FormData): Promise<TFileUploadResponse> {
-    return this.post(
-      `${target}${B4Transport.ENDPOINT}/filestorage/api_files/`,
-      file
-    );
+    return this.post(`${B4Transport.ENDPOINT}/filestorage/api_files/`, file);
+  }
+
+  public getFilesList(): Promise<TCompanyFileResponse[]> {
+    return this.get(`${B4Transport.ENDPOINT}/company_files`);
   }
 
   public mapFileIdWithCompany(
     file: number,
     company: TCompanyInn
-  ): Promise<unknown> {
-    return this.post(`${target}${B4Transport.ENDPOINT}/company_files`, {
+  ): Promise<TCompanyFileResponse> {
+    return this.post(`${B4Transport.ENDPOINT}/company_files`, {
       file,
       company
     });
   }
 
-  private get<T>(url: string, config: AxiosRequestConfig = {}): Promise<T> {
-    const defaultConfig = this.getDefaultConfig();
+  public getCommonRecommends(): Promise<TCompanyRecommendsResponse[]> {
+    return this.get(`${B4Transport.ENDPOINT}/company_recommends`);
+  }
 
-    return axios
-      .get(url, { ...defaultConfig, ...config })
+  public getRecommends(
+    inn: TCompanyInn
+  ): Promise<TCompanyRecommendsResponse[]> {
+    return this.get(
+      `${B4Transport.ENDPOINT}/company_recommends?company=${inn}`
+    );
+  }
+
+  public sendGuarantee(guarantee: TGuaranteeRequest): Promise<void> {
+    return this.post(`${B4Transport.ENDPOINT}/warranties`, guarantee);
+  }
+
+  private get<T>(url: string, config: AxiosRequestConfig = {}): Promise<T> {
+    return axiosTransport
+      .get(url, config)
       .then(({ data }: AxiosResponse<T>): T => data);
   }
 
@@ -81,10 +97,8 @@ class B4Transport {
     userData: T,
     config: AxiosRequestConfig = {}
   ): Promise<M> {
-    const defaultConfig = this.getDefaultConfig();
-
-    return axios
-      .patch(url, userData, { ...defaultConfig, ...config })
+    return axiosTransport
+      .patch(url, userData, config)
       .then(({ data }: AxiosResponse<M>): M => data);
   }
 
@@ -93,34 +107,9 @@ class B4Transport {
     userData: T,
     config: AxiosRequestConfig = {}
   ): Promise<M> {
-    const defaultConfig = this.getDefaultConfig();
-
-    return axios
-      .post(url, userData, { ...defaultConfig, ...config })
+    return axiosTransport
+      .post(url, userData, config)
       .then(({ data }: AxiosResponse<M>): M => data);
-  }
-
-  private put<T, M>(
-    url: string,
-    userData: T,
-    config: AxiosRequestConfig = {}
-  ): Promise<M> {
-    const defaultConfig = this.getDefaultConfig();
-
-    return axios
-      .put(url, userData, { ...defaultConfig, ...config })
-      .then(({ data }: AxiosResponse<M>): M => data);
-  }
-
-  private getDefaultConfig(): AxiosRequestConfig {
-    const defaultConfig: AxiosRequestConfig = {};
-    const token = AuthStore.getUserJWTToken();
-
-    if (token) {
-      defaultConfig.headers = { Authorization: `JWT ${token}` };
-    }
-
-    return defaultConfig;
   }
 }
 

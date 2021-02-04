@@ -57,5 +57,12 @@ export type TCompanyLandingInfo = {
    * Сумма
    */
   bgSum: string;
+  /**
+   * Данные у конкурента
+   */
   competitor: TCompanyLandingInfo & { bgSavingEconomy: number };
+  /**
+   * Были ли обработаны документы
+   */
+  wasProcessed: boolean;
 };

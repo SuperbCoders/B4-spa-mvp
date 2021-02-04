@@ -1,6 +1,12 @@
 import { BehaviorSubject, Observable } from 'rxjs';
-import { b4Transport, TCompanyInn, TCompanyLandingInfo } from '../transport';
+import {
+  b4Transport,
+  TCompanyInn,
+  TCompanyLandingInfo,
+  TUserCompaniesResponse
+} from '../transport';
 import { firebaseStore } from './firebase';
+import { landingCurrentCompanyStorage } from './landing-current-company.store';
 
 class UserCurrentCompanyStorage {
   // @ts-ignore
@@ -13,22 +19,17 @@ class UserCurrentCompanyStorage {
   );
 
   public currentCompany$: Observable<TCompanyLandingInfo | null> = this._currentCompany$.asObservable();
-  public currentCompany: TCompanyLandingInfo | null = this._currentCompany$
-    .value;
 
   public allCompanies$: Observable<
     TCompanyLandingInfo[]
   > = this._allCompanies$.asObservable();
 
   constructor() {
-    firebaseStore.isLoggedIn$.subscribe((isLoggedIn: boolean): void => {
+    firebaseStore.isLoggedIn$.subscribe((isLoggedIn: boolean | void): void => {
       if (isLoggedIn) {
-        b4Transport
-          .getCurrentUserCompanies()
-          .then((companies: TCompanyLandingInfo[]): void => {
-            this._allCompanies$.next(companies);
-            this._currentCompany$.next(companies[0]);
-          });
+        landingCurrentCompanyStorage
+          .addCompany()
+          .then((): void => this.getCompanies());
       } else {
         this._allCompanies$.next([]);
       }
@@ -40,6 +41,21 @@ class UserCurrentCompanyStorage {
       ({ inn }: TCompanyLandingInfo): boolean => inn === currentCompany
     ) as TCompanyLandingInfo;
     this._currentCompany$.next(fullInfo);
+  }
+
+  private getCompanies(): void {
+    b4Transport
+      .getCurrentUserCompanies()
+      .then(({ companies }: TUserCompaniesResponse): void => {
+        this._allCompanies$.next(companies);
+
+        const currentCompany =
+          companies.find(
+            (company: TCompanyLandingInfo): boolean =>
+              company.inn === landingCurrentCompanyStorage.companyInn
+          ) || companies[0];
+        this._currentCompany$.next(currentCompany);
+      });
   }
 }
 

@@ -1,26 +1,24 @@
 import * as React from 'react';
-import { HeaderControls } from './components';
+import { CompaniesSelect, HeaderControls } from './components';
 import { Logo } from '../Logo';
-
-import { firebaseStore } from '../../../stores';
-
-import { observer } from 'mobx-react';
 
 import './style.scss';
 
-export const Header = observer(
-  (): JSX.Element => {
-    console.log(':L:: header', firebaseStore);
+type THeanderProps = {
+  transparent: boolean;
+};
 
-    return (
-      <header className="header">
-        <a href="/">
-          <Logo className="header-logo" />
-        </a>
-
-        {/* <CompaniesSelect /> */}
+export function Header({ transparent }: THeanderProps): JSX.Element {
+  return (
+    <header
+      className="page-header"
+      style={{ backgroundColor: transparent ? 'transparent' : 'inherit' }}
+    >
+      <div className="page-header__content">
+        <Logo className="page-header__logo" />
+        {!transparent && <CompaniesSelect />}
         <HeaderControls />
-      </header>
-    );
-  }
-);
+      </div>
+    </header>
+  );
+}

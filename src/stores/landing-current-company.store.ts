@@ -8,12 +8,16 @@ class LandingCurrentCompanyStorage {
   }
 
   public set companyInn(inn: TCompanyInn | null) {
-    console.log(inn);
     this._companyInn = inn;
   }
 
-  public addCompany(): void {
-    this._companyInn && b4Transport.addCompany(this._companyInn);
+  public addCompany(): Promise<void> {
+    if (this._companyInn) {
+      return (b4Transport.addCompany(this._companyInn) as unknown) as Promise<
+        void
+      >;
+    }
+    return Promise.resolve();
   }
 }
 
